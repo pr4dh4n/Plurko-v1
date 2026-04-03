@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="PCIe Gen 5 Controller IP — 32 GT/s data rates, Gen 3-5 backward compatible, FEC data integrity. Silicon-proven semiconductor IP from PlurkoTech."/>
+<meta name="keywords" content="PCIe Gen 5, Controller IP, PCI Express, FEC, semiconductor IP, PlurkoTech, PrimeSoc"/>
+<meta name="author" content="Plurko Technologies"/>
+<meta property="og:title" content="PCIe Gen 5 Controller IP — PlurkoTech"/>
+<meta property="og:description" content="32 GT/s data rates, Gen 3-5 backward compatible, FEC data integrity. Silicon-proven PCIe IP."/>
+<meta property="og:type" content="product"/>
+<title>PCIe Gen 5 Controller IP — PlurkoTech</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FFFFFF;
+  --bg-alt:#F7F5F2;
+  --bg-dark:#1A1A1E;
+  --bg-dark-deep:#141417;
+  --text:#222222;
+  --text-light:#666666;
+  --text-muted:#999999;
+  --purple:#744897;
+  --purple-l:#9B6FBF;
+  --purple-xl:#C09FD8;
+  --purple-d:#5A3575;
+  --purple-dark:#2D1B4E;
+  --gold:#FFD166;
+  --gold-d:#E8B84B;
+  --accent:var(--purple);
+  --accent-light:var(--purple-l);
+  --white:#FFFFFF;
+  --border:rgba(34,34,34,0.08);
+  --border-dark:rgba(255,255,255,0.08);
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+  --ease-smooth:cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"]{
+  --bg:#1A1A1E;
+  --bg-alt:#222226;
+  --text:#E8E8E8;
+  --text-light:#AAAAAA;
+  --text-muted:#777777;
+  --border:rgba(255,255,255,0.08);
+  --white:#FFFFFF;
+}
+
+[data-theme="light"]{
+  --bg-dark:#EFECF0;
+  --bg-dark-deep:#E8E4EC;
+  --border-dark:rgba(34,34,34,0.08);
+}
+
+[data-theme="light"] .menu-overlay{background:rgba(255,255,255,0.55)}
+[data-theme="light"] .menu-overlay nav a{color:rgba(34,34,34,0.75);border-bottom-color:rgba(34,34,34,0.08)}
+[data-theme="light"] .menu-overlay nav a:hover{color:var(--purple)}
+[data-theme="light"] .menu-overlay-footer{color:rgba(34,34,34,0.4)}
+[data-theme="light"] .site-header.scrolled .hamburger span{background:var(--text)}
+[data-theme="light"] .site-header.scrolled .header-search{border-color:rgba(34,34,34,0.12)}
+[data-theme="light"] .site-header.scrolled .header-search__icon svg{stroke:var(--text)}
+[data-theme="light"] .site-header.scrolled .theme-toggle{border-color:rgba(34,34,34,0.12)}
+[data-theme="light"] .site-header.scrolled .theme-toggle svg{stroke:var(--purple)}
+
+[data-theme="dark"] .site-header.scrolled{background:rgba(26,26,30,0.92);border-bottom-color:var(--border)}
+[data-theme="dark"] .site-header.scrolled .hamburger span{background:var(--white)}
+
+[data-theme="dark"] .product-cta-section{background:var(--bg)}
+[data-theme="dark"] .product-cta-section h2{color:var(--text)}
+
+.section-tag{color:var(--purple)}
+[data-theme="dark"] .section-tag{color:#e6b830}
+
+[data-theme="light"] .section-divider{opacity:0.7}
+
+html{scroll-behavior:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Raleway',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+@media(pointer:coarse){body{cursor:auto}}
+a{color:inherit;text-decoration:none}
+button{border:none;background:none;cursor:auto;font-family:inherit}
+@media(pointer:coarse){a,button{cursor:auto}}
+img{display:block;max-width:100%}
+ul,ol{list-style:none}
+input,select,textarea{font-family:inherit;border:none;outline:none;background:transparent}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:rgba(116,72,151,0.2);border-radius:3px}
+::-webkit-scrollbar-track{background:transparent}
+
+.font-display{font-family:'Poppins',sans-serif}
+.font-mono{font-family:'JetBrains Mono',monospace}
+h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.05;letter-spacing:-0.02em}
+
+.js-ready .reveal{opacity:0;transform:translate3d(0,30px,0);transition:opacity 0.7s ease-out,transform 0.7s ease-out;will-change:transform,opacity}
+.reveal.visible{opacity:1;transform:translate3d(0,0,0)}
+.js-ready .gsap-up{opacity:0;transform:translateY(40px)}
+
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:1002;
+  padding:0 clamp(24px,4vw,96px);height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background 0.4s,backdrop-filter 0.4s,border-color 0.4s,transform 1.1s cubic-bezier(0.22,1,0.36,1),border-radius 1.1s cubic-bezier(0.22,1,0.36,1),left 1.1s cubic-bezier(0.22,1,0.36,1);
+  border-bottom:1px solid transparent;
+}
+.site-header.scrolled{
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);
+  border-bottom-color:var(--border);
+}
+.header-logo{height:32px}
+.header-logo img{height:100%}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-cta{
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.15em;
+  background:var(--gold);color:#222222;
+  padding:10px 28px;border-radius:100px;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s var(--ease-smooth);
+}
+.header-cta:hover{transform:scale(1.03)}
+.header-cta .cta-fill{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:var(--purple);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s var(--ease-smooth);
+}
+.header-cta:hover .cta-fill{transform:scaleX(1)}
+.header-cta span{position:relative;z-index:1;transition:color 0.3s}
+.header-cta:hover span{color:var(--white)}
+.header-cta .dot-svg{width:6px;height:6px;fill:#222226;position:relative;z-index:1;transition:fill 0.3s;flex-shrink:0}
+.site-header.scrolled .header-cta .dot-svg{fill:var(--bg-alt)}
+.header-cta:hover .dot-svg{fill:var(--gold)}
+.hamburger{
+  width:28px;height:20px;display:flex;flex-direction:column;justify-content:space-between;
+  padding:0;cursor:pointer;position:relative;z-index:2;
+}
+.hamburger span{display:block;width:100%;height:2px;background:var(--text);transition:transform 0.4s var(--ease-out-expo),opacity 0.3s,background 0.4s}
+.site-header.scrolled .hamburger span{background:var(--text)}
+[data-theme="dark"] .hamburger.active span{background:var(--white)!important}
+[data-theme="light"] .hamburger.active span{background:var(--text)!important}
+.hamburger.active span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+#smooth-wrapper{
+  position:relative;overflow:hidden;
+  transition:transform 1.1s cubic-bezier(0.22,1,0.36,1),border-radius 1.1s cubic-bezier(0.22,1,0.36,1),width 1.1s cubic-bezier(0.22,1,0.36,1),left 1.1s cubic-bezier(0.22,1,0.36,1);
+}
+#smooth-wrapper.pushed{
+  left:min(380px,85vw) !important;
+  width:calc(100% - min(380px,85vw)) !important;
+  border-radius:16px;
+}
+.site-header.menu-open{
+  left:min(380px,85vw);
+  right:0;
+  border-radius:16px 16px 0 0;
+}
+.theme-toggle{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+  transition:background 0.3s,border-color 0.3s;
+  position:relative;overflow:hidden;
+}
+.site-header.scrolled .theme-toggle{border-color:var(--border)}
+.theme-toggle:hover{background:rgba(116,72,151,0.1);border-color:var(--purple-l)}
+.theme-toggle svg{width:16px;height:16px;stroke:var(--text);fill:none;stroke-width:2;transition:stroke 0.3s,transform 0.4s var(--ease-smooth)}
+.site-header.scrolled .theme-toggle svg{stroke:var(--text)}
+[data-theme="dark"] .theme-toggle svg{stroke:var(--gold)}
+[data-theme="dark"] .site-header.scrolled .theme-toggle svg{stroke:var(--gold)}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+@media(max-width:768px){.header-cta{display:none}}
+
+.header-search{
+  position:relative;display:flex;align-items:center;
+  height:36px;border-radius:100px;
+  border:1px solid var(--border);
+  overflow:visible;
+  transition:width 0.45s var(--ease-out-expo),background 0.3s,border-color 0.3s,box-shadow 0.3s;
+  width:36px;cursor:pointer;
+}
+.header-search.expanded{
+  width:280px;background:rgba(255,255,255,0.08);
+  border-color:var(--purple-l);box-shadow:0 0 20px rgba(116,72,151,0.15);
+}
+.site-header.scrolled .header-search{border-color:var(--border)}
+.site-header.scrolled .header-search.expanded{border-color:var(--purple-l);background:rgba(0,0,0,0.04)}
+[data-theme="dark"] .site-header.scrolled .header-search.expanded{background:rgba(255,255,255,0.06)}
+.header-search__icon{
+  width:36px;height:36px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.3s var(--ease-smooth);
+}
+.header-search__icon svg{
+  width:16px;height:16px;stroke:var(--text);fill:none;stroke-width:2;transition:stroke 0.3s;
+}
+.site-header.scrolled .header-search__icon svg{stroke:var(--text)}
+[data-theme="dark"] .header-search__icon svg{stroke:var(--gold)}
+.header-search__input{
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--text);letter-spacing:0.02em;
+  width:0;opacity:0;padding:0;
+  transition:opacity 0.3s 0.1s,width 0.3s;
+}
+.header-search.expanded .header-search__input{width:100%;opacity:1;padding:0 12px 0 0}
+.header-search__input::placeholder{color:var(--text-muted)}
+.header-search__clear{
+  width:20px;height:20px;flex-shrink:0;
+  display:none;align-items:center;justify-content:center;
+  margin-right:8px;border-radius:50%;
+  background:rgba(255,255,255,0.1);cursor:pointer;transition:background 0.2s;
+}
+.header-search__clear:hover{background:var(--purple)}
+.header-search__clear svg{width:10px;height:10px;stroke:var(--text-muted);fill:none;stroke-width:2.5}
+.header-search.has-value .header-search__clear{display:flex}
+@media(max-width:480px){.header-search.expanded{width:200px}}
+
+.search-popup{
+  position:fixed;z-index:10000;
+  pointer-events:none;opacity:0;
+  transform:translateY(8px) scale(0.95);
+  transition:opacity 0.25s var(--ease-out-expo),transform 0.25s var(--ease-out-expo);
+}
+.search-popup.visible{
+  opacity:1;pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+.search-popup-inner{
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;
+  backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35),0 0 0 1px rgba(116,72,151,0.1);
+  display:flex;align-items:center;gap:12px;
+  min-width:200px;
+}
+[data-theme="dark"] .search-popup-inner{
+  background:rgba(30,30,34,0.92);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(116,72,151,0.15);
+}
+[data-theme="light"] .search-popup-inner{background:rgba(255,255,255,0.95);box-shadow:0 12px 40px rgba(0,0,0,0.1)}
+.search-popup-text{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--text);letter-spacing:0.3px;flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;
+}
+.search-popup-text span{color:var(--text-muted);font-size:11px;margin-right:6px}
+.search-popup-btn{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:1.2px;
+  padding:5px 12px;background:var(--purple);color:#fff;
+  border:none;border-radius:4px;cursor:pointer;
+  white-space:nowrap;transition:background 0.2s,transform 0.15s;
+}
+.search-popup-btn:hover{background:var(--gold);color:#222222;transform:scale(1.04)}
+.search-popup-hint{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--text-muted);letter-spacing:0.5px;
+  padding:3px 6px;border:1px solid var(--border);
+  border-radius:3px;white-space:nowrap;
+}
+
+.menu-backdrop{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0);pointer-events:none;
+  transition:background 1s cubic-bezier(0.22,1,0.36,1);
+}
+.menu-backdrop.visible{background:rgba(0,0,0,0.25);pointer-events:auto}
+.menu-overlay{
+  position:fixed;top:0;left:0;bottom:0;z-index:1001;
+  width:min(380px,85vw);
+  background:rgba(20,20,23,0.30);
+  backdrop-filter:blur(24px) saturate(1.3);
+  -webkit-backdrop-filter:blur(24px) saturate(1.3);
+  border-right:1px solid rgba(255,255,255,0.06);
+  transform:translateX(-100%);
+  transition:transform 1s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:100px 40px 60px;
+}
+.menu-overlay.open{transform:translateX(0)}
+.menu-overlay nav{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%}
+.menu-overlay nav a{
+  font-family:'Poppins',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;
+  color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.02em;
+  transition:color 0.3s,transform 0.3s var(--ease-smooth),padding-left 0.3s var(--ease-smooth);
+  display:block;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.menu-overlay nav a:hover{color:var(--gold);padding-left:12px}
+.menu-overlay-footer{
+  position:absolute;bottom:32px;left:40px;right:40px;
+  display:flex;flex-direction:column;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.4);
+}
+.menu-overlay-footer .footer-links{display:flex;gap:16px;flex-wrap:wrap}
+
+.mega-col{
+  position:fixed;top:0;bottom:0;z-index:1002;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 0;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.06) transparent;
+  transform:translateX(-100%);opacity:0;pointer-events:none;
+  contain:layout style paint;
+  will-change:transform,opacity;
+  transition:transform 0.08s ease-out,opacity 0.06s ease-out;
+}
+.mega-col.open{transform:translateX(0);opacity:1;pointer-events:auto}
+.mega-l1{
+  left:min(380px,85vw);width:260px;
+  background:rgba(24,24,27,0.5);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.06);
+  padding-left:28px;padding-right:28px;
+}
+.mega-l2{
+  left:calc(min(380px,85vw) + 260px);width:240px;
+  background:rgba(20,20,22,0.5);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.05);
+  padding-left:24px;padding-right:24px;
+}
+.mega-l3{
+  left:calc(min(380px,85vw) + 260px + 240px);width:280px;
+  background:rgba(17,17,19,0.5);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.04);
+  padding-left:28px;padding-right:28px;
+}
+.mega-col-head{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  text-transform:uppercase;letter-spacing:0.14em;
+  color:rgba(255,255,255,0.45);
+  padding:0 0 14px;margin-bottom:6px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  flex-shrink:0;
+}
+.mega-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-radius:8px;
+  font-family:'Poppins',sans-serif;font-weight:600;
+  color:rgba(255,255,255,0.4);cursor:pointer;
+  text-decoration:none;
+  transition:color 0.2s,background 0.2s,padding-left 0.2s cubic-bezier(0.22,1,0.36,1);
+}
+.mega-row:hover{color:var(--gold);background:rgba(255,209,102,0.05);padding-left:20px}
+.mega-row.active{color:var(--gold);background:rgba(255,209,102,0.07)}
+.mega-row svg{
+  width:12px;height:12px;stroke:currentColor;flex-shrink:0;
+  opacity:0;transform:translateX(-4px);
+  transition:opacity 0.15s,transform 0.15s;
+}
+.mega-row:hover svg,.mega-row.active svg{opacity:0.6;transform:translateX(0)}
+.mega-l1 .mega-row{font-size:clamp(13px,1.5vw,15px);padding:11px 14px}
+.mega-l2 .mega-row{font-size:13px;font-weight:500}
+.mega-l3 .mega-row{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:400;
+  letter-spacing:0.01em;
+}
+.mega-l3 .mega-row:hover{color:var(--white);background:rgba(116,72,151,0.1)}
+.mega-count{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:rgba(255,255,255,0.35);margin-left:8px;
+}
+[data-theme="light"] .mega-l1{background:rgba(248,248,250,0.5);border-right-color:rgba(34,34,34,0.08)}
+[data-theme="light"] .mega-l2{background:rgba(242,242,245,0.5);border-right-color:rgba(34,34,34,0.06)}
+[data-theme="light"] .mega-l3{background:rgba(236,236,240,0.5)}
+[data-theme="light"] .mega-col-head{color:rgba(34,34,34,0.85);border-bottom-color:rgba(34,34,34,0.15)}
+[data-theme="light"] .mega-row{color:rgba(34,34,34,0.75)}
+[data-theme="light"] .mega-row:hover{color:var(--purple);background:rgba(116,72,151,0.05)}
+[data-theme="light"] .mega-row.active{color:var(--purple);background:rgba(116,72,151,0.07)}
+[data-theme="light"] .mega-l3 .mega-row:hover{color:var(--purple);background:rgba(116,72,151,0.08)}
+[data-theme="light"] .mega-count{color:rgba(34,34,34,0.4)}
+@media(max-width:768px){.mega-col{display:none!important}}
+
+.product-top{
+  padding-top:104px;
+  padding-bottom:clamp(48px,6vw,80px);
+  padding-left:clamp(24px,3vw,48px);
+  padding-right:clamp(24px,3vw,48px);
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+.product-top-inner{max-width:1440px;margin:0 auto}
+
+.breadcrumb{
+  font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;
+  color:var(--text-light);letter-spacing:0.04em;margin-bottom:24px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.breadcrumb a{color:var(--text-light);transition:color 0.2s}
+.breadcrumb a:hover{color:var(--purple)}
+.breadcrumb .sep{color:var(--border);font-size:10px}
+
+.product-header{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:40px;
+}
+@media(max-width:768px){.product-header{flex-direction:column;gap:24px}}
+
+.product-header-left{flex:1;min-width:0}
+.product-header-left .product-category{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.15em;
+  color:var(--purple-l);background:rgba(116,72,151,0.08);
+  padding:5px 12px;border-radius:100px;display:inline-block;margin-bottom:16px;
+}
+.product-header-left h1{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:800;
+  color:var(--text);line-height:1.1;margin-bottom:16px;
+}
+.product-header-left .product-desc{
+  font-size:16px;color:var(--text-light);line-height:1.7;max-width:600px;margin-bottom:20px;
+}
+.product-header-left .product-vendor{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--text-muted);letter-spacing:0.05em;
+}
+.product-header-left .product-vendor strong{color:var(--text);font-weight:600}
+
+.product-header-right{
+  flex-shrink:0;width:280px;
+  display:flex;flex-direction:column;gap:20px;
+}
+@media(max-width:768px){.product-header-right{width:100%}}
+.quick-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.quick-stat{
+  background:var(--bg-alt);border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;text-align:center;
+}
+.quick-stat-val{
+  font-family:'JetBrains Mono',monospace;font-size:clamp(1.1rem,2vw,1.4rem);font-weight:700;
+  color:var(--gold);margin-bottom:2px;
+}
+.quick-stat-label{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);
+}
+.product-ctas{display:flex;flex-direction:column;gap:10px}
+.product-cta-primary{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  background:var(--gold);color:#222222;
+  padding:14px 28px;border-radius:100px;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s var(--ease-smooth);
+}
+.product-cta-primary:hover{transform:scale(1.03)}
+.product-cta-primary .cta-fill{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:var(--purple);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s var(--ease-smooth);
+}
+.product-cta-primary:hover .cta-fill{transform:scaleX(1)}
+.product-cta-primary span{position:relative;z-index:1;transition:color 0.3s}
+.product-cta-primary:hover span{color:var(--white)}
+.product-cta-primary .dot-svg{width:6px;height:6px;fill:#222;position:relative;z-index:1;transition:fill 0.3s}
+.product-cta-primary:hover .dot-svg{fill:var(--gold)}
+.product-cta-secondary{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.12em;
+  background:transparent;color:var(--text);
+  padding:14px 28px;border-radius:100px;
+  border:1px solid var(--border);
+  transition:border-color 0.3s,color 0.3s,background 0.3s;
+}
+.product-cta-secondary:hover{border-color:var(--purple);color:var(--purple);background:rgba(116,72,151,0.04)}
+.product-cta-secondary svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+[data-theme="dark"] .product-top{background:var(--bg);border-bottom-color:var(--border)}
+[data-theme="dark"] .product-header-left h1{color:var(--text)}
+[data-theme="dark"] .quick-stat{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
+[data-theme="dark"] .product-cta-secondary{border-color:rgba(255,255,255,0.1);color:var(--text-light)}
+[data-theme="dark"] .product-cta-secondary:hover{border-color:var(--purple-l);color:var(--purple-l)}
+
+.section-divider{
+  height:2px;width:100%;
+  background:linear-gradient(90deg,transparent 0%,var(--purple) 30%,var(--gold) 70%,transparent 100%);
+  transform:scaleX(0);
+}
+
+.tab-bar{
+  display:flex;gap:0;border-bottom:2px solid var(--border);
+  padding:0 clamp(24px,3vw,48px);
+  max-width:1440px;margin:0 auto;
+  position:sticky;top:72px;z-index:100;background:var(--bg);
+}
+.tab-btn{
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;
+  padding:16px 28px;color:var(--text-muted);
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  cursor:pointer;transition:color 0.2s,border-color 0.2s;
+  background:none;border-top:none;border-left:none;border-right:none;
+}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--purple);border-bottom-color:var(--purple)}
+[data-theme="dark"] .tab-bar{background:var(--bg)}
+
+.tab-content{display:none;padding:clamp(40px,6vw,80px) clamp(24px,3vw,48px)}
+.tab-content.active{display:block}
+.overview-layout{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(40px,5vw,80px);
+  max-width:1440px;margin:0 auto;align-items:start;
+}
+@media(max-width:900px){.overview-layout{grid-template-columns:1fr}}
+
+.info-section{margin-bottom:48px}
+.info-section-title{
+  font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.08em;
+  color:var(--text-muted);margin-bottom:16px;
+  padding-bottom:8px;border-bottom:1px solid var(--border);
+}
+.info-text{font-size:16px;color:var(--text-light);line-height:1.8}
+
+.feature-list{display:flex;flex-direction:column;gap:10px}
+.feature-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:var(--text);line-height:1.6;
+}
+.feature-check{
+  width:18px;height:18px;flex-shrink:0;margin-top:2px;
+  color:var(--purple);
+}
+
+.app-pills{display:flex;flex-wrap:wrap;gap:8px}
+.app-pill{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  padding:6px 14px;border-radius:100px;
+  background:rgba(116,72,151,0.06);color:var(--text);
+  border:1px solid rgba(116,72,151,0.1);
+  transition:background 0.2s,border-color 0.2s;
+}
+.app-pill:hover{background:rgba(116,72,151,0.1);border-color:rgba(116,72,151,0.2)}
+[data-theme="dark"] .app-pill{background:rgba(116,72,151,0.1);border-color:rgba(116,72,151,0.15)}
+
+.deliverable-list{display:flex;flex-direction:column;gap:8px}
+.deliverable-list li{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;color:var(--text);
+}
+.del-check{width:16px;height:16px;color:var(--gold)}
+
+.layer-diagram{
+  background:var(--bg-alt);border:1px solid var(--border);border-radius:16px;
+  padding:clamp(24px,3vw,40px);
+}
+.layer-diagram-title{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:0.2em;color:var(--text-muted);margin-bottom:24px;
+}
+.layer-stack{display:flex;flex-direction:column;gap:0;align-items:center}
+.layer-box{
+  width:100%;padding:18px 20px;text-align:center;
+  background:rgba(116,72,151,0.06);border:1px solid rgba(116,72,151,0.12);
+  font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--text);
+  transition:background 0.3s;position:relative;
+}
+.layer-box:first-child{border-radius:10px 10px 0 0}
+.layer-box:last-child{border-radius:0 0 10px 10px}
+.layer-box:hover{background:rgba(116,72,151,0.1)}
+.layer-box .layer-sub{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400;
+  color:var(--text-muted);margin-top:4px;display:block;
+}
+.layer-connector{
+  width:2px;height:16px;background:rgba(116,72,151,0.15);margin:0 auto;
+}
+.layer-sides{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;
+}
+.side-block{
+  padding:14px 16px;text-align:center;border-radius:8px;
+  background:rgba(255,209,102,0.06);border:1px solid rgba(255,209,102,0.12);
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:var(--text);
+}
+.side-block .layer-sub{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:400;
+  color:var(--text-muted);margin-top:4px;display:block;
+}
+[data-theme="dark"] .layer-diagram{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
+[data-theme="dark"] .layer-box{background:rgba(116,72,151,0.08);border-color:rgba(116,72,151,0.2)}
+[data-theme="dark"] .layer-connector{background:rgba(255,255,255,0.1)}
+[data-theme="dark"] .side-block{background:rgba(255,209,102,0.06);border-color:rgba(255,209,102,0.15)}
+
+.diagram-edit-btn{
+  position:absolute;top:12px;right:12px;z-index:5;
+  width:32px;height:32px;border-radius:8px;cursor:pointer;
+  background:rgba(116,72,151,0.1);border:1px solid rgba(116,72,151,0.2);
+  display:none;align-items:center;justify-content:center;transition:background 0.2s;
+}
+.diagram-edit-btn:hover{background:rgba(116,72,151,0.2)}
+.diagram-edit-btn svg{width:14px;height:14px;stroke:var(--purple);fill:none;stroke-width:2}
+body.role-admin .diagram-edit-btn{display:flex}
+
+.vb-overlay{
+  position:fixed;inset:0;z-index:2000;background:#1a1a1e;
+  display:none;flex-direction:column;
+}
+.vb-overlay.open{display:flex}
+
+.vb-toolbar{
+  display:flex;align-items:center;gap:8px;padding:8px 16px;
+  background:#222226;border-bottom:1px solid rgba(255,255,255,0.08);
+  flex-shrink:0;
+}
+.vb-toolbar-group{display:flex;gap:4px;padding:0 8px;border-right:1px solid rgba(255,255,255,0.08)}
+.vb-toolbar-group:last-child{border-right:none;margin-left:auto}
+.vb-tool{
+  padding:6px 12px;border-radius:6px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  color:rgba(255,255,255,0.6);background:transparent;border:1px solid transparent;
+  transition:all 0.15s;display:flex;align-items:center;gap:6px;
+}
+.vb-tool:hover{color:#fff;background:rgba(255,255,255,0.06)}
+.vb-tool.active{color:var(--gold);border-color:rgba(255,209,102,0.3);background:rgba(255,209,102,0.08)}
+.vb-tool svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.vb-tool-color{
+  width:20px;height:20px;border-radius:4px;cursor:pointer;
+  border:2px solid rgba(255,255,255,0.15);transition:border-color 0.15s;
+}
+.vb-tool-color:hover,.vb-tool-color.active{border-color:#fff}
+.vb-brand{
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;
+  color:rgba(255,255,255,0.8);margin-right:12px;
+}
+
+.vb-canvas-wrap{
+  flex:1;overflow:auto;position:relative;
+  background:#2a2a2e;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:20px 20px;
+}
+.vb-canvas{
+  position:relative;width:1200px;height:800px;margin:40px auto;
+  background:#1e1e22;border-radius:12px;border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 8px 40px rgba(0,0,0,0.3);
+}
+
+.vb-block{
+  position:absolute;border-radius:6px;cursor:move;user-select:none;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  color:#fff;overflow:visible;min-width:40px;min-height:30px;
+  transition:box-shadow 0.15s;
+}
+.vb-block:hover{box-shadow:0 0 0 1px var(--gold)}
+.vb-block.selected{box-shadow:0 0 0 2px var(--gold)}
+.vb-block .vb-label{
+  pointer-events:none;padding:4px 8px;width:100%;word-break:break-word;
+  line-height:1.3;
+}
+.vb-block .vb-label[contenteditable="true"]{
+  pointer-events:auto;cursor:text;outline:none;
+  background:rgba(0,0,0,0.3);border-radius:4px;
+}
+
+.vb-resize{
+  position:absolute;width:8px;height:8px;background:var(--gold);
+  border-radius:2px;display:none;z-index:5;
+}
+.vb-block.selected .vb-resize{display:block}
+.vb-resize-se{bottom:-4px;right:-4px;cursor:se-resize}
+.vb-resize-sw{bottom:-4px;left:-4px;cursor:sw-resize}
+.vb-resize-ne{top:-4px;right:-4px;cursor:ne-resize}
+.vb-resize-nw{top:-4px;left:-4px;cursor:nw-resize}
+
+.vb-port{
+  position:absolute;width:14px;height:14px;
+  background:rgba(255,209,102,0.6);border:2px solid var(--gold);
+  border-radius:50%;display:none;z-index:10;cursor:crosshair;
+}
+.vb-block:hover .vb-port,.vb-block.selected .vb-port{display:block}
+.vb-port-t{top:-7px;left:50%;margin-left:-7px}
+.vb-port-b{bottom:-7px;left:50%;margin-left:-7px}
+.vb-port-l{left:-7px;top:50%;margin-top:-7px}
+.vb-port-r{right:-7px;top:50%;margin-top:-7px}
+
+.vb-arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible}
+.vb-arrows line{stroke:rgba(255,255,255,0.5);stroke-width:2;pointer-events:stroke;cursor:pointer}
+.vb-arrows line:hover{stroke:var(--gold);stroke-width:3}
+.vb-arrows line.arrow-selected{stroke:#dc3c3c;stroke-width:3}
+
+.vb-props{
+  position:absolute;top:8px;right:8px;width:200px;
+  background:rgba(30,30,34,0.95);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);border-radius:10px;
+  padding:14px;display:none;z-index:10;
+}
+.vb-props.open{display:block}
+.vb-props-title{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);
+  margin-bottom:10px;
+}
+.vb-props label{
+  display:block;font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:4px;
+  font-family:'JetBrains Mono',monospace;
+}
+.vb-props input,.vb-props select{
+  width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:6px;padding:6px 8px;font-size:12px;color:#fff;margin-bottom:10px;
+  font-family:'Raleway',sans-serif;
+}
+.vb-props input:focus,.vb-props select:focus{outline:none;border-color:var(--gold)}
+.vb-colors{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+
+.vb-toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2001;
+  background:var(--purple);color:#fff;padding:10px 20px;border-radius:8px;
+  font-size:12px;font-weight:600;opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.vb-toast.show{opacity:1}
+
+.quick-ref{
+  background:var(--bg-alt);border:1px solid var(--border);border-radius:12px;
+  padding:24px;margin-top:24px;
+}
+.quick-ref-title{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:0.15em;
+  color:var(--text-muted);margin-bottom:16px;
+}
+.quick-ref-row{
+  display:flex;justify-content:space-between;padding:10px 0;
+  border-bottom:1px solid var(--border);font-size:13px;
+}
+.quick-ref-row:last-child{border-bottom:none}
+.quick-ref-label{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:12px}
+.quick-ref-val{color:var(--text);font-weight:600}
+[data-theme="dark"] .quick-ref{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
+
+.doc-viewer-wrap{
+  max-width:1440px;margin:0 auto;
+  padding:24px 0;
+}
+.doc-viewer-toolbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px;background:var(--bg-alt);border:1px solid var(--border);
+  border-radius:12px 12px 0 0;
+}
+.doc-viewer-title{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--text-muted);display:flex;align-items:center;gap:8px;
+}
+.doc-viewer-title svg{width:16px;height:16px;stroke:var(--purple);fill:none;stroke-width:2}
+.doc-viewer-actions{display:flex;gap:8px}
+.doc-action-btn{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:6px 14px;border-radius:6px;
+  border:1px solid var(--border);color:var(--text-light);
+  background:transparent;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.doc-action-btn:hover{border-color:var(--purple);color:var(--purple);background:rgba(116,72,151,0.04)}
+.doc-action-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+#pdfContainer{
+  border:1px solid var(--border);border-top:none;
+  border-radius:0 0 12px 12px;
+  min-height:600px;background:var(--bg);
+  overflow:auto;padding:20px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+#pdfContainer canvas{
+  max-width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.1);border-radius:4px;
+}
+.pdf-page-nav{
+  display:flex;align-items:center;gap:16px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);
+}
+.pdf-page-nav button{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border);background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color 0.2s,background 0.2s;
+}
+.pdf-page-nav button:hover{border-color:var(--purple);background:rgba(116,72,151,0.06)}
+.pdf-page-nav button:disabled{opacity:0.3;cursor:default;pointer-events:none}
+.pdf-page-nav button svg{width:14px;height:14px;stroke:var(--text);fill:none;stroke-width:2}
+.pdf-locked-overlay{
+  text-align:center;padding:48px 24px;
+  background:rgba(116,72,151,0.04);border:1px dashed var(--purple-l);
+  border-radius:12px;max-width:480px;
+}
+.pdf-locked-overlay svg{width:40px;height:40px;stroke:var(--purple-l);fill:none;stroke-width:1.5;margin-bottom:16px}
+.pdf-locked-overlay h4{font-size:16px;margin-bottom:8px;color:var(--text)}
+.pdf-locked-overlay p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:16px}
+.pdf-locked-overlay a{
+  display:inline-block;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  background:var(--gold);color:#222;padding:10px 24px;border-radius:100px;
+  transition:transform 0.2s;
+}
+.pdf-locked-overlay a:hover{transform:scale(1.03)}
+[data-theme="dark"] .doc-viewer-toolbar{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
+[data-theme="dark"] #pdfContainer{border-color:rgba(255,255,255,0.06);background:var(--bg-alt)}
+
+.doc-loading{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:400px;color:var(--text-muted);gap:16px;
+}
+.doc-loading .spinner{
+  width:32px;height:32px;border:3px solid var(--border);
+  border-top-color:var(--purple);border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.doc-error{
+  text-align:center;padding:60px 20px;color:var(--text-muted);
+}
+.doc-error p{margin-bottom:16px;font-size:15px}
+.doc-error a{color:var(--purple);font-weight:600}
+
+.product-cta-section{
+  text-align:center;padding:clamp(64px,8vw,120px) clamp(24px,3vw,48px);
+  background:var(--bg);position:relative;
+}
+.product-cta-section h2{
+  font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;
+  color:var(--text);line-height:1.1;margin-bottom:20px;
+}
+.product-cta-section h2 .accent-word{
+  background:linear-gradient(135deg,var(--purple-l),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.product-cta-section p{
+  font-size:clamp(14px,1.2vw,17px);color:var(--text-muted);
+  max-width:520px;margin:0 auto 36px;line-height:1.6;
+}
+.final-cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  background:linear-gradient(135deg,var(--purple),var(--gold));color:var(--white);
+  padding:16px 40px;border-radius:100px;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s var(--ease-smooth),box-shadow 0.3s;
+}
+.final-cta-btn:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(116,72,151,0.3)}
+
+.site-footer{
+  position:relative;
+  background:#141417;border-top:1px solid rgba(255,255,255,0.08);
+  padding:clamp(48px,6vw,80px) clamp(24px,3vw,48px) 32px;
+}
+.site-footer::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/images/hero-semiconductor.jpg') center/cover no-repeat;
+  opacity:0.3;
+  filter:grayscale(100%);
+  pointer-events:none;
+}
+.footer-grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;
+}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7;max-width:300px;margin-top:16px}
+.footer-col h5{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  text-transform:uppercase;letter-spacing:0.2em;
+  color:rgba(255,255,255,0.7);margin-bottom:20px;
+}
+.footer-col ul{display:flex;flex-direction:column;gap:10px}
+.footer-col ul li a{font-size:14px;color:rgba(255,255,255,0.75);transition:color 0.3s}
+.footer-col ul li a:hover{color:var(--purple-l)}
+.footer-newsletter p{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:16px;line-height:1.6}
+.footer-newsletter-input{
+  display:flex;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:8px;
+}
+.footer-newsletter-input input{
+  flex:1;background:transparent;border:none;font-size:12px;color:var(--white);padding:0;
+}
+.footer-newsletter-input input::placeholder{color:rgba(255,255,255,0.5)}
+.footer-newsletter-input button{
+  color:var(--gold);font-size:18px;background:none;border:none;transition:color 0.3s;padding:0;
+}
+.footer-newsletter-input button:hover{color:var(--white)}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.footer-social a{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.3s,border-color 0.3s;
+}
+.footer-social a:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.2)}
+.footer-social a svg{width:14px;height:14px;stroke:rgba(255,255,255,0.75);fill:none;stroke-width:2}
+.footer-bottom{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.footer-bottom .copyright{font-size:14px;color:rgba(255,255,255,0.65)}
+.footer-bottom .legal{display:flex;gap:24px}
+.footer-bottom .legal a{font-size:14px;color:rgba(255,255,255,0.65);transition:color 0.3s}
+.footer-bottom .legal a:hover{color:var(--purple-l)}
+
+.theme-trans,.theme-trans>*,.theme-trans header,.theme-trans section,.theme-trans footer{
+  transition:background-color 0.3s,color 0.3s,border-color 0.3s!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
+</head>
+<body class="theme-trans"><script>document.body.classList.add('js-ready');if(location.search.indexOf('admin=true')!==-1)document.body.classList.add('role-admin');</script>
+
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<div class="menu-overlay" id="menuOverlay">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#solutions">Solutions</a>
+    <a href="index.html#products" data-mega="ip-cores">IP Cores</a>
+    <a href="index.html#coverage">Partners</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <div class="menu-overlay-footer">
+    <div class="footer-links">
+      <span>Privacy Policy</span>
+      <span>Terms of Service</span>
+    </div>
+    <span>&copy; 2026 PlurkoTech</span>
+  </div>
+</div>
+
+<div class="mega-col mega-l1" id="megaL1"></div>
+<div class="mega-col mega-l2" id="megaL2"></div>
+<div class="mega-col mega-l3" id="megaL3"></div>
+
+<header class="site-header scrolled" id="siteHeader">
+  <div style="display:flex;align-items:center;gap:16px">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-logo">
+      <a href="index.html"><img src="assets/images/logo-light.png" alt="PlurkoTech" id="headerLogo"/></a>
+    </div>
+  </div>
+  <div class="header-right">
+    <a href="index.html#contact" class="header-cta">
+      <div class="cta-fill"></div>
+      <span>Get Started</span>
+      <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+    </a>
+    <div class="header-search" id="headerSearch">
+      <div class="header-search__icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <input class="header-search__input" id="headerSearchInput" type="text" placeholder="Search IP cores..." autocomplete="off" spellcheck="false"/>
+      <div class="header-search__clear" id="headerSearchClear">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="search-popup" id="searchPopup">
+  <div class="search-popup-inner">
+    <div class="search-popup-text"><span>Search:</span> <em id="searchPopupQuery"></em></div>
+    <button class="search-popup-btn" id="searchPopupBtn">Go</button>
+    <span class="search-popup-hint">Enter</span>
+  </div>
+</div>
+
+<div id="smooth-wrapper">
+
+<section class="product-top">
+  <div class="product-top-inner">
+    <div class="breadcrumb reveal" id="breadcrumb"></div>
+    <div class="product-header">
+      <div class="product-header-left">
+        <span class="product-category" id="productCategory"></span>
+        <h1 id="productName"></h1>
+        <p class="product-desc" id="productDesc"></p>
+      </div>
+      <div class="product-header-right">
+        <div class="quick-stats" id="quickStats"></div>
+        <div class="product-ctas">
+          <a href="index.html#contact" class="product-cta-primary">
+            <div class="cta-fill"></div>
+            <span>Request Evaluation</span>
+            <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+          </a>
+          <a class="product-cta-secondary" id="downloadBriefBtn">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Brief
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="tab-overview">Overview</button>
+  <button class="tab-btn" data-tab="tab-brief">Product Brief</button>
+</div>
+
+<div class="tab-content active" id="tab-overview">
+  <div class="overview-layout">
+    <div class="overview-left">
+      <div class="info-section reveal">
+        <div class="info-section-title">Description</div>
+        <p class="info-text" id="overviewDesc"></p>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Key Features</div>
+        <ul class="feature-list" id="featureList"></ul>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Applications</div>
+        <div class="app-pills" id="appPills"></div>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Deliverables</div>
+        <ul class="deliverable-list" id="deliverableList"></ul>
+      </div>
+    </div>
+    <div class="overview-right">
+      <div class="reveal" style="position:relative">
+        <div class="layer-diagram" id="layerDiagram"></div>
+        <button class="diagram-edit-btn" id="diagramEditBtn" title="Edit diagram">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>
+      <div class="quick-ref reveal" id="quickRef"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" id="tab-brief">
+  <div class="doc-viewer-wrap">
+    <div class="doc-viewer-toolbar">
+      <div class="doc-viewer-title">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span id="docFileName"></span>
+      </div>
+      <div class="doc-viewer-actions">
+        <a class="doc-action-btn" id="docDownloadBtn" download>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+      </div>
+    </div>
+    <div id="pdfContainer">
+      <div class="doc-loading">
+        <div class="spinner"></div>
+        <span>Select the Product Brief tab to load the document.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" style="transform-origin:right"></div>
+
+<section class="product-cta-section">
+  <h2 class="reveal">Ready to Evaluate This <span class="accent-word">IP?</span></h2>
+  <p class="reveal">Get access to the full technical documentation and connect with our integration engineering team.</p>
+  <a href="index.html#contact" class="final-cta-btn reveal">Request Evaluation</a>
+</section>
+
+<div class="vb-overlay" id="vbOverlay">
+  <div class="vb-toolbar">
+    <span class="vb-brand">Diagram Builder</span>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbAddBox" title="Add box">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Box
+      </button>
+      <button class="vb-tool" id="vbAddContainer" title="Add container">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" stroke-dasharray="4 2"/></svg> Container
+      </button>
+      <button class="vb-tool" id="vbAddArrow" title="Draw arrow (click two ports)">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Arrow
+      </button>
+    </div>
+    <div class="vb-toolbar-group">
+      <div class="vb-tool-color" style="background:#744897" data-color="#744897" title="Purple"></div>
+      <div class="vb-tool-color" style="background:#FFD166" data-color="#FFD166" title="Gold"></div>
+      <div class="vb-tool-color" style="background:#3a3a3e" data-color="#3a3a3e" title="Dark"></div>
+      <div class="vb-tool-color" style="background:transparent;border-color:rgba(255,255,255,0.3)" data-color="outline" title="Outline only"></div>
+    </div>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbDuplicate" title="Duplicate selected">
+        <svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg> Clone
+      </button>
+      <button class="vb-tool" id="vbDelete" title="Delete selected">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> Delete
+      </button>
+    </div>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbSave" title="Save & apply to page">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save
+      </button>
+      <button class="vb-tool" id="vbExportJSON" title="Export as JSON">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export
+      </button>
+      <button class="vb-tool" id="vbClose" title="Close editor">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Close
+      </button>
+    </div>
+  </div>
+  <div class="vb-canvas-wrap">
+    <div class="vb-canvas" id="vbCanvas">
+      <svg class="vb-arrows" id="vbArrowsSvg" viewBox="0 0 1200 800">
+        <defs>
+          <marker id="vbArrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(255,255,255,0.5)"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</div>
+<div class="vb-toast" id="vbToast"></div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/images/logo-dark.png" alt="PlurkoTech — Silicon-Proven Semiconductor IP" style="height:32px" id="footerLogo"/>
+      <p>Empower professionals with reliable, high-performance semiconductor IP products that drive innovation across industries worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Products</h5>
+      <ul>
+        <li><a href="#">Interface IPs</a></li>
+        <li><a href="#">Memory IPs</a></li>
+        <li><a href="#">Peripheral & Crypto</a></li>
+        <li><a href="#">Analog IPs</a></li>
+        <li><a href="#">Cellular IPs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Solutions</h5>
+      <ul>
+        <li><a href="#">Verification IPs</a></li>
+        <li><a href="#">EDA Tools</a></li>
+        <li><a href="#">ASIC Turn-Key</a></li>
+        <li><a href="#">Test Services</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-newsletter">
+      <h5>Newsletter</h5>
+      <p>Stay updated with the latest in semiconductor technology.</p>
+      <div class="footer-newsletter-input">
+        <input type="email" placeholder="Email Address"/>
+        <button aria-label="Subscribe">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="rgba(255,255,255,0.4)" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copyright">&copy; 2026 Plurko Technologies. All rights reserved.</span>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">GDPR Compliance</a>
+      <a href="#">Export Control</a>
+    </div>
+  </div>
+</footer>
+</div><!-- /smooth-wrapper -->
+
+<script>
+(function(){
+  'use strict';
+  try {
+
+  var PRODUCT = {
+    name: 'PCIe Gen 5 Controller IP',
+    category: 'Interface IP',
+    subcategory: 'PCIe',
+    vendor: 'PrimeSoc',
+    description: 'High-speed, point-to-point serial interconnect with signalling rate of 32.0 GT/s per lane. Implements Transaction, Data Link, and Physical layers with PIPE interface logic for PHY communication and AXI bridge logic for high-performance system fabrics.',
+    pdfPath: 'assets/docs/pcie-gen5-brief.pdf',
+    stats: [
+      { value: '32 GT/s', label: 'Throughput' },
+      { value: 'Gen 3\u20135', label: 'Compatible' },
+      { value: 'x1\u2013x16', label: 'Lanes' },
+      { value: 'FEC', label: 'Data Integrity' }
+    ],
+    features: [
+      '32 GT/s max data throughput per lane',
+      'Root Port, Endpoint, Switch Port, Dual-Mode, Retimer configurations',
+      'FLIT and non-FLIT virtual channel topologies',
+      'Forward Error Correction (FEC) for enhanced data integrity',
+      'Lane configurations: x1, x2, x4, x8, x16',
+      'Backward compatible with PCIe 4.0 and 3.1/3.0',
+      'RAS (Reliability, Availability, Serviceability) features',
+      'Lane Orientation Polarity (LOP) for flexible board routing'
+    ],
+    applications: [
+      'Consumer Electronics', 'Defence & Aerospace', 'Virtual Reality',
+      'Augmented Reality', 'Medical', 'Biometrics',
+      'Automotive Devices', 'Sensor Devices'
+    ],
+    deliverables: [
+      'Verilog Source Code',
+      'User Guide',
+      'IP Integration Guide',
+      'Run & Synthesis Scripts',
+      'Encrypted Verification Testbench'
+    ],
+    layers: [
+      { name: 'Transaction Layer', sub: 'TLP Generation & Processing' },
+      { name: 'Data Link Layer', sub: 'DLLP, Flow Control, Retry' },
+      { name: 'Physical Layer', sub: 'Digital Packet & Encoding' }
+    ],
+    interfaces: [
+      { name: 'AXI Bridge', sub: 'System Fabric Interface' },
+      { name: 'PIPE Interface', sub: 'Gen5 PHY' }
+    ],
+    layers: [
+      { name: 'Transaction Layer', sub: 'TLP Generation & Processing' },
+      { name: 'Data Link Layer', sub: 'DLLP, Flow Control, Retry' },
+      { name: 'Physical Layer', sub: 'Digital Packet & Encoding' }
+    ],
+    interfaces: [
+      { name: 'AXI Bridge', sub: 'System Fabric Interface' },
+      { name: 'PIPE Interface', sub: 'Gen5 PHY' }
+    ],
+    quickRef: [
+      { label: 'Standard', value: 'PCIe 5.x' },
+      { label: 'Max Data Rate', value: '32 GT/s/lane' },
+      { label: 'Lane Widths', value: 'x1, x2, x4, x8, x16' },
+      { label: 'Topologies', value: 'Root Port, EP, Switch, Retimer' },
+      { label: 'Error Protection', value: 'FEC' },
+      { label: 'Compatibility', value: 'Gen 3.0 \u2013 5.0' },
+      { label: 'Availability', value: 'Production Ready' }
+    ]
+  };
+
+  var breadcrumbEl = document.getElementById('breadcrumb');
+  var crumbs = [
+    { label: 'Home', href: 'index.html' },
+    { label: 'IP Cores', href: 'index.html#products' },
+    { label: PRODUCT.category, href: 'index.html#products' },
+    { label: PRODUCT.subcategory, href: 'index.html#products' },
+    { label: PRODUCT.name.replace(PRODUCT.subcategory + ' ', '').replace(' IP', '') }
+  ];
+  breadcrumbEl.innerHTML = crumbs.map(function(c, i) {
+    var sep = i < crumbs.length - 1 ? '<span class="sep">/</span>' : '';
+    if (c.href) return '<a href="' + c.href + '">' + c.label + '</a>' + sep;
+    return '<span>' + c.label + '</span>';
+  }).join('');
+
+  document.getElementById('productCategory').textContent = PRODUCT.category + ' \u2014 ' + PRODUCT.subcategory;
+  document.getElementById('productName').textContent = PRODUCT.name;
+  document.getElementById('productDesc').textContent = PRODUCT.description;
+
+  var statsEl = document.getElementById('quickStats');
+  statsEl.innerHTML = PRODUCT.stats.map(function(s) {
+    return '<div class="quick-stat"><div class="quick-stat-val">' + s.value + '</div><div class="quick-stat-label">' + s.label + '</div></div>';
+  }).join('');
+
+  var dlBtn = document.getElementById('downloadBriefBtn');
+  dlBtn.href = PRODUCT.pdfPath;
+  dlBtn.setAttribute('download', '');
+
+  document.getElementById('overviewDesc').textContent = PRODUCT.description;
+
+  var featureListEl = document.getElementById('featureList');
+  featureListEl.innerHTML = PRODUCT.features.map(function(f) {
+    return '<li><svg class="feature-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' + f + '</li>';
+  }).join('');
+
+  var appPillsEl = document.getElementById('appPills');
+  appPillsEl.innerHTML = PRODUCT.applications.map(function(a) {
+    return '<span class="app-pill">' + a + '</span>';
+  }).join('');
+
+  var delListEl = document.getElementById('deliverableList');
+  delListEl.innerHTML = PRODUCT.deliverables.map(function(d) {
+    return '<li><svg class="del-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>' + d + '</li>';
+  }).join('');
+
+  var layerEl = document.getElementById('layerDiagram');
+
+  function renderDiagram(title, layers, interfaces) {
+    var boxes = layers.map(function(l, i) {
+      var connector = i < layers.length - 1 ? '<div class="layer-connector"></div>' : '';
+      return '<div class="layer-box">' + l.name + '<span class="layer-sub">' + l.sub + '</span></div>' + connector;
+    }).join('');
+    var sides = interfaces.map(function(iface) {
+      return '<div class="side-block">' + iface.name + '<span class="layer-sub">' + iface.sub + '</span></div>';
+    }).join('');
+    layerEl.innerHTML = '<div class="layer-diagram-title">' + title + '</div>' +
+      '<div class="layer-stack">' + boxes + '</div>' +
+      (sides ? '<div class="layer-sides">' + sides + '</div>' : '');
+  }
+
+  function renderVisualDiagram(state) {
+    if (!state || !state.blocks || !state.blocks.length) return false;
+    var b = state.blocks;
+    var a = state.arrows || [];
+    var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+    b.forEach(function(bl) {
+      if (bl.x < minX) minX = bl.x;
+      if (bl.y < minY) minY = bl.y;
+      if (bl.x + bl.w > maxX) maxX = bl.x + bl.w;
+      if (bl.y + bl.h > maxY) maxY = bl.y + bl.h;
+    });
+    var totalW = maxX - minX || 1;
+    var totalH = maxY - minY || 1;
+    var pad = 20;
+
+    var html = '<div style="position:relative;width:100%;padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
+    html += '<svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
+    html += '<defs><marker id="ah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(116,72,151,0.5)"/></marker></defs>';
+    a.forEach(function(ar) {
+      var fromB = b.find(function(bl) { return bl.id === ar.from; });
+      var toB = b.find(function(bl) { return bl.id === ar.to; });
+      if (!fromB || !toB) return;
+      function portPos(bl, p) {
+        switch(p) {
+          case 't': return { x: bl.x + bl.w/2, y: bl.y };
+          case 'b': return { x: bl.x + bl.w/2, y: bl.y + bl.h };
+          case 'l': return { x: bl.x, y: bl.y + bl.h/2 };
+          case 'r': return { x: bl.x + bl.w, y: bl.y + bl.h/2 };
+        }
+        return { x: bl.x, y: bl.y };
+      }
+      var p1 = portPos(fromB, ar.fromPort);
+      var p2 = portPos(toB, ar.toPort);
+      html += '<line x1="' + (p1.x - minX + pad) + '" y1="' + (p1.y - minY + pad) + '" x2="' + (p2.x - minX + pad) + '" y2="' + (p2.y - minY + pad) + '" stroke="rgba(116,72,151,0.4)" stroke-width="2" marker-end="url(#ah)"/>';
+    });
+    html += '</svg>';
+
+    b.forEach(function(bl) {
+      var left = ((bl.x - minX + pad) / (totalW + pad * 2) * 100);
+      var top = ((bl.y - minY + pad) / (totalH + pad * 2) * 100);
+      var w = (bl.w / (totalW + pad * 2) * 100);
+      var h = (bl.h / (totalH + pad * 2) * 100);
+      var isContainer = bl.type === 'container';
+      var isOutline = bl.color === 'outline';
+      var bg = isContainer ? 'transparent' : (isOutline ? 'rgba(116,72,151,0.06)' : bl.color);
+      var border = isContainer ? '2px dashed ' + bl.color : (isOutline ? '1px solid rgba(116,72,151,0.12)' : '1px solid rgba(255,255,255,0.1)');
+      var textColor = isContainer ? bl.color : (isOutline ? 'var(--text)' : (bl.color === '#FFD166' ? '#222' : '#fff'));
+      var z = isContainer ? 0 : 2;
+      var fontSize = bl.fontSize || 12;
+      var align = isContainer ? 'flex-start' : 'center';
+      var justify = isContainer ? 'flex-start' : 'center';
+      var extraStyle = isContainer ? 'text-transform:uppercase;letter-spacing:0.12em;font-weight:700;' : 'font-weight:600;';
+
+      html += '<div style="position:absolute;left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;' +
+        'background:' + bg + ';border:' + border + ';border-radius:6px;' +
+        'display:flex;align-items:' + align + ';justify-content:' + justify + ';' +
+        'color:' + textColor + ';font-family:Poppins,sans-serif;font-size:' + fontSize + 'px;' +
+        'text-align:center;z-index:' + z + ';padding:4px 8px;' + extraStyle + '">' +
+        bl.text + '</div>';
+    });
+    html += '</div>';
+    layerEl.innerHTML = html;
+    return true;
+  }
+
+  var VB_STORAGE_KEY = 'vb-diagram-' + (PRODUCT.name || 'default');
+  var savedVB = localStorage.getItem(VB_STORAGE_KEY);
+  if (savedVB) {
+    try {
+      if (!renderVisualDiagram(JSON.parse(savedVB))) {
+        renderDiagram(PRODUCT.subcategory + ' Protocol Stack', PRODUCT.layers, PRODUCT.interfaces);
+      }
+    } catch(e) {
+      renderDiagram(PRODUCT.subcategory + ' Protocol Stack', PRODUCT.layers, PRODUCT.interfaces);
+    }
+  } else {
+    renderDiagram(PRODUCT.subcategory + ' Protocol Stack', PRODUCT.layers, PRODUCT.interfaces);
+  }
+
+  (function() {
+    var editBtn = document.getElementById('diagramEditBtn');
+    var overlay = document.getElementById('vbOverlay');
+    var canvas = document.getElementById('vbCanvas');
+    var svgEl = document.getElementById('vbArrowsSvg');
+    var toast = document.getElementById('vbToast');
+    if (!editBtn || !overlay || !canvas) return;
+
+    var blocks = [];
+    var arrows = [];
+    var selected = null;
+    var selectedArrow = -1;
+    var idCounter = 0;
+    var activeColor = '#744897';
+    var arrowMode = false;
+    var arrowStart = null;
+    var dragState = null;
+    var SNAP = 10;
+    var STORAGE_KEY = 'vb-diagram-' + (PRODUCT.name || 'default');
+
+    function snap(v) { return Math.round(v / SNAP) * SNAP; }
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+
+    function createBlock(opts) {
+      var b = {
+        id: 'b' + (++idCounter),
+        x: opts.x || 100, y: opts.y || 100,
+        w: opts.w || 160, h: opts.h || 50,
+        text: opts.text || 'Label',
+        color: opts.color || activeColor,
+        type: opts.type || 'box',
+        fontSize: opts.fontSize || 12
+      };
+      blocks.push(b);
+      renderBlock(b);
+      selectBlock(b.id);
+      return b;
+    }
+
+    function renderBlock(b) {
+      var existing = document.getElementById(b.id);
+      if (existing) existing.remove();
+
+      var el = document.createElement('div');
+      el.className = 'vb-block' + (b.type === 'container' ? ' vb-container' : '');
+      el.id = b.id;
+      el.style.left = b.x + 'px';
+      el.style.top = b.y + 'px';
+      el.style.width = b.w + 'px';
+      el.style.height = b.h + 'px';
+      el.style.fontSize = b.fontSize + 'px';
+
+      if (b.type === 'container') {
+        el.style.background = 'transparent';
+        el.style.border = '2px dashed ' + b.color;
+        el.style.color = b.color;
+        el.style.alignItems = 'flex-start';
+        el.style.justifyContent = 'flex-start';
+        el.style.zIndex = '0';
+      } else {
+        el.style.background = b.color === 'outline' ? 'transparent' : b.color;
+        el.style.border = b.color === 'outline' ? '2px solid rgba(255,255,255,0.3)' : '1px solid rgba(255,255,255,0.1)';
+        el.style.color = (b.color === '#FFD166') ? '#222' : '#fff';
+        el.style.zIndex = '2';
+      }
+
+      var label = document.createElement('div');
+      label.className = 'vb-label';
+      label.textContent = b.text;
+      if (b.type === 'container') {
+        label.style.padding = '6px 10px';
+        label.style.fontSize = '10px';
+        label.style.textTransform = 'uppercase';
+        label.style.letterSpacing = '0.12em';
+        label.style.fontWeight = '700';
+      }
+      el.appendChild(label);
+
+      ['se','sw','ne','nw'].forEach(function(dir) {
+        var h = document.createElement('div');
+        h.className = 'vb-resize vb-resize-' + dir;
+        h.setAttribute('data-dir', dir);
+        el.appendChild(h);
+      });
+
+      ['t','b','l','r'].forEach(function(pos) {
+        var p = document.createElement('div');
+        p.className = 'vb-port vb-port-' + pos;
+        p.setAttribute('data-port', pos);
+        p.setAttribute('data-block', b.id);
+        el.appendChild(p);
+      });
+
+      canvas.appendChild(el);
+
+      el.addEventListener('mousedown', function(e) {
+        var tgt = e.target;
+        if (tgt.classList.contains('vb-port')) {
+          e.stopPropagation();
+          e.preventDefault();
+          handlePort(b.id, tgt.getAttribute('data-port'));
+          return;
+        }
+        if (tgt.classList.contains('vb-resize')) {
+          startResize(b.id, tgt.getAttribute('data-dir'), e);
+          e.stopPropagation();
+          return;
+        }
+        selectBlock(b.id);
+        startDrag(b.id, e);
+        e.stopPropagation();
+      });
+
+      el.addEventListener('dblclick', function(e) {
+        var lbl = el.querySelector('.vb-label');
+        lbl.contentEditable = 'true';
+        lbl.focus();
+        var range = document.createRange();
+        range.selectNodeContents(lbl);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        function finishEdit() {
+          lbl.contentEditable = 'false';
+          b.text = lbl.textContent.trim() || 'Label';
+          lbl.textContent = b.text;
+          lbl.removeEventListener('blur', finishEdit);
+          lbl.removeEventListener('keydown', onKey);
+        }
+        function onKey(ev) { if (ev.key === 'Enter') { ev.preventDefault(); finishEdit(); } }
+        lbl.addEventListener('blur', finishEdit);
+        lbl.addEventListener('keydown', onKey);
+        e.stopPropagation();
+      });
+    }
+
+    function selectBlock(id) {
+      if (selected) {
+        var prev = document.getElementById(selected);
+        if (prev) prev.classList.remove('selected');
+      }
+      selected = id;
+      var el = document.getElementById(id);
+      if (el) el.classList.add('selected');
+    }
+    function deselectAll() {
+      if (selected) {
+        var el = document.getElementById(selected);
+        if (el) el.classList.remove('selected');
+      }
+      selected = null;
+    }
+    canvas.addEventListener('mousedown', function(e) {
+      if (e.target === canvas || e.target === svgEl) {
+        deselectAll();
+        if (selectedArrow !== -1) { selectedArrow = -1; drawArrows(); }
+        if (arrowStart) {
+          var prevPortEl = document.querySelector('#' + arrowStart.blockId + ' .vb-port-' + arrowStart.port);
+          if (prevPortEl) prevPortEl.style.background = '';
+          arrowStart = null;
+        }
+      }
+    });
+
+    function startDrag(id, e) {
+      var b = blocks.find(function(bl) { return bl.id === id; });
+      if (!b) return;
+      var startX = e.clientX, startY = e.clientY;
+      var origX = b.x, origY = b.y;
+      dragState = { id: id };
+
+      function onMove(ev) {
+        b.x = snap(origX + (ev.clientX - startX));
+        b.y = snap(origY + (ev.clientY - startY));
+        b.x = Math.max(0, Math.min(b.x, 1200 - b.w));
+        b.y = Math.max(0, Math.min(b.y, 800 - b.h));
+        var el = document.getElementById(id);
+        el.style.left = b.x + 'px';
+        el.style.top = b.y + 'px';
+        drawArrows();
+      }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        dragState = null;
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+
+    function startResize(id, dir, e) {
+      var b = blocks.find(function(bl) { return bl.id === id; });
+      if (!b) return;
+      var startX = e.clientX, startY = e.clientY;
+      var origX = b.x, origY = b.y, origW = b.w, origH = b.h;
+
+      function onMove(ev) {
+        var dx = ev.clientX - startX, dy = ev.clientY - startY;
+        if (dir.indexOf('e') !== -1) b.w = snap(Math.max(60, origW + dx));
+        if (dir.indexOf('s') !== -1) b.h = snap(Math.max(30, origH + dy));
+        if (dir.indexOf('w') !== -1) { b.w = snap(Math.max(60, origW - dx)); b.x = snap(origX + origW - b.w); }
+        if (dir.indexOf('n') !== -1) { b.h = snap(Math.max(30, origH - dy)); b.y = snap(origY + origH - b.h); }
+        var el = document.getElementById(id);
+        el.style.left = b.x + 'px'; el.style.top = b.y + 'px';
+        el.style.width = b.w + 'px'; el.style.height = b.h + 'px';
+        drawArrows();
+      }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function getPortPos(blockId, port) {
+      var b = blocks.find(function(bl) { return bl.id === blockId; });
+      if (!b) return { x: 0, y: 0 };
+      switch (port) {
+        case 't': return { x: b.x + b.w / 2, y: b.y };
+        case 'b': return { x: b.x + b.w / 2, y: b.y + b.h };
+        case 'l': return { x: b.x, y: b.y + b.h / 2 };
+        case 'r': return { x: b.x + b.w, y: b.y + b.h / 2 };
+      }
+      return { x: b.x, y: b.y };
+    }
+
+    function handlePort(blockId, port) {
+      if (!arrowStart) {
+        arrowStart = { blockId: blockId, port: port };
+        var startPortEl = document.querySelector('#' + blockId + ' .vb-port-' + port);
+        if (startPortEl) startPortEl.style.background = 'var(--gold)';
+        showToast('Click another port to complete arrow');
+      } else {
+        var prevPortEl = document.querySelector('#' + arrowStart.blockId + ' .vb-port-' + arrowStart.port);
+        if (prevPortEl) prevPortEl.style.background = '';
+        if (arrowStart.blockId !== blockId) {
+          arrows.push({ from: arrowStart.blockId, fromPort: arrowStart.port, to: blockId, toPort: port });
+          drawArrows();
+          showToast('Arrow created');
+        }
+        arrowStart = null;
+      }
+    }
+
+    function drawArrows() {
+      var children = svgEl.childNodes;
+      for (var i = children.length - 1; i >= 0; i--) {
+        if (children[i].nodeName === 'line') svgEl.removeChild(children[i]);
+      }
+
+      arrows.forEach(function(a, idx) {
+        var fromExists = blocks.some(function(bl) { return bl.id === a.from; });
+        var toExists = blocks.some(function(bl) { return bl.id === a.to; });
+        if (!fromExists || !toExists) return;
+        var p1 = getPortPos(a.from, a.fromPort);
+        var p2 = getPortPos(a.to, a.toPort);
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', p1.x); line.setAttribute('y1', p1.y);
+        line.setAttribute('x2', p2.x); line.setAttribute('y2', p2.y);
+        line.setAttribute('marker-end', 'url(#vbArrowhead)');
+        if (idx === selectedArrow) line.classList.add('arrow-selected');
+        line.addEventListener('mousedown', function(e) {
+          e.stopPropagation();
+          deselectAll();
+          selectedArrow = idx;
+          drawArrows();
+          showToast('Arrow selected — press Delete to remove');
+        });
+        svgEl.appendChild(line);
+      });
+    }
+
+    document.getElementById('vbAddBox').addEventListener('click', function() {
+      arrowMode = false;
+      document.getElementById('vbAddArrow').classList.remove('active');
+      createBlock({ x: 100 + Math.random() * 200, y: 100 + Math.random() * 200, text: 'New Block', color: activeColor });
+    });
+
+    document.getElementById('vbAddContainer').addEventListener('click', function() {
+      arrowMode = false;
+      document.getElementById('vbAddArrow').classList.remove('active');
+      createBlock({ x: 80 + Math.random() * 100, y: 80 + Math.random() * 100, w: 300, h: 200, text: 'CONTAINER', color: activeColor, type: 'container' });
+    });
+
+    document.getElementById('vbAddArrow').addEventListener('click', function() {
+      arrowMode = !arrowMode;
+      arrowStart = null;
+      this.classList.toggle('active', arrowMode);
+      showToast(arrowMode ? 'Arrow mode: click two ports' : 'Arrow mode off');
+    });
+
+    document.querySelectorAll('.vb-tool-color').forEach(function(swatch) {
+      swatch.addEventListener('click', function() {
+        document.querySelectorAll('.vb-tool-color').forEach(function(s) { s.classList.remove('active'); });
+        this.classList.add('active');
+        activeColor = this.getAttribute('data-color');
+        if (selected) {
+          var b = blocks.find(function(bl) { return bl.id === selected; });
+          if (b) { b.color = activeColor; renderBlock(b); selectBlock(b.id); }
+        }
+      });
+    });
+
+    document.getElementById('vbDuplicate').addEventListener('click', function() {
+      if (!selected) { showToast('Select a block first'); return; }
+      var b = blocks.find(function(bl) { return bl.id === selected; });
+      if (!b) return;
+      createBlock({ x: b.x + 20, y: b.y + 20, w: b.w, h: b.h, text: b.text, color: b.color, type: b.type, fontSize: b.fontSize });
+    });
+
+    document.getElementById('vbDelete').addEventListener('click', function() {
+      if (selectedArrow !== -1) {
+        arrows.splice(selectedArrow, 1);
+        selectedArrow = -1;
+        drawArrows();
+        showToast('Arrow deleted');
+        return;
+      }
+      if (!selected) { showToast('Select a block or arrow first'); return; }
+      var el = document.getElementById(selected);
+      if (el) el.remove();
+      var delId = selected;
+      blocks = blocks.filter(function(b) { return b.id !== delId; });
+      arrows = arrows.filter(function(a) { return a.from !== delId && a.to !== delId; });
+      selected = null;
+      drawArrows();
+      showToast('Block deleted');
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!overlay.classList.contains('open')) return;
+      if (e.target.isContentEditable) return;
+      if ((e.key === 'Delete' || e.key === 'Backspace') && (selected || selectedArrow !== -1)) {
+        document.getElementById('vbDelete').click();
+      }
+      if (e.key === 'Escape') {
+        if (arrowMode) { arrowMode = false; arrowStart = null; document.getElementById('vbAddArrow').classList.remove('active'); }
+        else deselectAll();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selected) {
+        e.preventDefault();
+        document.getElementById('vbDuplicate').click();
+      }
+    });
+
+    function getState() {
+      return { blocks: blocks, arrows: arrows, idCounter: idCounter };
+    }
+    function loadState(state) {
+      canvas.querySelectorAll('.vb-block').forEach(function(el) { el.remove(); });
+      blocks = state.blocks || [];
+      arrows = state.arrows || [];
+      idCounter = state.idCounter || blocks.length;
+      blocks.forEach(function(b) { renderBlock(b); });
+      drawArrows();
+    }
+
+    document.getElementById('vbSave').addEventListener('click', function() {
+      var state = getState();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderVisualDiagram(state);
+      overlay.classList.remove('open');
+      showToast('Diagram saved & applied');
+    });
+
+    document.getElementById('vbExportJSON').addEventListener('click', function() {
+      var json = JSON.stringify(getState(), null, 2);
+      navigator.clipboard.writeText(json).then(function() {
+        showToast('JSON copied to clipboard');
+      }).catch(function() { prompt('Copy this JSON:', json); });
+    });
+
+    editBtn.addEventListener('click', function() {
+      overlay.classList.add('open');
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { loadState(JSON.parse(saved)); } catch(e) { initFromProduct(); }
+      } else {
+        initFromProduct();
+      }
+    });
+
+    document.getElementById('vbClose').addEventListener('click', function() {
+      overlay.classList.remove('open');
+    });
+
+    function initFromProduct() {
+      canvas.querySelectorAll('.vb-block').forEach(function(el) { el.remove(); });
+      blocks = []; arrows = []; idCounter = 0;
+      var startY = 60;
+      var centerX = 440;
+
+      createBlock({ x: centerX, y: startY, w: 320, h: 36, text: PRODUCT.subcategory + ' Protocol Stack', color: '#3a3a3e', type: 'box', fontSize: 11 });
+
+      PRODUCT.layers.forEach(function(l, i) {
+        var ly = createBlock({ x: centerX, y: startY + 60 + i * 80, w: 320, h: 50, text: l.name, color: '#744897' });
+        if (i > 0) {
+          arrows.push({ from: blocks[blocks.length - 2].id, fromPort: 'b', to: ly.id, toPort: 't' });
+        }
+      });
+
+      PRODUCT.interfaces.forEach(function(iface, i) {
+        createBlock({ x: centerX + i * 170 - (PRODUCT.interfaces.length > 1 ? 85 : 0), y: startY + 60 + PRODUCT.layers.length * 80 + 20, w: 150, h: 50, text: iface.name, color: '#FFD166' });
+      });
+
+      drawArrows();
+      deselectAll();
+    }
+  })();
+
+  var qrEl = document.getElementById('quickRef');
+  var qrRows = PRODUCT.quickRef.map(function(r) {
+    return '<div class="quick-ref-row"><span class="quick-ref-label">' + r.label + '</span><span class="quick-ref-val">' + r.value + '</span></div>';
+  }).join('');
+  qrEl.innerHTML = '<div class="quick-ref-title">Quick Reference</div>' + qrRows;
+
+  var docFileName = PRODUCT.pdfPath.split('/').pop();
+  document.getElementById('docFileName').textContent = docFileName;
+  var docDlBtn = document.getElementById('docDownloadBtn');
+  docDlBtn.href = PRODUCT.pdfPath;
+
+  document.title = PRODUCT.name + ' \u2014 PlurkoTech';
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'tab-brief' && !window._pdfLoaded) {
+        window._pdfLoaded = true;
+        loadPdf();
+      }
+    });
+  });
+
+  var PDF_ACCESS = {
+    role: 'admin',           // 'guest' | 'user' | 'customer' | 'admin'
+    maxPages: { guest: 2, user: 5, customer: Infinity, admin: Infinity },
+    allowDownload: { guest: false, user: false, customer: true, admin: true },
+    allowPrint: { guest: false, user: false, customer: true, admin: true }
+  };
+
+  function loadPdf() {
+    var container = document.getElementById('pdfContainer');
+    container.innerHTML = '<div class="doc-loading"><div class="spinner"></div><span>Loading product brief...</span></div>';
+
+    var role = PDF_ACCESS.role;
+    var maxPages = PDF_ACCESS.maxPages[role] || 2;
+    var canDl = PDF_ACCESS.allowDownload[role] || false;
+
+    if (!canDl) {
+      var dlBtn = document.getElementById('docDownloadBtn');
+      if (dlBtn) dlBtn.style.display = 'none';
+    }
+
+    if (window.location.protocol === 'file:') {
+      container.innerHTML = '<iframe src="' + PRODUCT.pdfPath + '#toolbar=1&navpanes=0" style="width:100%;min-height:800px;border:none;border-radius:4px"></iframe>';
+      return;
+    }
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    pdfjsLib.getDocument(PRODUCT.pdfPath).promise.then(function(pdf) {
+      var totalPages = pdf.numPages;
+      var accessible = Math.min(maxPages, totalPages);
+      var currentPage = 1;
+      var rendering = false;
+
+      container.innerHTML = '';
+
+      var nav = document.createElement('div');
+      nav.className = 'pdf-page-nav';
+      var pageLabel = accessible < totalPages
+        ? 'Page 1 / ' + accessible + ' (of ' + totalPages + ')'
+        : 'Page 1 / ' + totalPages;
+      nav.innerHTML =
+        '<button id="pdfPrev" disabled><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>' +
+        '<span id="pdfPageInfo">' + pageLabel + '</span>' +
+        '<button id="pdfNext"' + (accessible <= 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>';
+      container.appendChild(nav);
+
+      var canvas = document.createElement('canvas');
+      canvas.id = 'pdfCanvas';
+      canvas.style.cssText = 'user-select:none;-webkit-user-select:none;';
+      canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      container.appendChild(canvas);
+      var ctx = canvas.getContext('2d');
+
+      if (accessible < totalPages) {
+        var locked = document.createElement('div');
+        locked.className = 'pdf-locked-overlay';
+        locked.id = 'pdfLocked';
+        locked.style.display = 'none';
+        locked.innerHTML =
+          '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
+          '<h4>Premium Content</h4>' +
+          '<p>Preview: ' + accessible + ' of ' + totalPages + ' pages. Upgrade for full access.</p>' +
+          '<a href="index.html#contact">Request Full Access</a>';
+        container.appendChild(locked);
+      }
+
+      function renderPage(num) {
+        if (rendering) return;
+        rendering = true;
+
+        var lockedEl = document.getElementById('pdfLocked');
+
+        if (num > accessible) {
+          canvas.style.display = 'none';
+          if (lockedEl) lockedEl.style.display = 'block';
+          rendering = false;
+          return;
+        }
+
+        canvas.style.display = 'block';
+        if (lockedEl) lockedEl.style.display = 'none';
+
+        pdf.getPage(num).then(function(page) {
+          var containerW = container.clientWidth - 40;
+          var baseViewport = page.getViewport({ scale: 1 });
+          var scale = Math.min(containerW / baseViewport.width, 2.5);
+          var viewport = page.getViewport({ scale: scale });
+
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function() {
+            currentPage = num;
+            var info = accessible < totalPages
+              ? 'Page ' + num + ' / ' + accessible + ' (of ' + totalPages + ')'
+              : 'Page ' + num + ' / ' + totalPages;
+            document.getElementById('pdfPageInfo').textContent = info;
+            document.getElementById('pdfPrev').disabled = (num <= 1);
+            document.getElementById('pdfNext').disabled = (num >= accessible);
+            rendering = false;
+          });
+        });
+      }
+
+      document.getElementById('pdfPrev').addEventListener('click', function() {
+        if (currentPage > 1) renderPage(currentPage - 1);
+      });
+      document.getElementById('pdfNext').addEventListener('click', function() {
+        if (currentPage < accessible) renderPage(currentPage + 1);
+      });
+
+      document.addEventListener('keydown', function(e) {
+        var brief = document.getElementById('tab-brief');
+        if (!brief || !brief.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft' && currentPage > 1) renderPage(currentPage - 1);
+        if (e.key === 'ArrowRight' && currentPage < accessible) renderPage(currentPage + 1);
+      });
+
+      renderPage(1);
+
+    }).catch(function(err) {
+      container.innerHTML = '<iframe src="' + PRODUCT.pdfPath + '#toolbar=1&navpanes=0" style="width:100%;min-height:800px;border:none;border-radius:4px"></iframe>';
+    });
+  }
+
+  var isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  var storedThemeEarly = localStorage.getItem('plurko-theme');
+  if (storedThemeEarly) {
+    document.documentElement.setAttribute('data-theme', storedThemeEarly);
+  }
+
+  var header = document.getElementById('siteHeader');
+  var headerLogo = document.getElementById('headerLogo');
+
+  function updateHeader() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    header.classList.add('scrolled');
+    if (headerLogo) headerLogo.src = isDark ? 'assets/images/logo-dark.png' : 'assets/images/logo-light.png';
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+
+  var hamburger = document.getElementById('hamburgerBtn');
+  var menuOverlay = document.getElementById('menuOverlay');
+  var menuBackdrop = document.getElementById('menuBackdrop');
+  var smoothWrapper = document.getElementById('smooth-wrapper');
+  var menuOpen = false;
+
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    hamburger.classList.toggle('active', menuOpen);
+    menuOverlay.classList.toggle('open', menuOpen);
+    menuBackdrop.classList.toggle('visible', menuOpen);
+    header.classList.toggle('menu-open', menuOpen);
+    if (smoothWrapper) smoothWrapper.classList.toggle('pushed', menuOpen);
+    if (menuOpen) menuOverlay.querySelector('a').focus();
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  menuBackdrop.addEventListener('click', function() { if (menuOpen) toggleMenu(); });
+  menuOverlay.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { if (menuOpen) toggleMenu(); });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && menuOpen) toggleMenu();
+  });
+
+  (function() {
+    var PRODUCT_TREE = {
+      "High speed interface IP Core": {
+        "PCIe": ["PCIe Gen 5 Controller","PCIe Gen 4 Controller","PCIe Gen 3 Controller","PCIe Gen 2 Controller","PCIe Gen 5 PHY","PCIe Gen 4 PHY","PCIe Gen 3 PHY","PCIe Gen 2 PHY","PCIe Gen 5 Switch"],
+        "USB": ["USB4 Host Controller","USB 3.2 Controller","USB 2.0 OTG Controller","USB 2.0 PHY","USB 3.2 PHY","USB Type-C Controller","USB PD Controller"],
+        "Ethernet": ["10G Ethernet MAC","25G Ethernet MAC","100G Ethernet MAC","10G Ethernet PHY","25G Ethernet PHY","1G Ethernet MAC","1G SGMII PHY","TSN Ethernet Switch"],
+        "MIPI": ["MIPI D-PHY","MIPI C-PHY","MIPI CSI-2 Controller","MIPI DSI-2 Controller","MIPI M-PHY","MIPI UniPro"],
+        "SerDes": ["28G LR SerDes","56G PAM4 SerDes","112G PAM4 SerDes","16G SR SerDes"],
+        "CXL": ["CXL 2.0 Controller","CXL 3.0 Controller","CXL 2.0 PHY"],
+        "UCIe": ["UCIe 1.1 Controller","UCIe 1.1 PHY"],
+        "Die-to-Die": ["BoW Die-to-Die Interface","HBI 2.0 Die-to-Die"]
+      },
+      "Memory IP Core": {
+        "DDR": ["DDR5 Controller","DDR4 Controller","DDR5 PHY","DDR4 PHY","LPDDR5 Controller","LPDDR5 PHY","LPDDR4X Controller","LPDDR4X PHY"],
+        "HBM": ["HBM3 Controller","HBM3 PHY","HBM2E Controller","HBM2E PHY"],
+        "GDDR": ["GDDR6 Controller","GDDR6 PHY","GDDR7 Controller"],
+        "Flash / Storage": ["eMMC 5.1 Controller","UFS 4.0 Controller","NVMe Controller","ONFI Flash Controller","SD/SDIO Controller"],
+        "SRAM / ROM": ["High-Density SRAM Compiler","Ultra-Low-Power SRAM","ROM Compiler","Register File Compiler","Multi-Port SRAM"]
+      },
+      "Peripheral and Cryptographic IP Core": {
+        "Security": ["AES-128/256 Engine","SHA-2/SHA-3 Engine","RSA/ECC Public Key Accelerator","TRNG (True Random Number Generator)","Inline AES-XTS for Storage","MACsec Engine","IPsec Engine","Crypto Coprocessor"],
+        "AMBA / Bus": ["AXI4 Interconnect","AHB-Lite Bridge","APB Bridge","AXI-to-AHB Bridge","NOC (Network on Chip)"],
+        "Peripheral": ["I2C Controller","SPI Controller","UART Controller","I3C Controller","CAN-FD Controller","GPIO Controller","Timer / Watchdog","DMA Controller","Interrupt Controller"],
+        "Display": ["HDMI 2.1 TX Controller","HDMI 2.1 RX Controller","DisplayPort 2.0 TX","DisplayPort 2.0 RX","LVDS TX/RX","eDP 1.4 Controller"]
+      },
+      "Analog IP Core": {
+        "ADC/DAC": ["12-bit 8 GSPS ADC","14-bit 600 MSPS ADC","12-bit 200 MSPS ADC","10-bit 2.5 GSPS ADC","16-bit 5 MSPS DAC","12-bit 1.6 GSPS DAC","14-bit 8 GSPS DAC","6-bit 1 GSPS ADC","12-bit 4 GSPS IQ ADC","7-bit 64 GSPS ADC"],
+        "PLL": ["High Performance PLL 3.5GHz","Low Jitter 250 MHz PLL","200-500 MHz PLL","GNSS ADPLL L1","GNSS ADPLL L5"],
+        "AFE": ["8-Ch 2.4 GSPS AFE","16 ADC + 18 DAC Integrated AFE","14-bit Swift ADC + PGA AFE","8-Ch 10-bit 2.5 GS/s AFE"],
+        "LDO": ["LDO 1.1V 30mA","LDO 1.8V 300mA","LDO Capless 25mA","LDO 5V-3.3V Input"],
+        "PVT / Sensor": ["Temperature Voltage Monitor","PVT Monitor with Interrupt","Latch-Up Protection Module"],
+        "Oscillator": ["16 MHz RC Oscillator","32.768 kHz RC Oscillator","16 MHz Temp-Stable Oscillator"]
+      },
+      "Verification IP Cores": ["CAN VIP","LIN VIP","SPI VIP","UART VIP","A-PHY VIP","UCIe VIP","USB4 VIP","GDDR6 UVM VIP","CPRI VIP","JESD204B VIP","MIPI I3C UVM VIP","AXI VIP","AHB Lite VIP","LPC Controller VIP"],
+      "EDA Tools": ["SoC Generator","Chip Agent — Agentic AI for Chip Design"]
+    };
+
+    var l1 = document.getElementById('megaL1');
+    var l2 = document.getElementById('megaL2');
+    var l3 = document.getElementById('megaL3');
+    var ipCoresLink = document.querySelector('.menu-overlay nav a[data-mega="ip-cores"]');
+    if (!l1 || !ipCoresLink) return;
+
+    var megaActive = false;
+    var hideTimeout = null;
+    var activeL1Key = null;
+    var activeL2Key = null;
+    var l1Built = false;
+
+    var CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>';
+
+    function shortLabel(cat) {
+      return cat
+        .replace(/ IP Cores?$/i, '')
+        .replace(/^High speed interface$/i, 'Interface')
+        .replace(/^Peripheral and Cryptographic$/i, 'Peripheral & Crypto');
+    }
+
+    function countLeaves(obj) {
+      if (Array.isArray(obj)) return obj.length;
+      var n = 0;
+      Object.keys(obj).forEach(function(k) { n += countLeaves(obj[k]); });
+      return n;
+    }
+
+    function ensureL1() {
+      if (l1Built) return;
+      l1Built = true;
+      var head = document.createElement('div');
+      head.className = 'mega-col-head';
+      head.textContent = 'IP Cores';
+      l1.appendChild(head);
+
+      Object.keys(PRODUCT_TREE).forEach(function(cat) {
+        var row = document.createElement('div');
+        row.className = 'mega-row';
+        row.setAttribute('data-key', cat);
+        var n = countLeaves(PRODUCT_TREE[cat]);
+        row.innerHTML = '<span>' + shortLabel(cat) + '<span class="mega-count">' + n + '</span></span>' + CHEVRON;
+        row.addEventListener('mouseenter', function() { selectL1(cat); });
+        l1.appendChild(row);
+      });
+    }
+
+    function selectL1(cat) {
+      if (activeL1Key === cat) return;
+      activeL1Key = cat;
+      activeL2Key = null;
+      l1.querySelectorAll('.mega-row').forEach(function(r) {
+        r.classList.toggle('active', r.getAttribute('data-key') === cat);
+      });
+      l3.classList.remove('open');
+      l2.innerHTML = '';
+      var head = document.createElement('div');
+      head.className = 'mega-col-head';
+      head.textContent = shortLabel(cat);
+      l2.appendChild(head);
+
+      var data = PRODUCT_TREE[cat];
+      if (Array.isArray(data)) {
+        data.forEach(function(product) {
+          var row = document.createElement('a');
+          row.className = 'mega-row';
+          row.href = 'product-pcie-gen5.html';
+          row.innerHTML = '<span>' + product + '</span>';
+          l2.appendChild(row);
+        });
+      } else {
+        Object.keys(data).forEach(function(sub) {
+          var row = document.createElement('div');
+          row.className = 'mega-row';
+          row.setAttribute('data-key', sub);
+          var count = data[sub].length;
+          row.innerHTML = '<span>' + sub + '<span class="mega-count">' + count + '</span></span>' + CHEVRON;
+          row.addEventListener('mouseenter', function() { selectL2(cat, sub); });
+          l2.appendChild(row);
+        });
+      }
+      l2.classList.add('open');
+    }
+
+    function selectL2(cat, sub) {
+      if (activeL2Key === sub) return;
+      activeL2Key = sub;
+      l2.querySelectorAll('.mega-row').forEach(function(r) {
+        r.classList.toggle('active', r.getAttribute('data-key') === sub);
+      });
+      l3.innerHTML = '';
+      var head = document.createElement('div');
+      head.className = 'mega-col-head';
+      head.textContent = sub;
+      l3.appendChild(head);
+
+      PRODUCT_TREE[cat][sub].forEach(function(product) {
+        var row = document.createElement('a');
+        row.className = 'mega-row';
+        row.href = 'product-pcie-gen5.html';
+        row.innerHTML = '<span>' + product + '</span>';
+        l3.appendChild(row);
+      });
+      l3.classList.add('open');
+    }
+
+    function showMega() {
+      clearTimeout(hideTimeout);
+      if (megaActive) return;
+      megaActive = true;
+      activeL1Key = null;
+      activeL2Key = null;
+      ensureL1();
+      l1.querySelectorAll('.mega-row').forEach(function(r) { r.classList.remove('active'); });
+      l2.classList.remove('open');
+      l3.classList.remove('open');
+      l1.classList.add('open');
+    }
+
+    function hideMega() {
+      hideTimeout = setTimeout(closeAll, 250);
+    }
+
+    function closeAll() {
+      megaActive = false;
+      activeL1Key = null;
+      activeL2Key = null;
+      l1.classList.remove('open');
+      l2.classList.remove('open');
+      l3.classList.remove('open');
+    }
+
+    function cancelHide() { clearTimeout(hideTimeout); }
+
+    ipCoresLink.addEventListener('mouseenter', showMega);
+    ipCoresLink.addEventListener('mouseleave', hideMega);
+    [l1, l2, l3].forEach(function(col) {
+      col.addEventListener('mouseenter', cancelHide);
+      col.addEventListener('mouseleave', hideMega);
+    });
+
+    ipCoresLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!megaActive) showMega(); else closeAll();
+    });
+
+    var megaObs = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.attributeName === 'class' && !menuOverlay.classList.contains('open') && megaActive) {
+          closeAll();
+        }
+      });
+    });
+    megaObs.observe(menuOverlay, { attributes: true });
+  })();
+
+  var hsWrap = document.getElementById('headerSearch');
+  var hsInput = document.getElementById('headerSearchInput');
+  var hsClear = document.getElementById('headerSearchClear');
+  var hsExpanded = false;
+
+  function hsExpand() {
+    if (hsExpanded) return;
+    hsExpanded = true;
+    hsWrap.classList.add('expanded');
+    setTimeout(function() { hsInput.focus(); }, 200);
+  }
+
+  function hsCollapse() {
+    if (!hsExpanded) return;
+    hsExpanded = false;
+    hsWrap.classList.remove('expanded', 'has-value');
+    hsInput.value = '';
+    hsInput.blur();
+  }
+
+  hsWrap.addEventListener('mouseenter', hsExpand);
+  hsWrap.querySelector('.header-search__icon').addEventListener('click', function() {
+    if (!hsExpanded) hsExpand(); else hsInput.focus();
+  });
+  hsWrap.addEventListener('mouseleave', function() {
+    if (document.activeElement !== hsInput) hsCollapse();
+  });
+  hsInput.addEventListener('blur', function() {
+    setTimeout(function() { if (!hsWrap.matches(':hover')) hsCollapse(); }, 200);
+  });
+  hsInput.addEventListener('input', function() {
+    hsWrap.classList.toggle('has-value', hsInput.value.length > 0);
+  });
+  hsClear.addEventListener('click', function(e) {
+    e.stopPropagation();
+    hsInput.value = '';
+    hsWrap.classList.remove('has-value');
+    hsInput.focus();
+  });
+  hsInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hsCollapse();
+  });
+
+  var searchPopup = document.getElementById('searchPopup');
+  var searchPopupQuery = document.getElementById('searchPopupQuery');
+  var searchPopupBtn = document.getElementById('searchPopupBtn');
+  var popupBuffer = '';
+  var popupTimer = null;
+  var mouseX = 0, mouseY = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function showPopup() {
+    searchPopupQuery.textContent = popupBuffer;
+    searchPopup.style.left = Math.min(mouseX + 16, window.innerWidth - 260) + 'px';
+    searchPopup.style.top = Math.max(mouseY - 50, 8) + 'px';
+    searchPopup.classList.add('visible');
+  }
+
+  function hidePopup() {
+    searchPopup.classList.remove('visible');
+    popupBuffer = '';
+    clearTimeout(popupTimer);
+  }
+
+  function commitSearch() {
+    if (!popupBuffer.trim()) return;
+    hsExpand();
+    hsInput.value = popupBuffer.trim();
+    hsWrap.classList.add('has-value');
+    hidePopup();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      if (hsExpanded) hsCollapse(); else hsExpand();
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      if (hsExpanded) hsCollapse();
+      hidePopup();
+      return;
+    }
+
+    if (hsExpanded) return;
+
+    var active = document.activeElement;
+    var isField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'SELECT' || active.isContentEditable);
+    if (isField) return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+    if (e.key === 'Enter' && popupBuffer) { e.preventDefault(); commitSearch(); return; }
+
+    if (e.key === 'Backspace' && popupBuffer) {
+      e.preventDefault();
+      popupBuffer = popupBuffer.slice(0, -1);
+      if (!popupBuffer) { hidePopup(); return; }
+      showPopup();
+      clearTimeout(popupTimer);
+      popupTimer = setTimeout(hidePopup, 4000);
+      return;
+    }
+
+    if (e.key.length === 1) {
+      e.preventDefault();
+      popupBuffer += e.key;
+      showPopup();
+      clearTimeout(popupTimer);
+      popupTimer = setTimeout(hidePopup, 4000);
+    }
+  });
+
+  searchPopupBtn.addEventListener('click', commitSearch);
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        if (el.classList.contains('gsap-up')) { revealObserver.unobserve(el); return; }
+        var delay = el.style.getPropertyValue('--i');
+        if (delay) el.style.transitionDelay = (parseInt(delay) * 0.1) + 's';
+        el.classList.add('visible');
+        revealObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function(el) { revealObserver.observe(el); });
+
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('.gsap-up').forEach(function(el) {
+      var staggerIndex = parseInt(getComputedStyle(el).getPropertyValue('--i')) || 0;
+      gsap.fromTo(el,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, delay: staggerIndex * 0.1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+          onComplete: function() {
+            gsap.set(el, { clearProps: 'all' });
+            el.classList.remove('gsap-up');
+          }
+        }
+      );
+    });
+
+    gsap.utils.toArray('.section-divider').forEach(function(el) {
+      gsap.fromTo(el,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.2, ease: 'power2.inOut',
+          scrollTrigger: { trigger: el, start: 'top 92%' }
+        }
+      );
+    });
+  }
+
+  var parallaxEls = document.querySelectorAll('[data-speed]');
+  if (parallaxEls.length && !isTouch) {
+    var parallaxTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!parallaxTicking) {
+        requestAnimationFrame(function() {
+          var scrollY = window.scrollY;
+          parallaxEls.forEach(function(el) {
+            var speed = parseFloat(el.getAttribute('data-speed'));
+            var yPos = -(scrollY * speed);
+            el.style.transform = 'translate3d(0,' + yPos + 'px,0)';
+          });
+          parallaxTicking = false;
+        });
+        parallaxTicking = true;
+      }
+    }, { passive: true });
+  }
+
+  var themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('plurko-theme', next);
+      if (headerLogo) {
+        var isScrolled = header.classList.contains('scrolled');
+        if (next === 'dark') {
+          headerLogo.src = 'assets/images/logo-dark.png';
+        } else {
+          headerLogo.src = isScrolled ? 'assets/images/logo-light.png' : 'assets/images/logo-dark.png';
+        }
+      }
+      var footerLogo = document.getElementById('footerLogo');
+      if (footerLogo) footerLogo.src = next === 'dark' ? 'assets/images/logo-dark.png' : 'assets/images/logo-light.png';
+    });
+  }
+
+  } catch(e) {
+    console.error('MAIN SCRIPT ERROR:', e.message, 'at line', e.stack);
+    document.body.classList.remove('js-ready');
+  }
+})();
+</script>
+</body>
+</html>
