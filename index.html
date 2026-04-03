@@ -18,18 +18,19 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
+  /* Core Palette: Carbon Black / Velvet Purple / Deep Lilac / Amethyst Smoke / Golden Pollen / White */
   --bg:#FFFFFF;
   --bg-alt:#F7F5F2;
-  --bg-dark:#1A1A1E;
-  --bg-dark-deep:#141417;
+  --bg-dark:#222222;
+  --bg-dark-deep:#1A1A1E;
   --text:#222222;
   --text-light:#666666;
   --text-muted:#999999;
   --purple:#744897;
-  --purple-l:#9B6FBF;
+  --purple-l:#987AB3;
   --purple-xl:#C09FD8;
-  --purple-d:#5A3575;
-  --purple-dark:#2D1B4E;
+  --purple-d:#4E3166;
+  --purple-dark:#4E3166;
   --gold:#FFD166;
   --gold-d:#E8B84B;
   --accent:var(--purple);
@@ -42,7 +43,7 @@
 }
 [data-theme="dark"]{
   --bg:#1A1A1E;
-  --bg-alt:#222226;
+  --bg-alt:#2A2A2E;
   --text:#E8E8E8;
   --text-light:#AAAAAA;
   --text-muted:#777777;
@@ -554,7 +555,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .hero-bg{
   position:absolute;inset:-40px;z-index:0;
 }
-.hero-bg.drifting{
+.hero-bg.drifting,.hero-slide-bg.drifting{
   animation:heroDrift 25s ease-in-out infinite alternate;
 }
 @keyframes heroDrift{
@@ -629,6 +630,173 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .hero-visual svg{width:100%;height:auto}
 @media(max-width:768px){.hero-visual{display:none}}
+
+/* Hero Carousel */
+.hero-carousel{position:relative;z-index:3;width:100%;height:100%;display:flex;align-items:flex-end;padding-bottom:clamp(60px,10vh,120px)}
+.hero-slide{position:absolute;inset:0;display:flex;align-items:flex-end;padding:0 clamp(24px,4vw,96px) clamp(60px,10vh,120px);opacity:0;pointer-events:none;transition:opacity 0.8s ease}
+.hero-slide.active{opacity:1;pointer-events:auto}
+.hero-slide-bg{position:absolute;inset:-40px;z-index:0}
+.hero-slide-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.05)}
+.hero-slide-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,30,0.85) 0%,rgba(26,26,30,0.4) 40%,rgba(0,0,0,0.3) 100%);z-index:1}
+.hero-slide-content{max-width:800px;position:relative;z-index:2}
+.hero-slide h1{font-size:clamp(2.4rem,5vw,4.5rem);font-weight:800;color:#ffffff;line-height:1;margin-bottom:20px;text-shadow:0 2px 12px rgba(0,0,0,0.8)}
+.hero-slide h1 .accent-word{color:var(--gold);-webkit-text-fill-color:var(--gold)}
+.hero-slide p{font-size:clamp(15px,1.5vw,19px);color:rgba(255,255,255,0.85);text-shadow:0 2px 8px rgba(0,0,0,0.8);line-height:1.7;max-width:560px;margin-bottom:36px}
+.hero-dots{position:absolute;bottom:clamp(20px,4vh,40px);left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:4}
+.hero-dot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);background:transparent;cursor:pointer;transition:background 0.3s,border-color 0.3s,transform 0.3s}
+.hero-dot.active{background:var(--gold);border-color:var(--gold);transform:scale(1.2)}
+.hero-dot:hover{border-color:var(--gold)}
+.hero-arrows{position:absolute;bottom:clamp(18px,4vh,38px);right:clamp(24px,4vw,96px);display:flex;gap:8px;z-index:4}
+.hero-arrow{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,0.2);backdrop-filter:blur(8px);transition:background 0.3s,border-color 0.3s}
+.hero-arrow:hover{background:var(--purple);border-color:var(--purple)}
+.hero-arrow svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+@media(max-width:768px){.hero-arrows{display:none}}
+
+/* How It Works — 4 steps */
+.howitworks-section{
+  padding:clamp(80px,12vw,180px) clamp(24px,4vw,96px);
+}
+.howitworks-header{max-width:1200px;margin:0 auto 64px}
+.howitworks-header h2{font-size:clamp(2rem,4.5vw,3.8rem);margin-bottom:16px}
+.howitworks-header p{font-size:18px;color:var(--text-light);max-width:560px;line-height:1.6}
+.howitworks-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  max-width:1200px;margin:0 auto;position:relative;
+}
+.howitworks-grid::before{
+  content:'';position:absolute;top:48px;left:12%;right:12%;
+  height:2px;background:linear-gradient(90deg,var(--purple),var(--gold),var(--purple));
+  opacity:0.2;
+}
+@media(max-width:900px){
+  .howitworks-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .howitworks-grid::before{display:none}
+}
+@media(max-width:560px){.howitworks-grid{grid-template-columns:1fr}}
+.howitworks-card{
+  background:transparent;border:none;
+  text-align:center;position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+}
+.howitworks-icon{
+  width:96px;height:96px;border-radius:50%;margin:0 auto 24px;
+  background:var(--white);box-shadow:0 8px 32px rgba(0,0,0,0.06);
+  border:4px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:transform 0.3s var(--ease-smooth);
+}
+.howitworks-icon:hover{transform:scale(1.08)}
+.howitworks-icon svg{width:32px;height:32px;stroke:var(--purple);fill:none;stroke-width:1.5}
+.howitworks-badge{
+  position:absolute;top:-4px;right:-4px;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--purple);color:var(--white);
+  font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.howitworks-card h3{font-size:20px;margin-bottom:10px}
+.howitworks-card p{font-size:14px;color:var(--text-light);line-height:1.7}
+[data-theme="dark"] .howitworks-section{background:var(--bg)}
+[data-theme="dark"] .howitworks-icon{background:var(--bg-alt);box-shadow:0 8px 32px rgba(0,0,0,0.2);border-color:var(--bg)}
+
+/* Most Popular Offerings */
+.offerings-section{
+  padding:clamp(80px,12vw,180px) clamp(24px,4vw,96px);
+  background:var(--bg-alt);
+}
+.offerings-header{max-width:1200px;margin:0 auto 64px}
+.offerings-header h2{font-size:clamp(2rem,4.5vw,3.8rem);margin-bottom:16px}
+.offerings-header p{font-size:18px;color:var(--text-light);max-width:560px;line-height:1.6}
+.offerings-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  max-width:1200px;margin:0 auto;
+}
+@media(max-width:768px){.offerings-grid{grid-template-columns:1fr}}
+.offering-card{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:16px;padding:clamp(32px,3vw,48px);
+  position:relative;overflow:hidden;
+  transition:transform 0.4s var(--ease-smooth),box-shadow 0.4s,border-color 0.4s;
+}
+.offering-card:hover{transform:translateY(-6px);border-color:rgba(116,72,151,0.2);box-shadow:0 20px 60px rgba(116,72,151,0.08)}
+.offering-card-img{
+  height:180px;border-radius:12px;overflow:hidden;margin-bottom:24px;
+  position:relative;
+}
+.offering-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s var(--ease-smooth)}
+.offering-card:hover .offering-card-img img{transform:scale(1.05)}
+.offering-card-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,var(--bg) 0%,transparent 60%);
+  pointer-events:none;
+}
+[data-theme="dark"] .offering-card-img::after{background:linear-gradient(to top,var(--bg) 0%,transparent 60%)}
+.offering-card-icon{
+  width:64px;height:64px;border-radius:16px;
+  background:rgba(116,72,151,0.1);display:flex;
+  align-items:center;justify-content:center;
+  margin-bottom:24px;transition:background 0.3s;
+}
+.offering-card:hover .offering-card-icon{background:var(--purple)}
+.offering-card-icon svg{width:28px;height:28px;stroke:var(--purple);fill:none;stroke-width:1.5;transition:stroke 0.3s}
+.offering-card:hover .offering-card-icon svg{stroke:var(--white)}
+.offering-card h3{font-size:22px;margin-bottom:12px}
+.offering-card p{font-size:14px;color:var(--text-light);line-height:1.7;margin-bottom:20px}
+.offering-card .offering-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;
+  color:var(--purple);transition:gap 0.3s;
+}
+.offering-card .offering-link:hover{gap:16px}
+.offering-card .offering-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+[data-theme="dark"] .offerings-section{background:var(--bg-alt)}
+[data-theme="dark"] .offering-card{background:var(--bg);border-color:rgba(255,255,255,0.06)}
+
+/* Why PlurkoTech */
+.why-section{
+  padding:clamp(80px,12vw,180px) clamp(24px,4vw,96px);
+  background:var(--bg-dark-deep);color:var(--white);
+  position:relative;overflow:hidden;
+}
+.why-section::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/images/7.jpg') center/cover no-repeat;
+  opacity:0.12;pointer-events:none;
+}
+.why-section>*{position:relative;z-index:1}
+.why-header{max-width:1200px;margin:0 auto 64px}
+.why-header h2{font-size:clamp(2rem,4.5vw,3.8rem);color:var(--white);margin-bottom:16px}
+.why-header p{font-size:18px;color:rgba(255,255,255,0.4);max-width:560px;line-height:1.6}
+.why-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  max-width:1200px;margin:0 auto;
+}
+.why-grid .why-card:nth-child(4),.why-grid .why-card:nth-child(5){max-width:none}
+@media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.why-grid{grid-template-columns:1fr}}
+.why-card{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+  border-radius:16px;padding:clamp(28px,3vw,40px);
+  transition:background 0.4s,border-color 0.4s,transform 0.4s var(--ease-smooth);
+}
+.why-card:hover{background:rgba(255,255,255,0.06);border-color:rgba(116,72,151,0.3);transform:translateY(-4px)}
+.why-card-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(116,72,151,0.2);display:flex;
+  align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.why-card-icon svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.why-card h3{font-size:18px;color:var(--white);margin-bottom:10px}
+.why-card p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7}
+[data-theme="light"] .why-section{background:var(--bg-alt);color:var(--text)}
+[data-theme="light"] .why-section::before{opacity:0.06}
+[data-theme="light"] .why-header h2{color:var(--text)}
+[data-theme="light"] .why-header p{color:var(--text-light)}
+[data-theme="light"] .why-card{background:var(--bg);border-color:var(--border)}
+[data-theme="light"] .why-card:hover{background:rgba(116,72,151,0.04);border-color:rgba(116,72,151,0.15)}
+[data-theme="light"] .why-card h3{color:var(--text)}
+[data-theme="light"] .why-card p{color:var(--text-light)}
 
 .problem-section{
   padding:clamp(80px,12vw,180px) clamp(24px,4vw,96px);
@@ -1188,7 +1356,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .final-cta-btn:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(116,72,151,0.3)}
 
 .site-footer{
-  background:#141417;border-top:1px solid rgba(255,255,255,0.08);
+  background:#1A1A1E;border-top:1px solid rgba(255,255,255,0.08);
   padding:clamp(48px,6vw,80px) clamp(24px,4vw,96px) 32px;
   position:relative;
 }
@@ -1338,11 +1506,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <div class="menu-overlay" id="menuOverlay">
   <nav>
-    <a href="#hero">Home</a>
-    <a href="#solutions">Solutions</a>
-    <a href="#products" data-mega="ip-cores">IP Cores</a>
-    <a href="#blog">Insights</a>
-    <a href="#contact">Contact</a>
+    <a href="index.html">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="ip-core-products.html" data-mega="ip-cores">IP Core Products</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="contact.html">Contact</a>
   </nav>
   <div class="menu-overlay-footer">
     <div class="footer-links">
@@ -1402,23 +1570,68 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 <section class="hero" id="hero">
   <canvas class="pixel-trail" id="pixelTrail"></canvas>
-  <div class="hero-bg">
-    <video id="chipVideo" autoplay muted playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:block">
-      <source src="assets/chip-assembly-web.mp4" type="video/mp4">
-    </video>
-  </div>
   <div class="hero-glow"></div>
-  <div class="hero-content">
-    <h1 class="split-word" id="heroHeadline">
-      <span>Semiconductor</span> <span>IP,</span> <span class="accent-word">Curated.</span>
-    </h1>
-    <p class="hero-sub reveal">From USB 2.0 PHY to PCIe Gen 5 controllers — access 302 production-ready IP cores from verified vendors worldwide.</p>
-    <a href="#contact" class="hero-cta reveal">
-      <div class="cta-fill"></div>
-      <span>Explore Cores</span>
-      <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-    </a>
+
+  <div class="hero-slide active" data-slide="0">
+    <div class="hero-slide-bg">
+      <img src="assets/images/1.jpg" alt="" loading="eager"/>
+    </div>
+    <div class="hero-slide-content">
+      <h1 class="split-word" id="heroHeadline"><span>Accelerate</span> <span>Your</span> <span>Chip</span> <span>Design</span> <span>with</span> <span class="accent-word">Production-Ready</span> <span>IP</span> <span>Solutions</span></h1>
+      <p class="hero-sub reveal">Access 302+ silicon-proven IP cores from verified global vendors — engineered for performance, scalability, and faster time-to-market.</p>
+      <a href="ip-core-products.html" class="hero-cta reveal">
+        <div class="cta-fill"></div>
+        <span>Explore IP Core Products</span>
+        <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+      </a>
+    </div>
   </div>
+
+  <div class="hero-slide" data-slide="1">
+    <div class="hero-slide-bg">
+      <img src="assets/images/2.jpg" alt="" loading="lazy"/>
+    </div>
+    <div class="hero-slide-content">
+      <h1><span>Reliable</span> <span>IP</span> <span>for</span> <span class="accent-word">Next-Generation</span> <span>Semiconductor</span> <span>Innovation</span></h1>
+      <p class="hero-sub">Silicon-verified interface, memory, and analog IP blocks designed for advanced nodes from 28nm to 3nm.</p>
+      <a href="solutions.html" class="hero-cta">
+        <div class="cta-fill"></div>
+        <span>View Solutions</span>
+        <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-slide" data-slide="2">
+    <div class="hero-slide-bg">
+      <img src="assets/images/3.jpg" alt="" loading="lazy"/>
+    </div>
+    <div class="hero-slide-content">
+      <h1><span>Custom</span> <span>IP</span> <span>Solutions</span> <span>Tailored</span> <span>for</span> <span>Your</span> <span class="accent-word">Application</span></h1>
+      <p class="hero-sub">From protocol adaptation to node migration — our engineering team delivers IP customized to your exact requirements.</p>
+      <a href="#contact" class="hero-cta">
+        <div class="cta-fill"></div>
+        <span>Raise an Inquiry</span>
+        <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-dots">
+    <button class="hero-dot active" data-dot="0" aria-label="Slide 1"></button>
+    <button class="hero-dot" data-dot="1" aria-label="Slide 2"></button>
+    <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
+  </div>
+
+  <div class="hero-arrows">
+    <button class="hero-arrow" id="heroPrev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="hero-arrow" id="heroNext" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
   <div class="hero-visual" data-speed="0.3">
     <svg viewBox="0 0 400 400" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1">
       <rect x="50" y="50" width="300" height="300" rx="8"/>
@@ -1437,310 +1650,144 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 <div class="section-divider" style="transform-origin:left"></div>
 
-<section class="problem-section" id="problem">
-  <div class="problem-header">
-    <div class="header-left">
-      <span class="section-tag reveal">The Challenge</span>
-      <h2 class="reveal">Redefining the standard of silicon integration.</h2>
-    </div>
-    <div class="header-right-text reveal">Current methodologies are failing the pace of innovation. We identified the critical bottlenecks in modern SoC development.</div>
-  </div>
-  <div class="problem-grid">
-    <div class="problem-card gsap-up" style="--i:0">
-      <div class="big-number">73%</div>
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4M5.6 5.6l2.85 2.85m7.1 7.1l2.85 2.85M5.6 18.4l2.85-2.85m7.1-7.1l2.85-2.85"/></svg>
-      </div>
-      <h3>Scattered Sources</h3>
-      <p>Fragmented IP catalogs lead to architectural inconsistencies and vendor fatigue across design teams.</p>
-      <div class="card-meta">
-        <span>Market Average</span>
-        <svg viewBox="0 0 24 24"><path d="M7 17l5-5 4 4 5-7"/><path d="M17 7h5v5"/></svg>
-      </div>
-    </div>
-    <div class="problem-card gsap-up" style="--i:1">
-      <div class="big-number">6mo</div>
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      </div>
-      <h3>Delayed Tape-outs</h3>
-      <p>Unforeseen integration hurdles typically push project timelines back by half a year.</p>
-      <div class="card-meta">
-        <span>Efficiency Loss</span>
-        <svg viewBox="0 0 24 24"><path d="M7 7l5 5 4-4 5 7"/><path d="M17 17h5v-5"/></svg>
-      </div>
-    </div>
-    <div class="problem-card gsap-up" style="--i:2">
-      <div class="big-number">$2M</div>
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </div>
-      <h3>Integration Risk</h3>
-      <p>Cost of silicon re-spins due to non-verified IP blocks continues to escalate.</p>
-      <div class="card-meta">
-        <span>Avg. Risk Premium</span>
-        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9h20"/></svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider" style="transform-origin:right"></div>
-
-<div class="marquee-section">
-  <div class="marquee-track" id="marqueeTrack">
-    <div class="marquee-set">
-      <a class="marquee-item" href="#contact">PCIe Gen5</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">LPDDR5 Controller</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">AES-256 Core</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">USB4 PHY</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">HBM2E Interface</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">MIPI D-PHY</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">16-bit ADC</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">Phase-Locked Loop</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">TRNG Module</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">DDR5 Memory</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">SerDes 28G</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">RISC-V CPU</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">HDMI 2.1</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">5G NR PHY</a><span class="marquee-sep">|</span>
-    </div>
-    <div class="marquee-set" aria-hidden="true">
-      <a class="marquee-item" href="#contact">PCIe Gen5</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">LPDDR5 Controller</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">AES-256 Core</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">USB4 PHY</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">HBM2E Interface</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">MIPI D-PHY</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">16-bit ADC</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">Phase-Locked Loop</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">TRNG Module</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">DDR5 Memory</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">SerDes 28G</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">RISC-V CPU</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">HDMI 2.1</a><span class="marquee-sep">|</span>
-      <a class="marquee-item" href="#contact">5G NR PHY</a><span class="marquee-sep">|</span>
-    </div>
-  </div>
-</div>
-
-<div class="section-divider" style="transform-origin:left"></div>
-
-<section class="steps-section" id="solutions">
-  <div style="max-width:1200px;margin:0 auto">
+<!-- How It Works -->
+<section class="howitworks-section" id="howitworks">
+  <div class="howitworks-header">
     <span class="section-tag reveal">How It Works</span>
-    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.8rem);margin-bottom:16px">From search to silicon</h2>
-    <p class="reveal" style="font-size:18px;color:var(--text-light);max-width:560px;margin-bottom:64px;line-height:1.6">A direct path from IP discovery to vendor engagement.</p>
-    <div class="steps-grid">
-      <div class="step-card gsap-up" style="--i:0">
-        <div class="step-icon">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <div class="step-num-badge">1</div>
-        </div>
-        <h3>Browse Catalogue</h3>
-        <p>Explore our curated collection of production-ready IP cores filtered by node and standard.</p>
+    <h2 class="reveal">From Search to Proven Solutions</h2>
+    <p class="reveal">A Simple Process to Access Semiconductor Solutions</p>
+  </div>
+  <div class="howitworks-grid">
+    <div class="howitworks-card gsap-up" style="--i:0">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div class="howitworks-badge">1</div>
       </div>
-      <div class="step-card gsap-up" style="--i:1">
-        <div class="step-icon">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-          <div class="step-num-badge">2</div>
-        </div>
-        <h3>Shortlist IPs</h3>
-        <p>Compare technical specifications and power-performance-area (PPA) benchmarks in real-time.</p>
+      <h3>Browse Catalogue</h3>
+      <p>Explore our curated collection of 302+ production-ready IP cores filtered by protocol, node, and application.</p>
+    </div>
+    <div class="howitworks-card gsap-up" style="--i:1">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M8 6v12"/></svg>
+        <div class="howitworks-badge">2</div>
       </div>
-      <div class="step-card gsap-up" style="--i:2">
-        <div class="step-icon">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-          <div class="step-num-badge">3</div>
-        </div>
-        <h3>Raise Inquiry</h3>
-        <p>Receive instant technical documentation and connect with our integration engineering team.</p>
+      <h3>Shortlist IP Cores</h3>
+      <p>Compare specifications, verify silicon-proven status, and narrow down the right IP blocks for your design.</p>
+    </div>
+    <div class="howitworks-card gsap-up" style="--i:2">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <div class="howitworks-badge">3</div>
       </div>
+      <h3>Raise Inquiry</h3>
+      <p>Submit your requirements and receive technical documentation with direct access to our engineering team.</p>
+    </div>
+    <div class="howitworks-card gsap-up" style="--i:3">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div class="howitworks-badge">4</div>
+      </div>
+      <h3>Get Desired Products &amp; Solutions</h3>
+      <p>Receive verified IP cores, licensing terms, and integration support tailored to your project timeline.</p>
     </div>
   </div>
 </section>
 
 <div class="section-divider" style="transform-origin:right"></div>
 
-<section class="efficiency-section" id="efficiency">
-  <div class="efficiency-grid">
-    <div class="efficiency-text">
-      <span class="section-tag reveal">Why PlurkoTech</span>
-      <h2 class="reveal">Built by engineers, for engineers</h2>
-      <p class="reveal">We understand the pressure of tape-out schedules and the cost of IP integration risk. Our team brings decades of hands-on semiconductor design experience.</p>
-      <ul class="check-list reveal">
-        <li>
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
-          Silicon-proven IP only — no paper designs
-        </li>
-        <li>
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
-          Direct vendor relationships across USA, Europe, Asia-Pacific
-        </li>
-        <li>
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
-          Technical pre-screening before you evaluate
-        </li>
-        <li>
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
-          Legacy interfaces to PCIe Gen 5 coverage
-        </li>
-      </ul>
-    </div>
-    <div>
-      <div class="number-cards reveal">
-        <div class="number-card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <h4>Global Reach</h4>
-          <p>Teams in India with presence in USA, China, Japan, S. Korea, Italy, Australia</p>
-        </div>
-        <div class="number-card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-          <h4>Broad Portfolio</h4>
-          <p>Interface, memory, analog, peripheral, crypto — all under one roof.</p>
-        </div>
-        <div class="number-card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-          <h4>Technical Depth</h4>
-          <p>Verification engineers, analog designers, SoC architects on staff.</p>
-        </div>
-        <div class="number-card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <h4>Proven Quality</h4>
-          <p>Every IP in our catalogue is silicon-verified and production-ready.</p>
-        </div>
+<!-- Most Popular Offerings -->
+<section class="offerings-section" id="offerings">
+  <div class="offerings-header">
+    <span class="section-tag reveal">Most Popular Offerings</span>
+    <h2 class="reveal">End-to-End Semiconductor Expertise</h2>
+    <p class="reveal">Industry-leading IP solutions spanning high-speed interfaces, memory architectures, and custom developments.</p>
+  </div>
+  <div class="offerings-grid">
+    <div class="offering-card gsap-up" style="--i:0">
+      <div class="offering-card-img">
+        <img src="assets/images/4.jpg" alt="High-Speed Interface IP Cores" loading="lazy"/>
       </div>
+      <div class="offering-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4M5.6 5.6l2.85 2.85m7.1 7.1l2.85 2.85M5.6 18.4l2.85-2.85m7.1-7.1l2.85-2.85"/></svg>
+      </div>
+      <h3>Semiconductor High-Speed Interface IP Cores</h3>
+      <p>Silicon-proven PCIe, USB, Ethernet, MIPI, and SerDes IP blocks verified for leading foundries from 28nm to 3nm. Optimized for high-bandwidth, low-latency system designs.</p>
+      <a href="ip-core-products.html" class="offering-link">Explore Portfolio <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="offering-card gsap-up" style="--i:1">
+      <div class="offering-card-img">
+        <img src="assets/images/5.jpg" alt="Memory Die Solutions" loading="lazy"/>
+      </div>
+      <div class="offering-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
+      </div>
+      <h3>Memory Die Solutions</h3>
+      <p>High-bandwidth, power-efficient memory IP including DDR5, LPDDR5, HBM3, and SRAM compilers — optimized for AI, data center, and edge computing workloads.</p>
+      <a href="solutions.html" class="offering-link">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="offering-card gsap-up" style="--i:2">
+      <div class="offering-card-img">
+        <img src="assets/images/6.jpg" alt="Custom IP Development" loading="lazy"/>
+      </div>
+      <div class="offering-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3>Custom IP Development</h3>
+      <p>Tailored IP solutions including protocol adaptation, architecture optimization, power tuning, node migration, and system-level integration readiness.</p>
+      <a href="#contact" class="offering-link">Discuss Your Needs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
   </div>
 </section>
 
 <div class="section-divider" style="transform-origin:left"></div>
 
-
-<div class="section-divider" style="transform-origin:center"></div>
-
-<section class="sustainability-section" id="capabilities">
-  <div style="max-width:1100px;margin:0 auto">
-    <span class="section-tag reveal">End-to-End Capabilities</span>
-    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.8rem)">Beyond IP licensing</h2>
-    <p class="section-sub reveal" style="font-size:18px;max-width:560px;line-height:1.6">Full-cycle engineering services to ensure your silicon tape-out succeeds on schedule.</p>
-    <div class="capabilities-grid">
-      <div class="capability-card gsap-up hover-line-reveal" style="--i:0">
-        <div class="card-code">01 // ASIC</div>
-        <h3>ASIC Turn-Key</h3>
-        <p>Full-scale design and packaging services from architecture definition to physical realization. Foundry-agnostic, node-adaptive.</p>
-        <div class="bottom-line"></div>
+<!-- Why PlurkoTech -->
+<section class="why-section" id="why">
+  <div class="why-header">
+    <span class="section-tag gold-tag reveal">Why PlurkoTech</span>
+    <h2 class="reveal">Built by Engineers, for Engineers</h2>
+    <p class="reveal">A Trusted Technology Access Point</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card gsap-up" style="--i:0">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
       </div>
-      <div class="capability-card gsap-up hover-line-reveal" style="--i:1">
-        <div class="card-code">02 // TEST</div>
-        <h3>Test &amp; Verification</h3>
-        <p>Comprehensive validation, verification, and stress-testing protocols for complex SoC designs.</p>
-        <div class="bottom-line"></div>
+      <h3>Market &amp; Competitive Insight</h3>
+      <p>Deep understanding of semiconductor IP trends, competitive landscapes, and emerging protocols to guide your design decisions.</p>
+    </div>
+    <div class="why-card gsap-up" style="--i:1">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
-      <div class="capability-card gsap-up hover-line-reveal" style="--i:2">
-        <div class="card-code">03 // MFG</div>
-        <h3>Device Manufacturing</h3>
-        <p>End-to-end production support for modules and final devices, leveraging our global foundry network.</p>
-        <div class="bottom-line"></div>
+      <h3>Aligned with Future Technologies</h3>
+      <p>Early access to next-generation IP for PCIe Gen 6, UCIe, CXL 3.0, and advanced process nodes down to 3nm.</p>
+    </div>
+    <div class="why-card gsap-up" style="--i:2">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
       </div>
-      <div class="capability-card gsap-up hover-line-reveal" style="--i:3">
-        <div class="card-code">04 // EDA</div>
-        <h3>Verification &amp; EDA</h3>
-        <p>IP verification tools, design rule checking, and electronic design automation flows built for speed.</p>
-        <div class="bottom-line"></div>
+      <h3>Flexible Engagement Model</h3>
+      <p>Whether you need a single IP license or a full SoC integration partnership, our engagement scales to your requirements.</p>
+    </div>
+    <div class="why-card gsap-up" style="--i:3">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       </div>
+      <h3>End-to-End Semiconductor Solutions</h3>
+      <p>From IP licensing and integration to ASIC turn-key, verification, and device manufacturing — all under one roof.</p>
+    </div>
+    <div class="why-card gsap-up" style="--i:4">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <h3>Global Outreach</h3>
+      <p>Teams in India with vendor relationships and presence across USA, China, Japan, South Korea, Italy, and Australia.</p>
     </div>
   </div>
 </section>
 
 <div class="section-divider" style="transform-origin:right"></div>
-
-<section class="products-section" id="products">
-  <div style="max-width:1200px;margin:0 auto">
-    <span class="section-tag reveal">IP Portfolio</span>
-    <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.8rem);margin-bottom:16px">Core categories</h2>
-    <p class="reveal" style="font-size:18px;color:var(--text-light);max-width:560px;margin-bottom:64px;line-height:1.6">From high-speed interfaces to security accelerators — every IP is silicon-verified.</p>
-    <div class="products-grid">
-      <div class="product-card gsap-up" style="--i:0">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4M5.6 5.6l2.85 2.85m7.1 7.1l2.85 2.85M5.6 18.4l2.85-2.85m7.1-7.1l2.85-2.85"/></svg>
-        </div>
-        <h3>Interface IP</h3>
-        <div class="product-tags">
-          <span class="product-tag">PCIe Gen5</span>
-          <span class="product-tag">USB4</span>
-          <span class="product-tag">Ethernet 800G</span>
-        </div>
-        <p>High-bandwidth, low-latency interface solutions verified for leading foundries and process nodes from 28nm to 3nm.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="product-card gsap-up" style="--i:1">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
-        </div>
-        <h3>Memory IP</h3>
-        <div class="product-tags">
-          <span class="product-tag">LPDDR5X</span>
-          <span class="product-tag">HBM3</span>
-          <span class="product-tag">SRAM Compiler</span>
-        </div>
-        <p>Power-optimized memory controller and PHY solutions designed for AI training and edge computing workloads.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="product-card gsap-up" style="--i:2">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <h3>Security IP</h3>
-        <div class="product-tags">
-          <span class="product-tag">Root of Trust</span>
-          <span class="product-tag">AES-256</span>
-          <span class="product-tag">Side-channel</span>
-        </div>
-        <p>Advanced cryptographic engines and secure enclave IPs that protect data at rest and in transit against sophisticated attacks.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="product-card gsap-up" style="--i:3">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Analog IP</h3>
-        <div class="product-tags">
-          <span class="product-tag">ADC / DAC</span>
-          <span class="product-tag">PLL</span>
-          <span class="product-tag">LDO</span>
-        </div>
-        <p>Precision analog blocks — ADCs, DACs, PLLs, LDOs, and AFEs — silicon-proven across automotive and industrial nodes.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="product-card gsap-up" style="--i:4">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Verification IP</h3>
-        <div class="product-tags">
-          <span class="product-tag">UVM VIP</span>
-          <span class="product-tag">Protocol VIP</span>
-          <span class="product-tag">Bus VIP</span>
-        </div>
-        <p>Complete UVM-based verification environments for PCIe, USB, CAN, AXI, MIPI, and 10+ other protocols.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="product-card gsap-up" style="--i:5">
-        <div class="product-blob">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke-width="1"/><path d="M8 21h8M12 17v4" fill="none" stroke-width="1" stroke-linecap="round"/></svg>
-        </div>
-        <h3>EDA Tools</h3>
-        <div class="product-tags">
-          <span class="product-tag">SoC Generator</span>
-          <span class="product-tag">Chip Agent AI</span>
-        </div>
-        <p>Next-gen EDA tools including automated SoC assembly and agentic AI for chip design workflows.</p>
-        <a href="product-pcie-gen5.html" class="product-link">View Specs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <div class="protocol-ticker">
   <div class="protocol-ticker-track">
@@ -1805,68 +1852,6 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 <div class="section-divider" style="transform-origin:left"></div>
 
-<section class="blog-section" id="blog">
-  <div>
-    <div class="blog-header">
-      <div>
-        <span class="section-tag reveal">Insights</span>
-        <h2 class="reveal" style="font-size:clamp(2rem,4.5vw,3.8rem)">From the engineering desk</h2>
-      </div>
-      <div class="blog-nav reveal">
-        <button id="blogPrev" aria-label="Previous article" onclick="document.getElementById('blogGrid').scrollBy({left:-400,behavior:'smooth'})">
-          <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </button>
-        <button id="blogNext" aria-label="Next article" onclick="document.getElementById('blogGrid').scrollBy({left:400,behavior:'smooth'})">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="blog-grid" id="blogGrid">
-      <div class="blog-card gsap-up" style="--i:0">
-        <div class="blog-card-img">
-          <img src="assets/images/hero-semiconductor.jpg" alt="Semiconductor architecture" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"/>
-          <div class="hover-overlay"></div>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-tag">Engineering Deep Dive</span>
-          <h3>Architecture Scalability &amp; 3nm Constraints</h3>
-          <p>A deep dive into bandwidth requirements, lane configurations, and power trade-offs for next-generation interconnects.</p>
-        </div>
-      </div>
-      <div class="blog-card gsap-up" style="--i:1">
-        <div class="blog-card-img">
-          <img src="assets/images/blog-datacenter.jpg" alt="Data center" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"/>
-          <div class="hover-overlay"></div>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-tag">Optimization</span>
-          <h3>Reducing Thermal Overhead in Mobile SoC</h3>
-          <p>Exploring TRNG, AES-256, and secure boot chains for mission-critical semiconductor applications.</p>
-        </div>
-      </div>
-      <div class="blog-card gsap-up" style="--i:2">
-        <div class="blog-card-img">
-          <img src="assets/images/blog-semiconductors.jpg" alt="Semiconductor design" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"/>
-          <div class="hover-overlay"></div>
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-tag">Future Tech</span>
-          <h3>The Future of Fabless IP &amp; Next-Gen Node Design</h3>
-          <p>Market trends, consolidation patterns, and what design teams should prepare for in the next node cycle.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider" style="transform-origin:right"></div>
-
-<section class="final-cta">
-  <h2 class="reveal">Empowering Innovation <span class="accent-word">Worldwide</span></h2>
-  <p class="reveal" style="max-width:800px;margin:0 auto 32px;font-size:17px;line-height:1.7">Ready to accelerate your silicon design?<br>Access our catalogue of 302 silicon-proven IP cores and connect directly with our engineering team.</p>
-  <a href="#contact" class="final-cta-btn reveal">Start Integration</a>
-</section>
-
 <section class="form-section" id="contact">
   <div class="form-layout">
     <div class="form-headline">
@@ -1884,19 +1869,16 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         <label class="form-label" for="org">Organization / Company</label>
       </div>
       <div class="form-group reveal">
-        <input type="tel" class="form-input" id="phone"/>
-        <label class="form-label" for="phone">Phone Number</label>
+        <input type="email" class="form-input" id="email" required/>
+        <label class="form-label" for="email">Email</label>
       </div>
       <div class="form-group reveal">
-        <select class="form-select" id="country" required>
-          <option value="" disabled selected>Select Country</option>
-          <option>Afghanistan</option><option>Argentina</option><option>Australia</option><option>Austria</option><option>Bangladesh</option><option>Belgium</option><option>Brazil</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Czech Republic</option><option>Denmark</option><option>Egypt</option><option>Finland</option><option>France</option><option>Germany</option><option>Greece</option><option>Hong Kong</option><option>Hungary</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option><option>Kenya</option><option>Malaysia</option><option>Mexico</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>Norway</option><option>Pakistan</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Singapore</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sweden</option><option>Switzerland</option><option>Taiwan</option><option>Thailand</option><option>Turkey</option><option>UAE</option><option>United Kingdom</option><option>United States</option><option>Vietnam</option>
-        </select>
-        <label class="form-label" for="country" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Country</label>
+        <input type="tel" class="form-input" id="phone"/>
+        <label class="form-label" for="phone">Phone</label>
       </div>
       <div class="form-group full reveal">
-        <select class="form-select" id="usecase">
-          <option value="" disabled selected>Select Primary Use Case</option>
+        <select class="form-select" id="ipCategory">
+          <option value="" disabled selected>Select IP Category</option>
           <option>SoC Design — Mobile</option>
           <option>SoC Design — Automotive</option>
           <option>SoC Design — Data Center</option>
@@ -1906,43 +1888,35 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
           <option>Security / Crypto Module</option>
           <option>Other</option>
         </select>
-        <label class="form-label" for="usecase" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Primary Use Case</label>
+        <label class="form-label" for="ipCategory" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">IP Category</label>
       </div>
-      <div class="form-group full reveal">
-        <input type="text" class="form-input" id="current"/>
-        <label class="form-label" for="current">Current IP Solution (if any)</label>
-      </div>
-
-      <div class="form-group full reveal">
-        <div class="toggle-group">
-          <label class="form-label" style="position:static;transform:none;margin-bottom:12px;font-size:10px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.1em">Quantity Scale</label>
-          <div class="toggle-row">
-            <div class="toggle-switch" id="unitToggle">
-              <div class="toggle-knob"></div>
-            </div>
-            <div class="toggle-labels">
-              <span id="unitLabelA" class="active-label">Units</span>
-              <span>/</span>
-              <span id="unitLabelB">Volume (1000+)</span>
-            </div>
-          </div>
-          <input type="text" class="form-input" id="quantity" style="margin-top:8px"/>
-          <label class="form-label" for="quantity" style="position:static;transform:none;font-size:10px;margin-top:4px">Estimated quantity or volume</label>
-        </div>
-      </div>
-
-      <div class="form-group full reveal">
-        <select class="form-select" id="timeline">
-          <option value="" disabled selected>Select Timeline</option>
-          <option>Immediate (within 1 month)</option>
-          <option>Q1 2026</option>
-          <option>Q2 2026</option>
-          <option>Q3 2026</option>
-          <option>Q4 2026</option>
-          <option>2027+</option>
-          <option>Evaluation / No timeline yet</option>
+      <div class="form-group reveal">
+        <select class="form-select" id="licensing">
+          <option value="" disabled selected>Select Licensing Type</option>
+          <option>White Box</option>
+          <option>Black Box</option>
         </select>
-        <label class="form-label" for="timeline" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Project Timeline</label>
+        <label class="form-label" for="licensing" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Type of Licensing</label>
+      </div>
+      <div class="form-group reveal">
+        <input type="text" class="form-input" id="projectName"/>
+        <label class="form-label" for="projectName">Project Name</label>
+      </div>
+      <div class="form-group reveal">
+        <input type="text" class="form-input" id="endApplication"/>
+        <label class="form-label" for="endApplication">End Application</label>
+      </div>
+      <div class="form-group reveal">
+        <input type="text" class="form-input" id="fabNode"/>
+        <label class="form-label" for="fabNode">Required Fab and Node</label>
+      </div>
+      <div class="form-group full reveal">
+        <input type="text" class="form-input" id="timeline"/>
+        <label class="form-label" for="timeline">Timeline</label>
+      </div>
+      <div class="form-group full reveal">
+        <textarea class="form-input" id="notes" rows="3" style="resize:vertical;min-height:60px"></textarea>
+        <label class="form-label" for="notes">Additional Notes</label>
       </div>
 
       <button type="submit" class="form-submit reveal">
@@ -2326,7 +2300,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     function navigateToProduct(name) {
       closeAll();
       if (menuOpen) toggleMenu();
-      var sec = document.getElementById('products');
+      var sec = document.getElementById('offerings');
       if (sec) sec.scrollIntoView({ behavior: 'smooth' });
       setTimeout(function() {
         var input = document.getElementById('headerSearchInput');
@@ -2544,8 +2518,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     gsap.registerPlugin(ScrollTrigger);
     var introTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    introTL.fromTo('.hero-bg', { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0);
-    introTL.to('.hero-bg video', { scale: 1, duration: 2, ease: 'power2.out' }, 0);
+    introTL.fromTo('.hero-slide.active .hero-slide-bg', { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0);
+    introTL.to('.hero-slide.active .hero-slide-bg img', { scale: 1, duration: 2, ease: 'power2.out' }, 0);
     introTL.fromTo('.hero-orb--1', { opacity: 0, scale: 0.5 }, {
       opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out'
     }, 0.3);
@@ -2578,12 +2552,18 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         y: '0%', opacity: 1, duration: 0.7, ease: 'power4.out'
       }, 0.75 + i * 0.12);
     });
-    introTL.fromTo('.hero-sub', { y: 30, opacity: 0 }, {
+    introTL.fromTo('.hero-slide.active .hero-sub', { y: 30, opacity: 0 }, {
       y: 0, opacity: 1, duration: 0.8
     }, 1.15);
-    introTL.fromTo('.hero-cta', { scale: 0.8, opacity: 0 }, {
+    introTL.fromTo('.hero-slide.active .hero-cta', { scale: 0.8, opacity: 0 }, {
       scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', clearProps: 'transform'
     }, 1.35);
+    introTL.fromTo('.hero-dots', { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.6
+    }, 1.4);
+    introTL.fromTo('.hero-arrows', { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.6
+    }, 1.4);
     introTL.fromTo('.hero-visual', { opacity: 0, scale: 0.85, rotation: -5 }, {
       opacity: 0.12, scale: 1, rotation: 0, duration: 1.2, ease: 'power2.out'
     }, 0.9);
@@ -2594,7 +2574,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       scaleX: 1, duration: 1, ease: 'power2.inOut', clearProps: 'transform'
     }, 1.6);
     introTL.call(function() {
-      document.querySelector('.hero-bg').classList.add('drifting');
+      var heroBg = document.querySelector('.hero-slide.active .hero-slide-bg');
+      if (heroBg) heroBg.classList.add('drifting');
     }, null, 2);
     introTL.call(function() {
       document.getElementById('heroHeadline').classList.add('visible');
@@ -2670,25 +2651,6 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     });
   });
 
-  var unitToggle = document.getElementById('unitToggle');
-  var unitLabelA = document.getElementById('unitLabelA');
-  var unitLabelB = document.getElementById('unitLabelB');
-  var isVolume = false;
-
-  if (unitToggle) {
-    unitToggle.addEventListener('click', function() {
-      isVolume = !isVolume;
-      unitToggle.classList.toggle('active', isVolume);
-      if (isVolume) {
-        unitLabelA.classList.remove('active-label');
-        unitLabelB.classList.add('active-label');
-      } else {
-        unitLabelA.classList.add('active-label');
-        unitLabelB.classList.remove('active-label');
-      }
-    });
-  }
-
   var isDarkTheme = function() { return document.documentElement.getAttribute('data-theme') === 'dark'; };
   document.querySelectorAll('.form-select').forEach(function(sel) {
     sel.addEventListener('focus', function() {
@@ -2709,7 +2671,6 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       form.querySelectorAll('input, select, textarea').forEach(function(el) {
         if (el.id) data[el.id] = el.value;
       });
-      data.unitMode = isVolume ? 'Volume (1000+)' : 'Units';
       console.log('PlurkoTech Inquiry Submitted:', data);
       alert('Thank you for your inquiry! Our engineering team will be in touch shortly.');
       form.reset();
@@ -3018,25 +2979,6 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     });
   }
 
-  (function() {
-    var blogGrid = document.getElementById('blogGrid');
-    var prevBtn = document.getElementById('blogPrev');
-    var nextBtn = document.getElementById('blogNext');
-    if (!blogGrid || !prevBtn || !nextBtn) return;
-
-    function updateArrows() {
-      var sl = blogGrid.scrollLeft;
-      var maxScroll = blogGrid.scrollWidth - blogGrid.clientWidth;
-      prevBtn.style.opacity = sl > 10 ? '1' : '0.25';
-      prevBtn.style.pointerEvents = sl > 10 ? 'auto' : 'none';
-      nextBtn.style.opacity = sl < maxScroll - 10 ? '1' : '0.25';
-      nextBtn.style.pointerEvents = sl < maxScroll - 10 ? 'auto' : 'none';
-    }
-    blogGrid.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
-    updateArrows();
-  })();
-
   var hasSmoother = !isTouch && smoothWrapper && smoothContent;
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
@@ -3052,6 +2994,39 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       }
     });
   });
+
+  // Hero Carousel
+  (function() {
+    var slides = document.querySelectorAll('.hero-slide');
+    var dots = document.querySelectorAll('.hero-dot');
+    var prevBtn = document.getElementById('heroPrev');
+    var nextBtn = document.getElementById('heroNext');
+    var current = 0;
+    var total = slides.length;
+    var interval;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (idx + total) % total;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAuto() { interval = setInterval(next, 6000); }
+    function stopAuto() { clearInterval(interval); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { stopAuto(); prev(); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { stopAuto(); next(); startAuto(); });
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { stopAuto(); goTo(i); startAuto(); });
+    });
+
+    startAuto();
+  })();
 
   } catch(e) {
     console.error('MAIN SCRIPT ERROR:', e.message, 'at line', e.stack);
