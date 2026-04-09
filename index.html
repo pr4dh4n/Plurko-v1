@@ -667,35 +667,51 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .howitworks-section{
   padding:clamp(56px,8vw,120px) clamp(24px,4vw,96px);
 }
-.howitworks-split{
-  display:grid;grid-template-columns:1fr 1fr;gap:48px;
-  max-width:1400px;margin:0 auto;align-items:center;
+.howitworks-header{max-width:1400px;margin:0 auto 40px;text-align:center}
+.howitworks-header h2{font-size:clamp(1.5rem,3vw,2.4rem);margin-bottom:12px}
+.howitworks-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  max-width:1400px;margin:0 auto;position:relative;
 }
-@media(max-width:768px){.howitworks-split{grid-template-columns:1fr;gap:32px}}
-.howitworks-image{
-  border-radius:16px;overflow:hidden;position:relative;
-  aspect-ratio:4/3;
+.howitworks-grid::before{
+  content:'';position:absolute;top:36px;left:12%;right:12%;
+  height:0;border-top:2px dashed rgba(116,72,151,0.2);
 }
-.howitworks-image img{width:100%;height:100%;object-fit:cover;display:block}
-.howitworks-image::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(116,72,151,0.15),transparent 60%);
-  pointer-events:none;
+.howitworks-grid::after{
+  content:'';position:absolute;top:36px;left:12%;right:12%;
+  height:0;border-top:2px dashed var(--gold);
+  clip-path:inset(0 100% 0 0);transition:clip-path 1.8s cubic-bezier(0.16,1,0.3,1);
 }
-.howitworks-steps{display:flex;flex-direction:column}
-.hiw-step{
-  display:flex;gap:20px;align-items:flex-start;
-  padding:20px 0;border-bottom:1px solid var(--border);
-  transition:background 0.3s;
+.howitworks-grid.line-revealed::after{clip-path:inset(0 0% 0 0)}
+@media(max-width:900px){
+  .howitworks-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .howitworks-grid::before,.howitworks-grid::after{display:none}
 }
-.hiw-step:last-child{border-bottom:none}
-.hiw-num{
-  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
-  color:var(--purple);min-width:32px;padding-top:2px;
+@media(max-width:560px){.howitworks-grid{grid-template-columns:1fr}}
+.howitworks-card{
+  background:transparent;border:none;
+  text-align:center;position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
 }
-[data-theme="dark"] .hiw-num{color:var(--gold)}
-.hiw-body h3{font-size:15px;margin-bottom:4px}
-.hiw-body p{font-size:13px;color:var(--text-light);line-height:1.55}
+.howitworks-icon{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 18px;
+  background:var(--white);box-shadow:0 8px 32px rgba(0,0,0,0.06);
+  border:4px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:transform 0.3s var(--ease-smooth);
+}
+.howitworks-icon:hover{transform:translateY(-4px)}
+.howitworks-icon svg{width:26px;height:26px;stroke:var(--purple);fill:none;stroke-width:1.5}
+.howitworks-badge{
+  position:absolute;top:-2px;right:-2px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--purple);color:var(--white);
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.howitworks-card h3{font-size:15px;margin-bottom:6px}
+.howitworks-card p{font-size:12px;color:var(--text-light);line-height:1.55}
+[data-theme="dark"] .howitworks-icon{background:var(--bg-alt);box-shadow:0 8px 32px rgba(0,0,0,0.2);border-color:var(--bg)}
 [data-theme="dark"] .howitworks-section{background:var(--bg)}
 [data-theme="dark"] .howitworks-icon{background:var(--bg-alt);box-shadow:0 8px 32px rgba(0,0,0,0.2);border-color:var(--bg)}
 
@@ -1372,6 +1388,67 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .form-submit .dot-svg{width:8px;height:8px;fill:#222222;transition:fill 0.3s}
 .form-submit:hover .dot-svg{fill:#222222}
 
+/* Multi-step form */
+.form-stepper-wrap{position:relative}
+.step-indicator{margin-bottom:32px}
+.step-indicator-bar{height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-bottom:12px}
+.step-indicator-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:2px;width:33.3%;transition:width 0.5s var(--ease-out-expo)}
+.step-indicator-labels{display:flex;justify-content:space-between}
+.step-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.3);transition:color 0.3s}
+.step-label.active{color:var(--gold)}
+.step-label.done{color:rgba(255,255,255,0.55)}
+[data-theme="light"] .step-indicator-bar{background:rgba(34,34,34,0.1)}
+[data-theme="light"] .step-label{color:var(--text-muted)}
+[data-theme="light"] .step-label.active{color:var(--purple)}
+[data-theme="light"] .step-label.done{color:var(--text-light)}
+
+.form-step{display:none;animation:stepFadeIn 0.4s ease-out}
+.form-step.active{display:block}
+@keyframes stepFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.form-step-actions{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:16px}
+.form-next-btn,.form-back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+  padding:12px 24px;border-radius:100px;border:none;cursor:pointer;
+  transition:background 0.3s,transform 0.2s,box-shadow 0.3s;
+}
+.form-next-btn{background:var(--gold);color:#222}
+.form-next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,209,102,0.3)}
+.form-back-btn{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)}
+.form-back-btn:hover{background:rgba(255,255,255,0.12);color:var(--white)}
+[data-theme="light"] .form-back-btn{background:rgba(34,34,34,0.06);color:var(--text-light)}
+[data-theme="light"] .form-back-btn:hover{background:rgba(34,34,34,0.1);color:var(--text)}
+
+/* Licensing cards */
+.licensing-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+@media(max-width:560px){.licensing-cards{grid-template-columns:1fr}}
+.license-card{cursor:pointer;display:block}
+.license-card-inner{
+  border:1px solid rgba(255,255,255,0.1);border-radius:12px;
+  padding:20px;display:flex;gap:16px;align-items:flex-start;
+  transition:border-color 0.3s,background 0.3s,transform 0.3s var(--ease-smooth);
+}
+.license-card-inner:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.03)}
+.license-card input:checked ~ .license-card-inner{
+  border-color:var(--gold);background:rgba(255,209,102,0.06);
+}
+.license-card-icon{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:rgba(116,72,151,0.15);display:flex;align-items:center;justify-content:center;
+}
+.license-card-icon svg{width:20px;height:20px;stroke:var(--purple-l);fill:none;stroke-width:1.5}
+.license-card input:checked ~ .license-card-inner .license-card-icon{background:var(--purple)}
+.license-card input:checked ~ .license-card-inner .license-card-icon svg{stroke:var(--white)}
+.license-card-text strong{display:block;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px}
+.license-card-text span{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5}
+[data-theme="light"] .license-card-inner{border-color:rgba(34,34,34,0.12)}
+[data-theme="light"] .license-card-inner:hover{border-color:rgba(116,72,151,0.2);background:rgba(116,72,151,0.03)}
+[data-theme="light"] .license-card input:checked ~ .license-card-inner{border-color:var(--purple);background:rgba(116,72,151,0.06)}
+[data-theme="light"] .license-card-text strong{color:var(--text)}
+[data-theme="light"] .license-card-text span{color:var(--text-light)}
+
 /* Cinematic full-bleed banner */
 .cine-banner{
   position:relative;min-height:420px;display:flex;align-items:center;
@@ -1761,41 +1838,42 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 <!-- How It Works -->
 <section class="howitworks-section" id="howitworks">
-  <div class="howitworks-split">
-    <div class="howitworks-image gsap-up">
-      <img src="assets/images/how-it-works.jpg" alt="Semiconductor IP workflow" loading="lazy"/>
+  <div class="howitworks-header">
+    <span class="section-tag reveal">How It Works</span>
+    <h2 class="reveal">From Search to Silicon</h2>
+  </div>
+  <div class="howitworks-grid">
+    <div class="howitworks-card gsap-up" style="--i:0">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div class="howitworks-badge">1</div>
+      </div>
+      <h3>Browse Catalogue</h3>
+      <p>Explore 302+ production-ready IP cores filtered by protocol, node, and application.</p>
     </div>
-    <div class="howitworks-steps">
-      <span class="section-tag reveal">How It Works</span>
-      <h2 class="reveal" style="font-size:clamp(1.5rem,3vw,2.4rem);margin-bottom:32px">From Search to Silicon</h2>
-      <div class="hiw-step gsap-up" style="--i:0">
-        <div class="hiw-num">01</div>
-        <div class="hiw-body">
-          <h3>Browse Catalogue</h3>
-          <p>Explore 302+ production-ready IP cores filtered by protocol, node, and application.</p>
-        </div>
+    <div class="howitworks-card gsap-up" style="--i:1">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <div class="howitworks-badge">2</div>
       </div>
-      <div class="hiw-step gsap-up" style="--i:1">
-        <div class="hiw-num">02</div>
-        <div class="hiw-body">
-          <h3>Shortlist &amp; Compare</h3>
-          <p>Compare specifications, verify silicon-proven status, and narrow down the right IP blocks.</p>
-        </div>
+      <h3>Shortlist &amp; Compare</h3>
+      <p>Compare specifications, verify silicon-proven status, and narrow down the right IP blocks.</p>
+    </div>
+    <div class="howitworks-card gsap-up" style="--i:2">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <div class="howitworks-badge">3</div>
       </div>
-      <div class="hiw-step gsap-up" style="--i:2">
-        <div class="hiw-num">03</div>
-        <div class="hiw-body">
-          <h3>Raise Inquiry</h3>
-          <p>Submit requirements and receive technical documentation with direct engineering access.</p>
-        </div>
+      <h3>Raise Inquiry</h3>
+      <p>Submit requirements and receive documentation with direct engineering access.</p>
+    </div>
+    <div class="howitworks-card gsap-up" style="--i:3">
+      <div class="howitworks-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12.89 1.45l8 4A2 2 0 0122 7.24v9.53a2 2 0 01-1.11 1.79l-8 4a2 2 0 01-1.79 0l-8-4A2 2 0 012 16.76V7.24a2 2 0 011.11-1.79l8-4a2 2 0 011.78 0z"/><polyline points="2.32 6.16 12 11 21.68 6.16"/><line x1="12" y1="22.76" x2="12" y2="11"/></svg>
+        <div class="howitworks-badge">4</div>
       </div>
-      <div class="hiw-step gsap-up" style="--i:3">
-        <div class="hiw-num">04</div>
-        <div class="hiw-body">
-          <h3>Receive IP &amp; Support</h3>
-          <p>Get verified IP cores, licensing terms, and integration support for your timeline.</p>
-        </div>
-      </div>
+      <h3>Receive IP &amp; Support</h3>
+      <p>Get verified IP cores, licensing terms, and integration support for your timeline.</p>
     </div>
   </div>
 </section>
@@ -2083,72 +2161,178 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <h2 class="reveal">Ready to<br/>Innovate?</h2>
       <p class="reveal">Our technical team is ready to discuss your custom architecture requirements. Reach out to start a collaborative partnership.</p>
     </div>
-    <form id="inquiryForm" class="form-grid" autocomplete="off">
-      <div class="form-group reveal">
-        <input type="text" class="form-input" id="fname" required/>
-        <label class="form-label" for="fname">Full Name</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="text" class="form-input" id="org" required/>
-        <label class="form-label" for="org">Organization / Company</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="email" class="form-input" id="email" required/>
-        <label class="form-label" for="email">Email</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="tel" class="form-input" id="phone"/>
-        <label class="form-label" for="phone">Phone</label>
-      </div>
-      <div class="form-group full reveal">
-        <select class="form-select" id="ipCategory">
-          <option value="" disabled selected>Select IP Category</option>
-          <option>SoC Design — Mobile</option>
-          <option>SoC Design — Automotive</option>
-          <option>SoC Design — Data Center</option>
-          <option>FPGA Prototyping</option>
-          <option>ASIC Development</option>
-          <option>IoT / Edge Computing</option>
-          <option>Security / Crypto Module</option>
-          <option>Other</option>
-        </select>
-        <label class="form-label" for="ipCategory" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">IP Category</label>
-      </div>
-      <div class="form-group reveal">
-        <select class="form-select" id="licensing">
-          <option value="" disabled selected>Select Licensing Type</option>
-          <option>White Box</option>
-          <option>Black Box</option>
-        </select>
-        <label class="form-label" for="licensing" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Type of Licensing</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="text" class="form-input" id="projectName"/>
-        <label class="form-label" for="projectName">Project Name</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="text" class="form-input" id="endApplication"/>
-        <label class="form-label" for="endApplication">End Application</label>
-      </div>
-      <div class="form-group reveal">
-        <input type="text" class="form-input" id="fabNode"/>
-        <label class="form-label" for="fabNode">Required Fab and Node</label>
-      </div>
-      <div class="form-group full reveal">
-        <input type="text" class="form-input" id="timeline"/>
-        <label class="form-label" for="timeline">Timeline</label>
-      </div>
-      <div class="form-group full reveal">
-        <textarea class="form-input" id="notes" rows="3" style="resize:vertical;min-height:60px"></textarea>
-        <label class="form-label" for="notes">Additional Notes</label>
+    <div class="form-stepper-wrap">
+      <!-- Step indicator -->
+      <div class="step-indicator reveal">
+        <div class="step-indicator-bar"><div class="step-indicator-fill" id="stepFill"></div></div>
+        <div class="step-indicator-labels">
+          <span class="step-label active" data-step="0">1 — Project Scope</span>
+          <span class="step-label" data-step="1">2 — Technical Specs</span>
+          <span class="step-label" data-step="2">3 — Your Details</span>
+        </div>
       </div>
 
-      <button type="submit" class="form-submit reveal">
-        <div class="cta-fill"></div>
-        <span>Submit Inquiry</span>
-        <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-      </button>
-    </form>
+      <form id="inquiryForm" autocomplete="off">
+        <!-- STEP 1: Project Scope -->
+        <div class="form-step active" data-step="0">
+          <div class="form-grid">
+            <div class="form-group">
+              <input type="text" class="form-input" id="projectName"/>
+              <label class="form-label" for="projectName">Project Name</label>
+            </div>
+            <div class="form-group">
+              <select class="form-select" id="endApplication">
+                <option value="" disabled selected>Select End Application</option>
+                <option>Consumer Electronics</option>
+                <option>Industrial Systems</option>
+                <option>Automotive / ADAS</option>
+                <option>Telecom / 5G</option>
+                <option>AI-Edge &amp; IoT</option>
+                <option>Data Centres / HPC</option>
+                <option>Medical Technology</option>
+                <option>Other</option>
+              </select>
+              <label class="form-label" for="endApplication" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">End Application</label>
+            </div>
+            <div class="form-group full">
+              <select class="form-select" id="timeline">
+                <option value="" disabled selected>Select Timeline</option>
+                <option>Immediate Integration</option>
+                <option>Next Quarter</option>
+                <option>6–12 Months</option>
+                <option>Exploratory Research</option>
+              </select>
+              <label class="form-label" for="timeline" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Timeline</label>
+            </div>
+            <div class="form-group full">
+              <select class="form-select" id="ipCategory">
+                <option value="" disabled selected>Select IP Category</option>
+                <option>High-Speed Interface IP</option>
+                <option>Memory IP Cores</option>
+                <option>SerDes IP</option>
+                <option>Analog &amp; Mixed-Signal IP</option>
+                <option>Peripheral &amp; Cryptographic IP</option>
+                <option>Verification IP (VIP)</option>
+                <option>SoC / Interconnect IP</option>
+                <option>Other</option>
+              </select>
+              <label class="form-label" for="ipCategory" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">IP Category of Interest</label>
+            </div>
+          </div>
+          <div class="form-step-actions">
+            <span></span>
+            <button type="button" class="form-next-btn" data-next="1">
+              Next: Technical Specs
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Manufacturing & Licensing -->
+        <div class="form-step" data-step="1">
+          <div class="form-grid">
+            <div class="form-group">
+              <select class="form-select" id="fabNode">
+                <option value="" disabled selected>Select Foundry / Node</option>
+                <option>TSMC — 3nm</option>
+                <option>TSMC — 5nm</option>
+                <option>TSMC — 7nm</option>
+                <option>TSMC — 12nm</option>
+                <option>TSMC — 28nm</option>
+                <option>Samsung — 3nm GAA</option>
+                <option>Samsung — 5nm</option>
+                <option>Samsung — 14nm</option>
+                <option>GlobalFoundries — 12nm</option>
+                <option>GlobalFoundries — 22nm</option>
+                <option>Intel — Intel 4</option>
+                <option>Intel — Intel 7</option>
+                <option>Other / Multiple</option>
+              </select>
+              <label class="form-label" for="fabNode" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">Required Fab &amp; Node</label>
+            </div>
+            <div class="form-group">
+              <textarea class="form-input" id="notes" rows="3" style="resize:vertical;min-height:60px"></textarea>
+              <label class="form-label" for="notes">Additional Notes</label>
+            </div>
+          </div>
+
+          <!-- White Box / Black Box Cards -->
+          <div class="licensing-label" style="margin-top:24px">
+            <span class="form-label" style="position:static;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold)">Type of Licensing</span>
+          </div>
+          <div class="licensing-cards" id="licensingCards">
+            <label class="license-card" data-value="White Box">
+              <input type="radio" name="licensing" id="licensing" value="White Box" hidden/>
+              <div class="license-card-inner">
+                <div class="license-card-icon">
+                  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+                </div>
+                <div class="license-card-text">
+                  <strong>White Box</strong>
+                  <span>Full RTL access for deep customization. Requires internal ASIC design capability.</span>
+                </div>
+              </div>
+            </label>
+            <label class="license-card" data-value="Black Box">
+              <input type="radio" name="licensing" value="Black Box" hidden/>
+              <div class="license-card-inner">
+                <div class="license-card-icon">
+                  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                <div class="license-card-text">
+                  <strong>Black Box</strong>
+                  <span>Pre-hardened, drop-in integration. No internal RTL expertise required.</span>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <div class="form-step-actions">
+            <button type="button" class="form-back-btn" data-back="0">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back
+            </button>
+            <button type="button" class="form-next-btn" data-next="2">
+              Next: Your Details
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Contact Details -->
+        <div class="form-step" data-step="2">
+          <div class="form-grid">
+            <div class="form-group">
+              <input type="text" class="form-input" id="fname" required/>
+              <label class="form-label" for="fname">Full Name</label>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-input" id="org" required/>
+              <label class="form-label" for="org">Organization / Company</label>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-input" id="email" required/>
+              <label class="form-label" for="email">Email</label>
+            </div>
+            <div class="form-group">
+              <input type="tel" class="form-input" id="phone"/>
+              <label class="form-label" for="phone">Phone</label>
+            </div>
+          </div>
+          <div class="form-step-actions">
+            <button type="button" class="form-back-btn" data-back="1">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back
+            </button>
+            <button type="submit" class="form-submit">
+              <div class="cta-fill"></div>
+              <span>Submit Inquiry</span>
+              <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -2912,18 +3096,64 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     });
   });
 
+  // Multi-step form
   var form = document.getElementById('inquiryForm');
+  var stepFill = document.getElementById('stepFill');
+  var stepLabels = document.querySelectorAll('.step-label');
+  var formSteps = document.querySelectorAll('.form-step');
+  var currentStep = 0;
+  var totalSteps = formSteps.length;
+
+  function goToStep(idx) {
+    formSteps[currentStep].classList.remove('active');
+    stepLabels[currentStep].classList.remove('active');
+    stepLabels[currentStep].classList.add('done');
+    currentStep = idx;
+    formSteps[currentStep].classList.add('active');
+    // Update labels
+    stepLabels.forEach(function(l, i) {
+      l.classList.remove('active', 'done');
+      if (i < currentStep) l.classList.add('done');
+      if (i === currentStep) l.classList.add('active');
+    });
+    // Update progress bar
+    stepFill.style.width = ((currentStep + 1) / totalSteps * 100) + '%';
+    // Re-init floating labels for new step
+    formSteps[currentStep].querySelectorAll('.form-input, .form-select').forEach(function(input) {
+      var group = input.closest('.form-group');
+      if (group && input.value && input.value.length > 0) group.classList.add('has-value');
+    });
+  }
+
+  document.querySelectorAll('.form-next-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var next = parseInt(this.getAttribute('data-next'));
+      goToStep(next);
+    });
+  });
+  document.querySelectorAll('.form-back-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var back = parseInt(this.getAttribute('data-back'));
+      goToStep(back);
+    });
+  });
+
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       var data = {};
       form.querySelectorAll('input, select, textarea').forEach(function(el) {
-        if (el.id) data[el.id] = el.value;
+        if (el.id || el.name) data[el.id || el.name] = el.value;
       });
+      // Collect radio
+      var checked = form.querySelector('input[name="licensing"]:checked');
+      if (checked) data.licensing = checked.value;
       console.log('PlurkoTech Inquiry Submitted:', data);
       alert('Thank you for your inquiry! Our engineering team will be in touch shortly.');
       form.reset();
       form.querySelectorAll('.form-group').forEach(function(g) { g.classList.remove('has-value'); });
+      form.querySelectorAll('.license-card input').forEach(function(r) { r.checked = false; });
+      goToStep(0);
     });
   }
 
