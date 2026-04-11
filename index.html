@@ -1592,11 +1592,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   font-size:clamp(1.4rem,2.5vw,2rem);color:#fff;margin-bottom:12px;line-height:1.15;
 }
 .cine-banner-content p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:24px}
-.cine-banner-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cine-banner-tags{display:flex;flex-wrap:nowrap;gap:6px;justify-content:center}
 .cine-banner-tags span{
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.08em;
-  padding:6px 14px;border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.06em;
+  padding:5px 12px;border-radius:100px;white-space:nowrap;
   border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);
   transition:border-color 0.3s,color 0.3s,background 0.3s;
 }
@@ -2023,7 +2023,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <div class="expand-panel-overlay"></div>
       <div class="expand-panel-collapsed">
         <span class="expand-panel-num">02</span>
-        <span class="expand-panel-title-v">Memory</span>
+        <span class="expand-panel-title-v">Memory Die</span>
       </div>
       <div class="expand-panel-content">
         <span class="expand-panel-num">02</span>
@@ -2326,13 +2326,13 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
             <div class="form-group full">
               <select class="form-select" id="ipCategory">
                 <option value="" disabled selected>Select IP Category</option>
-                <option>High-Speed Interface IP</option>
+                <option>High-Speed Interface IP Cores</option>
                 <option>Memory IP Cores</option>
-                <option>SerDes IP</option>
-                <option>Analog &amp; Mixed-Signal IP</option>
-                <option>Peripheral &amp; Cryptographic IP</option>
-                <option>Verification IP (VIP)</option>
-                <option>SoC / Interconnect IP</option>
+                <option>SerDes IP Cores</option>
+                <option>Analog &amp; Mixed-Signal IP Cores</option>
+                <option>Peripheral &amp; Cryptographic IP Cores</option>
+                <option>Verification IP Cores</option>
+                <option>SoC / Interconnect IP Cores</option>
                 <option>Other</option>
               </select>
               <label class="form-label" for="ipCategory" style="transform:translateY(-22px);font-size:9px;color:var(--gold)">IP Category of Interest</label>
