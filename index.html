@@ -549,19 +549,17 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 @media(max-width:768px){.mega-col{display:none!important}}
 .hero{
-  min-height:90vh;display:flex;align-items:center;
-  padding:0 clamp(24px,4vw,96px);position:relative;overflow:hidden;
+  min-height:100vh;display:flex;align-items:center;
+  padding:0 clamp(24px,4vw,80px);position:relative;overflow:hidden;
 }
 .hero-bg{
-  position:absolute;inset:-40px;z-index:0;
+  position:absolute;inset:-20px;z-index:0;
 }
 .hero-bg.drifting,.hero-slide-bg.drifting{
-  animation:heroDrift 25s ease-in-out infinite alternate;
+  /* drift disabled — caused scroll vibration */
 }
 @keyframes heroDrift{
-  0%{transform:translate(0,0) scale(1.05)}
-  50%{transform:translate(-15px,10px) scale(1.08)}
-  100%{transform:translate(10px,-5px) scale(1.05)}
+  0%,100%{transform:none}
 }
 .hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover}
 .hero-bg::after{
@@ -635,8 +633,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .hero-carousel{position:relative;z-index:3;width:100%;height:100%;display:flex;align-items:flex-end;padding-bottom:clamp(40px,6vh,64px)}
 .hero-slide{position:absolute;inset:0;display:flex;align-items:flex-end;padding:0 clamp(24px,4vw,96px) clamp(48px,8vh,80px);opacity:0;pointer-events:none;transition:opacity 0.8s ease}
 .hero-slide.active{opacity:1;pointer-events:auto}
-.hero-slide-bg{position:absolute;inset:-40px;z-index:0}
-.hero-slide-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.05)}
+.hero-slide-bg{position:absolute;inset:-20px;z-index:0}
+.hero-slide-bg img{width:100%;height:100%;object-fit:cover}
 .hero-slide-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,30,0.92) 0%,rgba(26,26,30,0.55) 40%,rgba(0,0,0,0.45) 100%);z-index:1}
 .hero-slide-content{max-width:800px;position:relative;z-index:2}
 .hero-slide h1{font-size:clamp(1.8rem,3.8vw,3rem);font-weight:700;color:#ffffff;line-height:1.08;margin-bottom:16px;text-shadow:0 1px 8px rgba(0,0,0,0.6)}
@@ -724,10 +722,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .offerings-header h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:8px}
 .offerings-header p{font-size:14px;color:var(--text-light);max-width:520px;line-height:1.55}
 .offerings-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
   max-width:1400px;margin:0 auto;
 }
-@media(max-width:768px){.offerings-grid{grid-template-columns:1fr}}
 .offering-card{
   background:var(--bg);border:1px solid var(--border);
   border-radius:16px;padding:clamp(24px,2.5vw,36px);
@@ -786,7 +782,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .why-section::before{
   content:'';position:absolute;inset:0;
-  background:url('assets/images/why-section-bg.jpg') center/cover no-repeat;
+  background:url('assets/images/why-section-bg.png') center/cover no-repeat;
   opacity:0.18;pointer-events:none;filter:brightness(0.6);
 }
 .why-section>*{position:relative;z-index:1}
@@ -823,10 +819,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 
 .why-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
   max-width:1400px;margin:0 auto;
 }
-@media(max-width:560px){.why-grid{grid-template-columns:1fr}}
 .why-card{
   background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
   border-radius:16px;overflow:hidden;
@@ -1445,6 +1439,141 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 [data-theme="light"] .license-card-text strong{color:var(--text)}
 [data-theme="light"] .license-card-text span{color:var(--text-light)}
 
+/* (focus-carousel removed — replaced by expand-panels and why-showcase) */
+
+/* Expand Panels — Offerings */
+.expand-panels{
+  display:flex;gap:8px;max-width:1400px;margin:0 auto;
+  height:380px;border-radius:16px;overflow:hidden;
+}
+.expand-panel{
+  position:relative;flex:1;min-width:0;overflow:hidden;border-radius:12px;
+  cursor:pointer;transition:flex 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.expand-panel.active{flex:3;cursor:default}
+.expand-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.expand-panel-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.35) 100%);
+  transition:background 0.6s;
+}
+.expand-panel:not(.active) .expand-panel-overlay{
+  background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 100%);
+}
+.expand-panel-collapsed{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding:24px 12px;z-index:2;
+  transition:opacity 0.4s;
+}
+.expand-panel.active .expand-panel-collapsed{opacity:0;pointer-events:none}
+.expand-panel-num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--accent);letter-spacing:0.1em;margin-bottom:8px;
+}
+.expand-panel-title-v{
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;
+  color:#fff;writing-mode:vertical-lr;text-orientation:mixed;
+  letter-spacing:0.08em;text-transform:uppercase;
+  flex:1;display:flex;align-items:center;
+}
+.expand-panel-content{
+  position:absolute;bottom:0;left:0;right:0;padding:32px;z-index:2;
+  opacity:0;transform:translateY(16px);
+  transition:opacity 0.5s 0.1s,transform 0.5s 0.1s cubic-bezier(0.16,1,0.3,1);
+}
+.expand-panel.active .expand-panel-content{opacity:1;transform:translateY(0)}
+.expand-panel-content .expand-panel-num{display:block;margin-bottom:8px}
+.expand-panel-content h3{
+  font-size:clamp(16px,2vw,22px);color:#fff;margin-bottom:8px;line-height:1.2;
+}
+.expand-panel-content p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.55;max-width:480px;margin-bottom:16px}
+.expand-panel-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;
+  transition:gap 0.3s;
+}
+.expand-panel-link:hover{gap:12px}
+@media(max-width:768px){
+  .expand-panels{flex-direction:column;height:auto}
+  .expand-panel{min-height:80px;border-radius:12px}
+  .expand-panel.active{min-height:300px}
+  .expand-panel-title-v{writing-mode:horizontal-tb}
+  .expand-panel-collapsed{flex-direction:row;justify-content:flex-start;gap:12px;padding:20px}
+}
+
+/* Why Showcase — Tabbed immersive */
+.why-showcase{max-width:1400px;margin:0 auto}
+.why-showcase-tabs{
+  display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:0;
+}
+.why-tab{
+  flex:1;padding:16px 12px;border:none;background:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  position:relative;transition:background 0.3s;
+}
+.why-tab::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.why-tab.active::after{transform:scaleX(1)}
+.why-tab:hover{background:rgba(255,255,255,0.03)}
+.why-tab-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:rgba(255,255,255,0.3);letter-spacing:0.1em;transition:color 0.3s;
+}
+.why-tab.active .why-tab-num{color:var(--gold)}
+.why-tab-label{
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  color:rgba(255,255,255,0.4);transition:color 0.3s;
+}
+.why-tab.active .why-tab-label{color:#fff}
+.why-showcase-panel{position:relative;overflow:hidden;border-radius:0 0 16px 16px}
+.why-showcase-slide{
+  display:none;
+  grid-template-columns:1fr 1fr;gap:0;min-height:280px;
+  background:rgba(255,255,255,0.02);
+}
+.why-showcase-slide.active{display:grid}
+.why-showcase-img{position:relative;overflow:hidden;min-height:280px}
+.why-showcase-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.why-showcase-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 60%,rgba(26,26,30,0.6) 100%);
+}
+.why-showcase-text{
+  padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;justify-content:center;
+}
+.why-showcase-text h3{font-size:clamp(16px,2vw,22px);color:#fff;margin-bottom:10px;line-height:1.2}
+.why-showcase-text p{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:16px}
+.why-showcase-tags{display:flex;flex-wrap:wrap;gap:6px}
+.why-showcase-tags span{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  padding:4px 10px;border-radius:100px;letter-spacing:0.05em;
+  border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);
+  transition:border-color 0.3s,color 0.3s;
+}
+.why-showcase-tags span:hover{border-color:var(--gold);color:var(--gold)}
+[data-theme="light"] .why-showcase-tabs{border-bottom-color:var(--border)}
+[data-theme="light"] .why-tab:hover{background:rgba(0,0,0,0.02)}
+[data-theme="light"] .why-tab::after{background:var(--purple)}
+[data-theme="light"] .why-tab-num{color:var(--text-muted)}
+[data-theme="light"] .why-tab.active .why-tab-num{color:var(--purple)}
+[data-theme="light"] .why-tab-label{color:var(--text-muted)}
+[data-theme="light"] .why-tab.active .why-tab-label{color:var(--text)}
+[data-theme="light"] .why-showcase-slide{background:var(--bg)}
+[data-theme="light"] .why-showcase-text h3{color:var(--text)}
+[data-theme="light"] .why-showcase-text p{color:var(--text-light)}
+[data-theme="light"] .why-showcase-tags span{border-color:var(--border);color:var(--text-muted)}
+[data-theme="light"] .why-showcase-tags span:hover{border-color:var(--purple);color:var(--purple)}
+@media(max-width:768px){
+  .why-showcase-slide{grid-template-columns:1fr}
+  .why-showcase-img{min-height:180px}
+  .why-showcase-tabs{overflow-x:auto;scrollbar-width:none}
+  .why-tab{min-width:100px;flex:0 0 auto}
+}
+
 /* Cinematic full-bleed banner */
 .cine-banner{
   position:relative;min-height:320px;display:flex;align-items:center;
@@ -1629,7 +1758,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
 .js-ready .intro-hidden{opacity:0}
 .js-ready .site-header.intro-hidden{transform:translateY(-20px)}
-.hero-bg img,.hero-bg video{transform:scale(1.15)}
+.hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover}
 .js-ready .hero .split-word span{opacity:0;transform:translateY(110%)}
 
 .theme-trans,.theme-trans>*,.theme-trans header,.theme-trans section,.theme-trans footer{
@@ -1741,11 +1870,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
   <div class="hero-slide active" data-slide="0">
     <div class="hero-slide-bg">
-      <img src="assets/images/hero-slide-1.jpg" alt="Semiconductor fabrication" loading="eager"/>
+      <img src="assets/images/hero-slide-1.png" alt="Semiconductor fabrication" loading="eager"/>
     </div>
     <div class="hero-slide-content">
       <h1 class="split-word" id="heroHeadline"><span>Accelerate</span> <span>Your</span> <span>Chip</span> <span>Design</span> <span>with</span> <span class="accent-word">Production-Ready</span> <span>IP</span> <span>Solutions</span></h1>
-      <p class="hero-sub reveal">Access 302+ silicon-proven IP cores from verified global vendors — engineered for performance, scalability, and faster time-to-market.</p>
+      <p class="hero-sub reveal">Access high-performance semiconductor IP cores and advanced silicon solutions engineered to shorten development cycles and improve time-to-market.</p>
       <a href="ip-core-products.html" class="hero-cta reveal">
         <div class="cta-fill"></div>
         <span>Explore IP Core Products</span>
@@ -1756,11 +1885,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
   <div class="hero-slide" data-slide="1">
     <div class="hero-slide-bg">
-      <img src="assets/images/hero-slide-2.jpg" alt="Chip architecture" loading="lazy"/>
+      <img src="assets/images/hero-slide-2.png" alt="Chip architecture" loading="lazy"/>
     </div>
     <div class="hero-slide-content">
       <h1><span>Reliable</span> <span>IP</span> <span>for</span> <span class="accent-word">Next-Generation</span> <span>Semiconductor</span> <span>Innovation</span></h1>
-      <p class="hero-sub">Silicon-verified interface, memory, and analog IP blocks designed for advanced nodes from 28nm to 3nm.</p>
+      <p class="hero-sub">From high-speed interfaces to advanced memory die solutions, empower your engineering teams with scalable, integration-ready technologies.</p>
       <a href="solutions.html" class="hero-cta">
         <div class="cta-fill"></div>
         <span>View Solutions</span>
@@ -1771,11 +1900,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
   <div class="hero-slide" data-slide="2">
     <div class="hero-slide-bg">
-      <img src="assets/images/hero-slide-3.jpg" alt="Chip design lab" loading="lazy"/>
+      <img src="assets/images/hero-slide-3.png" alt="Chip design lab" loading="lazy"/>
     </div>
     <div class="hero-slide-content">
       <h1><span>Custom</span> <span>IP</span> <span>Solutions</span> <span>Tailored</span> <span>for</span> <span>Your</span> <span class="accent-word">Application</span></h1>
-      <p class="hero-sub">From protocol adaptation to node migration — our engineering team delivers IP customized to your exact requirements.</p>
+      <p class="hero-sub">Partner with experienced semiconductor specialists to implement optimized IP architectures aligned with your design requirements.</p>
       <a href="#contact" class="hero-cta">
         <div class="cta-fill"></div>
         <span>Raise an Inquiry</span>
@@ -1806,7 +1935,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </button>
   </div>
 
-  <div class="hero-visual" data-speed="0.3">
+  <div class="hero-visual">
     <svg viewBox="0 0 400 400" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1">
       <rect x="50" y="50" width="300" height="300" rx="8"/>
       <rect x="100" y="100" width="200" height="200" rx="4"/>
@@ -1836,16 +1965,16 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <div class="howitworks-badge">1</div>
       </div>
-      <h3>Browse Catalogue</h3>
-      <p>Explore 302+ production-ready IP cores filtered by protocol, node, and application.</p>
+      <h3>Browse Our Catalogue</h3>
+      <p>Explore an extensive portfolio of silicon-proven IP cores across connectivity, compute, automotive, aerospace, and secure processing domains.</p>
     </div>
     <div class="howitworks-card gsap-up" style="--i:1">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         <div class="howitworks-badge">2</div>
       </div>
-      <h3>Shortlist &amp; Compare</h3>
-      <p>Compare specifications, verify silicon-proven status, and narrow down the right IP blocks.</p>
+      <h3>Shortlist IP Cores</h3>
+      <p>Compare specifications, evaluate compatibility, and identify solutions aligned with your architecture.</p>
     </div>
     <div class="howitworks-card gsap-up" style="--i:2">
       <div class="howitworks-icon">
@@ -1853,15 +1982,15 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         <div class="howitworks-badge">3</div>
       </div>
       <h3>Raise Inquiry</h3>
-      <p>Submit requirements and receive documentation with direct engineering access.</p>
+      <p>Share your technical requirements with our specialists for tailored recommendations.</p>
     </div>
     <div class="howitworks-card gsap-up" style="--i:3">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12.89 1.45l8 4A2 2 0 0122 7.24v9.53a2 2 0 01-1.11 1.79l-8 4a2 2 0 01-1.79 0l-8-4A2 2 0 012 16.76V7.24a2 2 0 011.11-1.79l8-4a2 2 0 011.78 0z"/><polyline points="2.32 6.16 12 11 21.68 6.16"/><line x1="12" y1="22.76" x2="12" y2="11"/></svg>
         <div class="howitworks-badge">4</div>
       </div>
-      <h3>Receive IP &amp; Support</h3>
-      <p>Get verified IP cores, licensing terms, and integration support for your timeline.</p>
+      <h3>Get Desired Products &amp; Solutions</h3>
+      <p>Receive integration-ready IP solutions backed by engineering support.</p>
     </div>
   </div>
 </section>
@@ -1873,41 +2002,50 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   <div class="offerings-header">
     <span class="section-tag reveal">Most Popular Offerings</span>
     <h2 class="reveal">End-to-End Semiconductor Expertise</h2>
-    <p class="reveal">Industry-leading IP solutions spanning high-speed interfaces, memory architectures, and custom developments.</p>
+    <p class="reveal">Explore widely adopted semiconductor IP technologies and engineering solutions supporting connectivity platforms, memory architectures, programmable logic systems, and custom silicon development.</p>
   </div>
-  <div class="offerings-grid">
-    <div class="offering-card gsap-up" style="--i:0">
-      <div class="offering-card-img">
-        <img src="assets/images/offering-interface-ip.jpg" alt="High-Speed Interface IP Cores" loading="lazy"/>
+  <div class="expand-panels" id="expandPanels">
+    <div class="expand-panel active" data-panel="0" style="--accent:var(--purple)">
+      <img src="assets/images/offering-interface-ip.png" alt="High-Speed Interface IP" loading="lazy"/>
+      <div class="expand-panel-overlay"></div>
+      <div class="expand-panel-collapsed">
+        <span class="expand-panel-num">01</span>
+        <span class="expand-panel-title-v">Interface IP</span>
       </div>
-      <div class="offering-card-icon">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4M5.6 5.6l2.85 2.85m7.1 7.1l2.85 2.85M5.6 18.4l2.85-2.85m7.1-7.1l2.85-2.85"/></svg>
+      <div class="expand-panel-content">
+        <span class="expand-panel-num">01</span>
+        <h3>Semiconductor High-Speed Interface IP Cores</h3>
+        <p>Advanced interface and wireless IP core solutions designed to enable high-bandwidth communication between system components, processors, memory subsystems, and connected devices.</p>
+        <a href="ip-core-products.html" class="expand-panel-link">Explore Portfolio <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-      <h3>Semiconductor High-Speed Interface IP Cores</h3>
-      <p>Silicon-proven PCIe, USB, Ethernet, MIPI, and SerDes IP blocks verified for leading foundries from 28nm to 3nm. Optimized for high-bandwidth, low-latency system designs.</p>
-      <a href="ip-core-products.html" class="offering-link">Explore Portfolio <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
-    <div class="offering-card gsap-up" style="--i:1">
-      <div class="offering-card-img">
-        <img src="assets/images/offering-memory-die.jpg" alt="Memory Die Solutions" loading="lazy"/>
+    <div class="expand-panel" data-panel="1" style="--accent:var(--gold)">
+      <img src="assets/images/offering-memory-die.png" alt="Memory Die Solutions" loading="lazy"/>
+      <div class="expand-panel-overlay"></div>
+      <div class="expand-panel-collapsed">
+        <span class="expand-panel-num">02</span>
+        <span class="expand-panel-title-v">Memory</span>
       </div>
-      <div class="offering-card-icon">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
+      <div class="expand-panel-content">
+        <span class="expand-panel-num">02</span>
+        <h3>Memory Die Solutions</h3>
+        <p>Scalable memory subsystem technologies designed to support high-performance computing platforms, embedded systems, and next-generation semiconductor architectures.</p>
+        <a href="solutions.html" class="expand-panel-link">Learn More <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-      <h3>Memory Die Solutions</h3>
-      <p>High-bandwidth, power-efficient memory IP including DDR5, LPDDR5, HBM3, and SRAM compilers — optimized for AI, data center, and edge computing workloads.</p>
-      <a href="solutions.html" class="offering-link">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
-    <div class="offering-card gsap-up" style="--i:2">
-      <div class="offering-card-img">
-        <img src="assets/images/offering-custom-ip.jpg" alt="Custom IP Development" loading="lazy"/>
+    <div class="expand-panel" data-panel="2" style="--accent:var(--purple-l)">
+      <img src="assets/images/offering-custom-ip.png" alt="Custom IP Development" loading="lazy"/>
+      <div class="expand-panel-overlay"></div>
+      <div class="expand-panel-collapsed">
+        <span class="expand-panel-num">03</span>
+        <span class="expand-panel-title-v">Custom IP</span>
       </div>
-      <div class="offering-card-icon">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <div class="expand-panel-content">
+        <span class="expand-panel-num">03</span>
+        <h3>Custom IP Development</h3>
+        <p>Tailored semiconductor IP core solutions designed to address specialized architecture requirements, performance targets, and integration constraints.</p>
+        <a href="#contact" class="expand-panel-link">Discuss Your Needs <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-      <h3>Custom IP Development</h3>
-      <p>Tailored IP solutions including protocol adaptation, architecture optimization, power tuning, node migration, and system-level integration readiness.</p>
-      <a href="#contact" class="offering-link">Discuss Your Needs <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
   </div>
 </section>
@@ -1915,7 +2053,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 <!-- Full-bleed cinematic banner (Siemens-style) -->
 <section class="cine-banner" id="cineBanner">
   <div class="cine-banner-bg">
-    <img src="assets/images/banner-industries.jpg" alt="Data center infrastructure" loading="lazy"/>
+    <img src="assets/images/banner-industries.png" alt="Data center infrastructure" loading="lazy"/>
   </div>
   <div class="cine-banner-content gsap-up">
     <span class="section-tag" style="color:var(--gold)">Our Reach</span>
@@ -1960,33 +2098,79 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </div>
   </div>
 
-  <div class="why-grid">
-    <div class="why-card why-card--visual gsap-up" style="--i:0">
-      <div class="why-card-img"><img src="assets/images/why-future-tech.jpg" alt="Future-ready IP" loading="lazy"/></div>
-      <div class="why-card-content">
-        <h3>Aligned with Future Technologies</h3>
-        <p>Early access to next-gen IP for PCIe Gen 6, UCIe, CXL 3.0, and process nodes down to 3nm.</p>
-      </div>
+  <div class="why-showcase" id="whyShowcase">
+    <div class="why-showcase-tabs">
+      <button class="why-tab active" data-why="0">
+        <span class="why-tab-num">01</span>
+        <span class="why-tab-label">Market Insight</span>
+      </button>
+      <button class="why-tab" data-why="1">
+        <span class="why-tab-num">02</span>
+        <span class="why-tab-label">Future Tech</span>
+      </button>
+      <button class="why-tab" data-why="2">
+        <span class="why-tab-num">03</span>
+        <span class="why-tab-label">Flexible Model</span>
+      </button>
+      <button class="why-tab" data-why="3">
+        <span class="why-tab-num">04</span>
+        <span class="why-tab-label">End-to-End</span>
+      </button>
+      <button class="why-tab" data-why="4">
+        <span class="why-tab-num">05</span>
+        <span class="why-tab-label">Global Reach</span>
+      </button>
     </div>
-    <div class="why-card why-card--visual gsap-up" style="--i:1">
-      <div class="why-card-img"><img src="assets/images/why-e2e-solutions.jpg" alt="End-to-end solutions" loading="lazy"/></div>
-      <div class="why-card-content">
-        <h3>End-to-End Semiconductor Solutions</h3>
-        <p>From IP licensing and integration to ASIC turn-key, verification, and device manufacturing — all under one roof.</p>
+    <div class="why-showcase-panel">
+      <div class="why-showcase-slide active" data-why="0">
+        <div class="why-showcase-img"><img src="assets/images/why-silicon-proven.png" alt="Market Insight" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Market &amp; Competitive Insight</h3>
+          <p>Data-driven strategies with solid awareness of market dynamics and the competitor landscape. We help you make informed decisions about your silicon roadmap.</p>
+          <div class="why-showcase-tags">
+            <span>Market Analysis</span><span>Competitive Intel</span><span>Data-Driven</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="why-card why-card--visual gsap-up" style="--i:2">
-      <div class="why-card-img"><img src="assets/images/why-global.jpg" alt="Global outreach" loading="lazy"/></div>
-      <div class="why-card-content">
-        <h3>Global Outreach</h3>
-        <p>Teams in India with vendor relationships across USA, China, Japan, South Korea, Italy, and Australia.</p>
+      <div class="why-showcase-slide" data-why="1">
+        <div class="why-showcase-img"><img src="assets/images/why-future-tech.png" alt="Future Technologies" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Aligned with Future Technologies</h3>
+          <p>Focused on high-growth sectors like AI, IoT, automotive, telecom, and data centers. We invest ahead of the curve so you don't have to wait.</p>
+          <div class="why-showcase-tags">
+            <span>AI / ML</span><span>IoT</span><span>Automotive</span><span>Telecom</span><span>Data Centers</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="why-card why-card--visual gsap-up" style="--i:3">
-      <div class="why-card-img"><img src="assets/images/why-silicon-proven.jpg" alt="Silicon validation" loading="lazy"/></div>
-      <div class="why-card-content">
-        <h3>Silicon-Proven Quality</h3>
-        <p>Every IP core is verified through rigorous silicon validation — no untested blocks, no surprises at tape-out.</p>
+      <div class="why-showcase-slide" data-why="2">
+        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Flexible Engagement" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Flexible Engagement Model</h3>
+          <p>Agile and accessible — supporting businesses of all sizes with equal priority. From startups to enterprise, our engagement scales to your needs.</p>
+          <div class="why-showcase-tags">
+            <span>Startups</span><span>Enterprise</span><span>Scalable</span><span>Agile</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="3">
+        <div class="why-showcase-img"><img src="assets/images/why-e2e-solutions.png" alt="End-to-end solutions" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>End-to-End Semiconductor Solutions</h3>
+          <p>One stop for IP, design, testing, and manufacturing, simplifying the entire value chain.</p>
+          <div class="why-showcase-tags">
+            <span>IP Licensing</span><span>ASIC Turn-Key</span><span>Verification</span><span>Manufacturing</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="4">
+        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Global outreach" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Global Outreach</h3>
+          <p>Presence across key international markets, enabling broader collaboration and support.</p>
+          <div class="why-showcase-tags">
+            <span>India HQ</span><span>USA</span><span>Japan</span><span>South Korea</span><span>Europe</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2070,7 +2254,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   <div class="blog-grid" id="blogGrid">
     <article class="blog-card gsap-up" style="--i:0">
       <div class="blog-card-img">
-        <img src="assets/images/blog-pcie-gen5.jpg" alt="Data Center Architecture" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
+        <img src="assets/images/blog-pcie-gen5.png" alt="Data Center Architecture" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       </div>
       <div class="blog-card-body">
         <span class="blog-tag">Architecture</span>
@@ -2080,7 +2264,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </article>
     <article class="blog-card gsap-up" style="--i:1">
       <div class="blog-card-img">
-        <img src="assets/images/blog-ucie-chiplet.jpg" alt="Semiconductor Innovation" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
+        <img src="assets/images/blog-ucie-chiplet.png" alt="Semiconductor Innovation" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       </div>
       <div class="blog-card-body">
         <span class="blog-tag">Connectivity</span>
@@ -2090,7 +2274,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </article>
     <article class="blog-card gsap-up" style="--i:2">
       <div class="blog-card-img">
-        <img src="assets/images/blog-verification.jpg" alt="IP Verification" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
+        <img src="assets/images/blog-verification.png" alt="IP Verification" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       </div>
       <div class="blog-card-body">
         <span class="blog-tag">Verification</span>
@@ -2100,7 +2284,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </article>
     <article class="blog-card gsap-up" style="--i:3">
       <div class="blog-card-img">
-        <img src="assets/images/blog-hbm-memory.jpg" alt="Memory Architecture" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
+        <img src="assets/images/blog-hbm-memory.png" alt="Memory Architecture" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       </div>
       <div class="blog-card-body">
         <span class="blog-tag">Memory</span>
@@ -2911,7 +3095,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     var introTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     introTL.fromTo('.hero-slide.active .hero-slide-bg', { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0);
-    introTL.to('.hero-slide.active .hero-slide-bg img', { scale: 1, duration: 2, ease: 'power2.out' }, 0);
+    /* bg image scale intro disabled — caused vibration */
     introTL.fromTo('.hero-orb--1', { opacity: 0, scale: 0.5 }, {
       opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out'
     }, 0.3);
@@ -2967,7 +3151,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     }, 1.6);
     introTL.call(function() {
       var heroBg = document.querySelector('.hero-slide.active .hero-slide-bg');
-      if (heroBg) heroBg.classList.add('drifting');
+      /* drift disabled */
     }, null, 2);
     introTL.call(function() {
       document.getElementById('heroHeadline').classList.add('visible');
@@ -3432,6 +3616,54 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       }
     });
   });
+
+  // Expand panels — Offerings
+  (function() {
+    var panels = document.querySelectorAll('.expand-panel');
+    if (!panels.length) return;
+    panels.forEach(function(panel) {
+      panel.addEventListener('click', function() {
+        if (panel.classList.contains('active')) return;
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        panel.classList.add('active');
+      });
+    });
+  })();
+
+  // Why showcase — tabbed
+  (function() {
+    var tabs = document.querySelectorAll('.why-tab');
+    var slides = document.querySelectorAll('.why-showcase-slide');
+    if (!tabs.length) return;
+
+    function showSlide(idx) {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      slides.forEach(function(s) { s.classList.remove('active'); });
+      tabs[idx].classList.add('active');
+      slides[idx].classList.add('active');
+    }
+
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() { showSlide(i); });
+    });
+
+    // Auto-rotate every 5s
+    var current = 0;
+    var auto = setInterval(function() {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }, 5000);
+    var showcase = document.getElementById('whyShowcase');
+    if (showcase) {
+      showcase.addEventListener('mouseenter', function() { clearInterval(auto); });
+      showcase.addEventListener('mouseleave', function() {
+        auto = setInterval(function() {
+          current = (current + 1) % slides.length;
+          showSlide(current);
+        }, 5000);
+      });
+    }
+  })();
 
   // Blog card scroll nav
   var blogGrid = document.getElementById('blogGrid');
