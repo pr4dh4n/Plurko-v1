@@ -3585,12 +3585,12 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     });
   });
 
-  // Expand panels — Offerings
+  // Expand panels — Offerings (hover to expand)
   (function() {
     var panels = document.querySelectorAll('.expand-panel');
     if (!panels.length) return;
     panels.forEach(function(panel) {
-      panel.addEventListener('click', function() {
+      panel.addEventListener('mouseenter', function() {
         if (panel.classList.contains('active')) return;
         panels.forEach(function(p) { p.classList.remove('active'); });
         panel.classList.add('active');
