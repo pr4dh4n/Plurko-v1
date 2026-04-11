@@ -728,11 +728,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   var smoothWrapper = document.getElementById('smooth-wrapper');
   var smoothContent = document.getElementById('smooth-content');
 
+  function setBodyHeight() {
+    if (smoothContent) document.body.style.height = smoothContent.scrollHeight + 'px';
+  }
   if (!isTouch && smoothWrapper && smoothContent) {
     var current = 0, target = 0, ease = 0.1;
-    function setBodyHeight() {
-      document.body.style.height = smoothContent.scrollHeight + 'px';
-    }
     setBodyHeight();
     window.addEventListener('resize', function() {
       setBodyHeight();
@@ -817,6 +817,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       var wasOpen = card.classList.contains('open');
       accCards.forEach(function(c) { c.classList.remove('open'); });
       if (!wasOpen) card.classList.add('open');
+      // Recalculate scroll height after accordion transition
+      setTimeout(setBodyHeight, 550);
     });
   });
 
