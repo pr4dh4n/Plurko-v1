@@ -663,6 +663,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 /* How It Works — 4 steps */
 .howitworks-section{
   padding:clamp(40px,5vw,64px) clamp(24px,4vw,80px);
+  background:var(--bg-alt);
 }
 .howitworks-header{max-width:1400px;margin:0 auto 32px;text-align:center}
 .howitworks-header h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:8px}
@@ -715,7 +716,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 /* Most Popular Offerings */
 .offerings-section{
   padding:clamp(40px,5vw,64px) clamp(24px,4vw,80px);
-  background:var(--bg-alt);
+  background:var(--bg);
 }
 .offerings-header{max-width:1400px;margin:0 auto 32px}
 .offerings-header h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:8px}
@@ -1454,11 +1455,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .expand-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .expand-panel-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.35) 100%);
+  background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.6) 40%,rgba(0,0,0,0.4) 100%);
   transition:background 0.6s;
 }
 .expand-panel:not(.active) .expand-panel-overlay{
-  background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 100%);
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.6) 100%);
 }
 .expand-panel-collapsed{
   position:absolute;inset:0;display:flex;flex-direction:column;
@@ -1487,11 +1488,11 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .expand-panel-content h3{
   font-size:clamp(16px,2vw,22px);color:#fff;margin-bottom:8px;line-height:1.2;
 }
-.expand-panel-content p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.55;max-width:480px;margin-bottom:16px}
+.expand-panel-content p{font-size:13px;color:#fff;line-height:1.55;max-width:480px;margin-bottom:16px}
 .expand-panel-link{
   display:inline-flex;align-items:center;gap:6px;
   font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
-  color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;
+  color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;
   transition:gap 0.3s;
 }
 .expand-panel-link:hover{gap:12px}
