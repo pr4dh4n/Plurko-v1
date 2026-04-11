@@ -3613,15 +3613,15 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     }
 
     tabs.forEach(function(tab, i) {
-      tab.addEventListener('click', function() { showSlide(i); });
+      tab.addEventListener('click', function() { current = i; showSlide(i); });
     });
 
-    // Auto-rotate every 5s
+    // Auto-rotate every 4s
     var current = 0;
     var auto = setInterval(function() {
       current = (current + 1) % slides.length;
       showSlide(current);
-    }, 5000);
+    }, 4000);
     var showcase = document.getElementById('whyShowcase');
     if (showcase) {
       showcase.addEventListener('mouseenter', function() { clearInterval(auto); });
@@ -3629,7 +3629,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         auto = setInterval(function() {
           current = (current + 1) % slides.length;
           showSlide(current);
-        }, 5000);
+        }, 4000);
       });
     }
   })();
