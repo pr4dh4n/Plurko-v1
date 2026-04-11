@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="PlurkoTech Blog — Expert perspectives on semiconductor IP integration, silicon architecture trends, connectivity evolution, and system-level optimization."/>
+<meta name="keywords" content="semiconductor blog, IP integration, silicon architecture, PCIe Gen5, UCIe, chiplet, verification, HBM3"/>
+<meta name="author" content="Plurko Technologies"/>
+<title>PlurkoTech | Blog — Semiconductor Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FFFFFF;--bg-alt:#F7F5F2;--bg-dark:#222222;--bg-dark-deep:#1A1A1E;
+  --text:#222222;--text-light:#666666;--text-muted:#999999;
+  --purple:#744897;--purple-l:#987AB3;--purple-d:#4E3166;
+  --gold:#FFD166;--gold-d:#E8B84B;--accent:var(--purple);
+  --white:#FFFFFF;--border:rgba(34,34,34,0.08);
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);--ease-smooth:cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"]{
+  --bg:#1A1A1E;--bg-alt:#2A2A2E;--text:#E8E8E8;--text-light:#AAAAAA;--text-muted:#777777;--border:rgba(255,255,255,0.08);
+}
+[data-theme="light"]{
+  --bg-dark:#EFECF0;--bg-dark-deep:#E8E4EC;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Raleway',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;padding-top:64px}
+a{color:inherit;text-decoration:none}
+button{border:none;background:none;cursor:pointer;font-family:inherit}
+img{display:block;max-width:100%}
+ul,ol{list-style:none}
+h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.1;letter-spacing:-0.02em}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:rgba(116,72,151,0.2);border-radius:3px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease-out,transform 0.7s ease-out}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Header */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:1002;
+  padding:0 clamp(24px,4vw,80px);height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s;
+}
+[data-theme="dark"] .site-header{background:rgba(26,26,30,0.95);border-bottom-color:rgba(255,255,255,0.08)}
+.header-left{display:flex;align-items:center;gap:16px}
+.header-logo{height:32px}
+.header-logo img{height:100%}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-cta{
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.15em;
+  background:var(--gold);color:#222222;
+  padding:10px 28px;border-radius:100px;
+  position:relative;overflow:hidden;transition:transform 0.3s var(--ease-smooth);
+}
+.header-cta:hover{transform:scale(1.03)}
+.header-cta .cta-fill{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:var(--gold-d);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s var(--ease-smooth);
+}
+.header-cta:hover .cta-fill{transform:scaleX(1)}
+.header-cta span{position:relative;z-index:1}
+@media(max-width:768px){.header-cta{display:none}}
+
+.hamburger{width:28px;height:20px;display:flex;flex-direction:column;justify-content:space-between;padding:0}
+.hamburger span{display:block;width:100%;height:2px;background:var(--text);transition:transform 0.4s var(--ease-out-expo),opacity 0.3s,background 0.4s}
+[data-theme="dark"] .hamburger span{background:var(--white)}
+.hamburger.active span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+.header-search-icon,.theme-toggle{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);transition:background 0.3s,border-color 0.3s;
+}
+.header-search-icon:hover,.theme-toggle:hover{background:rgba(116,72,151,0.1);border-color:var(--purple-l)}
+.header-search-icon svg,.theme-toggle svg{width:16px;height:16px;stroke:var(--text);fill:none;stroke-width:2;transition:stroke 0.3s}
+[data-theme="dark"] .header-search-icon svg,[data-theme="dark"] .theme-toggle svg{stroke:var(--gold)}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+
+/* Menu overlay */
+.menu-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.4);opacity:0;visibility:hidden;transition:opacity 0.5s}
+.menu-backdrop.visible{opacity:1;visibility:visible}
+.menu-overlay{
+  position:fixed;top:0;left:0;bottom:0;z-index:1001;
+  width:min(380px,85vw);
+  background:rgba(20,20,23,0.30);backdrop-filter:blur(24px) saturate(1.3);-webkit-backdrop-filter:blur(24px) saturate(1.3);
+  border-right:1px solid rgba(255,255,255,0.06);
+  transform:translateX(-100%);transition:transform 1s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:100px 40px 60px;
+}
+.menu-overlay.open{transform:translateX(0)}
+.menu-overlay nav{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%}
+.menu-overlay nav a{
+  font-family:'Poppins',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;
+  color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.02em;
+  transition:color 0.3s,padding-left 0.3s var(--ease-smooth);
+  display:block;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.menu-overlay nav a:hover{color:var(--gold);padding-left:12px}
+.menu-overlay nav a.active-page{color:var(--gold)}
+[data-theme="light"] .menu-overlay{background:rgba(255,255,255,0.55)}
+[data-theme="light"] .menu-overlay nav a{color:rgba(34,34,34,0.75);border-bottom-color:rgba(34,34,34,0.08)}
+[data-theme="light"] .menu-overlay nav a:hover,[data-theme="light"] .menu-overlay nav a.active-page{color:var(--purple)}
+.menu-overlay-footer{
+  position:absolute;bottom:32px;left:40px;right:40px;
+  display:flex;flex-direction:column;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.4);
+}
+[data-theme="light"] .menu-overlay-footer{color:rgba(34,34,34,0.4)}
+.menu-overlay-footer .footer-links{display:flex;gap:16px;flex-wrap:wrap}
+
+/* Hero */
+.blog-hero{
+  height:50vh;min-height:340px;position:relative;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  background:url('assets/images/blog-pcie-gen5.png') center/cover no-repeat;
+  color:var(--white);
+}
+.blog-hero::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(26,26,30,0.75) 0%,rgba(26,26,30,0.9) 100%);
+}
+.blog-hero-content{position:relative;z-index:1;max-width:800px;padding:0 clamp(24px,4vw,80px)}
+.blog-hero h1{font-size:clamp(1.6rem,3.5vw,2.8rem);margin-bottom:20px;font-weight:800}
+.blog-hero p{font-size:clamp(14px,1.5vw,17px);color:rgba(255,255,255,0.6);line-height:1.7;max-width:640px;margin:0 auto}
+
+/* Challenges Banner */
+.challenges-banner{
+  background:var(--bg-dark-deep);color:var(--white);
+  padding:clamp(32px,4vw,48px) clamp(24px,4vw,80px);
+  position:relative;overflow:hidden;
+}
+.challenges-banner::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(116,72,151,0.04) 60px,rgba(116,72,151,0.04) 61px),
+             repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(116,72,151,0.04) 60px,rgba(116,72,151,0.04) 61px);
+  pointer-events:none;
+}
+.challenges-inner{max-width:1400px;margin:0 auto;position:relative;z-index:1}
+.challenges-inner>p{font-size:clamp(13px,1.3vw,15px);color:rgba(255,255,255,0.55);line-height:1.7;max-width:800px;margin-bottom:24px}
+.challenge-pills{display:flex;flex-wrap:wrap;gap:10px}
+.challenge-pill{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  padding:8px 20px;border-radius:100px;
+  border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);
+  transition:border-color 0.3s,color 0.3s,background 0.3s;
+}
+.challenge-pill:hover{border-color:var(--purple-l);color:var(--white);background:rgba(116,72,151,0.12)}
+[data-theme="light"] .challenges-banner{background:var(--bg-alt);color:var(--text)}
+[data-theme="light"] .challenges-inner>p{color:var(--text-light)}
+[data-theme="light"] .challenge-pill{border-color:rgba(34,34,34,0.12);color:var(--text-light)}
+[data-theme="light"] .challenge-pill:hover{border-color:var(--purple);color:var(--purple);background:rgba(116,72,151,0.06)}
+
+/* Blog Grid Section */
+.blog-grid-section{
+  padding:clamp(40px,5vw,64px) clamp(24px,4vw,80px);
+}
+.blog-grid-inner{max-width:1400px;margin:0 auto}
+.section-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.2em;color:var(--purple);margin-bottom:16px;display:block;
+}
+.blog-grid-section h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:48px}
+.blog-cards-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+@media(max-width:1024px){.blog-cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.blog-cards-grid{grid-template-columns:1fr}}
+
+.blog-card{
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  background:var(--bg);transition:transform 0.3s var(--ease-smooth),box-shadow 0.3s;
+}
+.blog-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+[data-theme="dark"] .blog-card{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
+[data-theme="dark"] .blog-card:hover{box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.blog-card-img{
+  height:200px;position:relative;overflow:hidden;
+  background:var(--bg-alt);
+}
+.blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s var(--ease-smooth)}
+.blog-card:hover .blog-card-img img{transform:scale(1.03)}
+.blog-card-body{padding:clamp(16px,2vw,24px)}
+.blog-card .blog-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.15em;
+  color:var(--purple-l);margin-bottom:10px;display:block;
+}
+.blog-card h3{font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;margin-bottom:8px;line-height:1.35}
+.blog-card .blog-excerpt{font-size:13px;color:var(--text-light);line-height:1.6;margin-bottom:12px}
+.blog-card .blog-date{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;
+}
+.blog-note{
+  text-align:center;margin-top:48px;
+  font-size:14px;color:var(--text-muted);line-height:1.7;
+}
+
+/* Section Divider */
+.section-divider{
+  height:2px;width:100%;
+  background:linear-gradient(90deg,transparent 0%,var(--purple) 30%,var(--gold) 70%,transparent 100%);
+}
+
+/* Footer */
+.site-footer{
+  background:#1A1A1E;border-top:1px solid rgba(255,255,255,0.08);
+  padding:clamp(48px,6vw,80px) clamp(24px,4vw,96px) 32px;position:relative;
+}
+.site-footer::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/images/hero-semiconductor.jpg') center/cover no-repeat;
+  opacity:0.3;filter:grayscale(100%);pointer-events:none;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;position:relative;z-index:1;
+}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7;max-width:300px;margin-top:16px}
+.footer-col h5{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  text-transform:uppercase;letter-spacing:0.2em;
+  color:rgba(255,255,255,0.7);margin-bottom:20px;
+}
+.footer-col ul{display:flex;flex-direction:column;gap:10px}
+.footer-col ul li a{font-size:14px;color:rgba(255,255,255,0.75);transition:color 0.3s}
+.footer-col ul li a:hover{color:var(--purple-l)}
+.footer-newsletter p{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:16px;line-height:1.6}
+.footer-newsletter-input{display:flex;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:8px}
+.footer-newsletter-input input{
+  flex:1;background:transparent;border:none;font-size:12px;color:var(--white);padding:0;outline:none;font-family:inherit;
+}
+.footer-newsletter-input input::placeholder{color:rgba(255,255,255,0.5)}
+.footer-newsletter-input button{color:var(--gold);font-size:18px;background:none;border:none;transition:color 0.3s;padding:0;cursor:pointer}
+.footer-newsletter-input button:hover{color:var(--white)}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.footer-social a{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.3s,border-color 0.3s;
+}
+.footer-social a:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.2)}
+.footer-social a svg{width:14px;height:14px;stroke:rgba(255,255,255,0.75);fill:none;stroke-width:2}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;position:relative;z-index:1;
+}
+.footer-bottom .copyright{font-size:14px;color:rgba(255,255,255,0.65)}
+.footer-bottom .legal{display:flex;gap:24px}
+.footer-bottom .legal a{font-size:14px;color:rgba(255,255,255,0.65);transition:color 0.3s}
+.footer-bottom .legal a:hover{color:var(--purple-l)}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var t=localStorage.getItem('plurko-theme');
+  if(t)document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<div class="menu-overlay" id="menuOverlay">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="ip-core-products.html">IP Core Products</a>
+    <a href="blogs.html" class="active-page">Blogs</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="menu-overlay-footer">
+    <div class="footer-links">
+      <span>Privacy Policy</span>
+      <span>Terms of Service</span>
+    </div>
+    <span>&copy; 2026 PlurkoTech</span>
+  </div>
+</div>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-logo">
+      <a href="index.html"><img src="assets/images/logo-light.png" alt="PlurkoTech" id="headerLogo"/></a>
+    </div>
+  </div>
+  <div class="header-right">
+    <a href="contact.html" class="header-cta">
+      <div class="cta-fill"></div>
+      <span>Get Started</span>
+    </a>
+    <button class="header-search-icon" aria-label="Search" onclick="window.location.href='index.html'">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="blog-hero">
+  <div class="blog-hero-content">
+    <h1 class="reveal">Insights Shaping the Future of Semiconductor Innovation</h1>
+    <p class="reveal">Explore expert perspectives on IP integration, silicon architecture trends, connectivity evolution, and system-level optimization strategies.</p>
+  </div>
+</section>
+
+<!-- Challenges Banner -->
+<section class="challenges-banner">
+  <div class="challenges-inner">
+    <p class="reveal">Modern semiconductor teams face increasing complexity across performance targets, node transitions, integration timelines, and verification cycles.</p>
+    <div class="challenge-pills reveal">
+      <span class="challenge-pill">Reducing integration risk</span>
+      <span class="challenge-pill">Accelerating validation</span>
+      <span class="challenge-pill">Optimizing architecture decisions</span>
+      <span class="challenge-pill">Managing power efficiency targets</span>
+      <span class="challenge-pill">Scaling across technology nodes</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Blog Grid -->
+<section class="blog-grid-section">
+  <div class="blog-grid-inner">
+    <span class="section-tag reveal">Latest Insights</span>
+    <h2 class="reveal">From the PlurkoTech Engineering Blog</h2>
+    <div class="blog-cards-grid">
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/blog-pcie-gen5.png" alt="PCIe Gen 5 Integration"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Architecture</span>
+          <h3>Navigating PCIe Gen 5 Integration in Modern SoC Designs</h3>
+          <p class="blog-excerpt">Exploring the architectural considerations and trade-offs when integrating PCIe Gen 5 IP into next-generation system-on-chip designs.</p>
+          <span class="blog-date">Mar 2026</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/blog-ucie-chiplet.png" alt="UCIe Chiplet Interconnect"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Connectivity</span>
+          <h3>The Rise of UCIe: Chiplet Interconnect for Heterogeneous Integration</h3>
+          <p class="blog-excerpt">How Universal Chiplet Interconnect Express is reshaping multi-die architectures and enabling disaggregated silicon strategies.</p>
+          <span class="blog-date">Feb 2026</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/blog-verification.png" alt="IP Verification"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Verification</span>
+          <h3>Silicon-Proven vs. FPGA-Proven: What IP Verification Really Means</h3>
+          <p class="blog-excerpt">Understanding the critical differences between verification methodologies and what they mean for integration confidence.</p>
+          <span class="blog-date">Feb 2026</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/blog-hbm-memory.png" alt="HBM3 vs LPDDR5"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Memory</span>
+          <h3>HBM3 vs. LPDDR5: Choosing the Right Memory IP for AI Workloads</h3>
+          <p class="blog-excerpt">A technical comparison of high-bandwidth memory and low-power DDR solutions for machine learning inference and training workloads.</p>
+          <span class="blog-date">Jan 2026</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/offering-interface-ip.png" alt="USB4 and Thunderbolt 5"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Interface</span>
+          <h3>USB4 and Thunderbolt 5: The Next Wave of High-Speed Connectivity</h3>
+          <p class="blog-excerpt">Examining the convergence of USB4 and Thunderbolt 5 standards and their implications for IP core selection.</p>
+          <span class="blog-date">Jan 2026</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-card-img">
+          <img src="assets/images/offering-memory-die.png" alt="Edge AI SoC Design"/>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-tag">Architecture</span>
+          <h3>Designing Power-Efficient SoCs for Edge AI Applications</h3>
+          <p class="blog-excerpt">Strategies for optimizing power consumption in edge AI silicon through IP selection, voltage scaling, and architectural trade-offs.</p>
+          <span class="blog-date">Dec 2025</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="blog-note reveal">More insights coming soon. Follow us on LinkedIn for updates.</p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/images/logo-dark.png" alt="PlurkoTech" style="height:32px" id="footerLogo"/>
+      <p>Empower professionals with reliable, high-performance semiconductor IP products that drive innovation across industries worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Products</h5>
+      <ul>
+        <li><a href="#">Interface IPs</a></li>
+        <li><a href="#">Memory IPs</a></li>
+        <li><a href="#">Peripheral &amp; Crypto</a></li>
+        <li><a href="#">Analog IPs</a></li>
+        <li><a href="#">Cellular IPs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Solutions</h5>
+      <ul>
+        <li><a href="#">Verification IPs</a></li>
+        <li><a href="#">EDA Tools</a></li>
+        <li><a href="#">ASIC Turn-Key</a></li>
+        <li><a href="#">Test Services</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-newsletter">
+      <h5>Newsletter</h5>
+      <p>Stay updated with the latest in semiconductor technology.</p>
+      <div class="footer-newsletter-input">
+        <input type="email" placeholder="Email Address"/>
+        <button aria-label="Subscribe">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="rgba(255,255,255,0.4)" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copyright">&copy; 2026 Plurko Technologies. All rights reserved.</span>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">GDPR Compliance</a>
+      <a href="#">Export Control</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // Theme toggle
+  var headerLogo = document.getElementById('headerLogo');
+  var themeToggle = document.getElementById('themeToggle');
+
+  function updateLogo(){
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if(headerLogo) headerLogo.src = isDark ? 'assets/images/logo-dark.png' : 'assets/images/logo-light.png';
+  }
+  updateLogo();
+
+  if(themeToggle){
+    themeToggle.addEventListener('click',function(){
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('plurko-theme', next);
+      updateLogo();
+    });
+  }
+
+  // Hamburger menu
+  var hamburger = document.getElementById('hamburgerBtn');
+  var menuOverlay = document.getElementById('menuOverlay');
+  var menuBackdrop = document.getElementById('menuBackdrop');
+  var menuOpen = false;
+
+  function toggleMenu(){
+    menuOpen = !menuOpen;
+    hamburger.classList.toggle('active', menuOpen);
+    menuOverlay.classList.toggle('open', menuOpen);
+    menuBackdrop.classList.toggle('visible', menuOpen);
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  menuBackdrop.addEventListener('click', function(){ if(menuOpen) toggleMenu(); });
+  menuOverlay.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ if(menuOpen) toggleMenu(); });
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menuOpen) toggleMenu(); });
+
+  // Reveal on scroll via IntersectionObserver
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    reveals.forEach(function(el){ obs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+})();
+</script>
+</body>
+</html>
