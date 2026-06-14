@@ -1570,7 +1570,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   grid-template-columns:1fr 1fr;gap:0;min-height:280px;
   background:rgba(255,255,255,0.02);
 }
-.why-showcase-slide.active{display:grid}
+.why-showcase-slide.active{display:grid;animation:whyShowcaseIn 0.55s var(--ease-out-expo)}
+@keyframes whyShowcaseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .why-showcase-img{position:relative;overflow:hidden;min-height:280px}
 .why-showcase-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .why-showcase-img::after{
@@ -2104,94 +2105,6 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 <div class="section-divider" style="transform-origin:left"></div>
 
 <!-- Why PlurkoTech -->
-<section class="why-section" id="why">
-  <div class="why-header">
-    <span class="section-tag gold-tag reveal">Why PlurkoTech</span>
-    <h2 class="reveal">Built by Engineers, for Engineers</h2>
-    <p class="reveal">A Trusted Technology Access Point</p>
-  </div>
-
-  <div class="why-showcase" id="whyShowcase">
-    <div class="why-showcase-tabs">
-      <button class="why-tab active" data-why="0">
-        <span class="why-tab-num">01</span>
-        <span class="why-tab-label">Market Insight</span>
-      </button>
-      <button class="why-tab" data-why="1">
-        <span class="why-tab-num">02</span>
-        <span class="why-tab-label">Future Tech</span>
-      </button>
-      <button class="why-tab" data-why="2">
-        <span class="why-tab-num">03</span>
-        <span class="why-tab-label">Flexible Model</span>
-      </button>
-      <button class="why-tab" data-why="3">
-        <span class="why-tab-num">04</span>
-        <span class="why-tab-label">End-to-End</span>
-      </button>
-      <button class="why-tab" data-why="4">
-        <span class="why-tab-num">05</span>
-        <span class="why-tab-label">Global Reach</span>
-      </button>
-    </div>
-    <div class="why-showcase-panel">
-      <div class="why-showcase-slide active" data-why="0">
-        <div class="why-showcase-img"><img src="assets/images/why-silicon-proven.png" alt="Market Insight" loading="lazy"/></div>
-        <div class="why-showcase-text">
-          <h3>Market &amp; Competitive Insight</h3>
-          <p>Data-driven strategies with solid awareness of market dynamics and competitor landscape.</p>
-          <div class="why-showcase-tags">
-            <span>Market Analysis</span><span>Competitive Intel</span><span>Data-Driven</span>
-          </div>
-        </div>
-      </div>
-      <div class="why-showcase-slide" data-why="1">
-        <div class="why-showcase-img"><img src="assets/images/why-future-tech.png" alt="Future Technologies" loading="lazy"/></div>
-        <div class="why-showcase-text">
-          <h3>Aligned with Future Technologies</h3>
-          <p>Focused on high-growth sectors like AI, IoT, automotive, telecom, and data centers.</p>
-          <div class="why-showcase-tags">
-            <span>AI / ML</span><span>IoT</span><span>Automotive</span><span>Telecom</span><span>Data Centers</span>
-          </div>
-        </div>
-      </div>
-      <div class="why-showcase-slide" data-why="2">
-        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Flexible Engagement" loading="lazy"/></div>
-        <div class="why-showcase-text">
-          <h3>Flexible Engagement Model</h3>
-          <p>Agile and accessible - supporting businesses of all sizes with equal priority.</p>
-          <div class="why-showcase-tags">
-            <span>Startups</span><span>Enterprise</span><span>Scalable</span><span>Agile</span>
-          </div>
-        </div>
-      </div>
-      <div class="why-showcase-slide" data-why="3">
-        <div class="why-showcase-img"><img src="assets/images/why-e2e-solutions.png" alt="End-to-end solutions" loading="lazy"/></div>
-        <div class="why-showcase-text">
-          <h3>End-to-End Semiconductor Solutions</h3>
-          <p>One stop for IP, design, testing, and manufacturing, simplifying the entire value chain.</p>
-          <div class="why-showcase-tags">
-            <span>IP Licensing</span><span>ASIC Turn-Key</span><span>Verification</span><span>Manufacturing</span>
-          </div>
-        </div>
-      </div>
-      <div class="why-showcase-slide" data-why="4">
-        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Global outreach" loading="lazy"/></div>
-        <div class="why-showcase-text">
-          <h3>Global Outreach</h3>
-          <p>Presence across key international markets, enabling broader collaboration and support.</p>
-          <div class="why-showcase-tags">
-            <span>India HQ</span><span>USA</span><span>Japan</span><span>South Korea</span><span>Europe</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider" style="transform-origin:right"></div>
-
-<!-- Blog / Insights -->
 <section class="blog-section" id="blog">
   <div class="blog-header">
     <div>
@@ -2298,6 +2211,94 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     </div>
   </div>
   <div class="blog-dots" id="blogDots"></div>
+</section>
+
+<div class="section-divider" style="transform-origin:right"></div>
+
+<!-- Blog / Insights -->
+<section class="why-section" id="why">
+  <div class="why-header">
+    <span class="section-tag gold-tag reveal">Why PlurkoTech</span>
+    <h2 class="reveal">Built by Engineers, for Engineers</h2>
+    <p class="reveal">A Trusted Technology Access Point</p>
+  </div>
+
+  <div class="why-showcase" id="whyShowcase">
+    <div class="why-showcase-tabs">
+      <button class="why-tab active" data-why="0">
+        <span class="why-tab-num">01</span>
+        <span class="why-tab-label">Market Insight</span>
+      </button>
+      <button class="why-tab" data-why="1">
+        <span class="why-tab-num">02</span>
+        <span class="why-tab-label">Future Tech</span>
+      </button>
+      <button class="why-tab" data-why="2">
+        <span class="why-tab-num">03</span>
+        <span class="why-tab-label">Flexible Model</span>
+      </button>
+      <button class="why-tab" data-why="3">
+        <span class="why-tab-num">04</span>
+        <span class="why-tab-label">End-to-End</span>
+      </button>
+      <button class="why-tab" data-why="4">
+        <span class="why-tab-num">05</span>
+        <span class="why-tab-label">Global Reach</span>
+      </button>
+    </div>
+    <div class="why-showcase-panel">
+      <div class="why-showcase-slide active" data-why="0">
+        <div class="why-showcase-img"><img src="assets/images/why-silicon-proven.png" alt="Market Insight" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Market &amp; Competitive Insight</h3>
+          <p>Data-driven strategies with solid awareness of market dynamics and competitor landscape.</p>
+          <div class="why-showcase-tags">
+            <span>Market Analysis</span><span>Competitive Intel</span><span>Data-Driven</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="1">
+        <div class="why-showcase-img"><img src="assets/images/why-future-tech.png" alt="Future Technologies" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Aligned with Future Technologies</h3>
+          <p>Focused on high-growth sectors like AI, IoT, automotive, telecom, and data centers.</p>
+          <div class="why-showcase-tags">
+            <span>AI / ML</span><span>IoT</span><span>Automotive</span><span>Telecom</span><span>Data Centers</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="2">
+        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Flexible Engagement" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Flexible Engagement Model</h3>
+          <p>Agile and accessible - supporting businesses of all sizes with equal priority.</p>
+          <div class="why-showcase-tags">
+            <span>Startups</span><span>Enterprise</span><span>Scalable</span><span>Agile</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="3">
+        <div class="why-showcase-img"><img src="assets/images/why-e2e-solutions.png" alt="End-to-end solutions" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>End-to-End Semiconductor Solutions</h3>
+          <p>One stop for IP, design, testing, and manufacturing, simplifying the entire value chain.</p>
+          <div class="why-showcase-tags">
+            <span>IP Licensing</span><span>ASIC Turn-Key</span><span>Verification</span><span>Manufacturing</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-showcase-slide" data-why="4">
+        <div class="why-showcase-img"><img src="assets/images/why-global.png" alt="Global outreach" loading="lazy"/></div>
+        <div class="why-showcase-text">
+          <h3>Global Outreach</h3>
+          <p>Presence across key international markets, enabling broader collaboration and support.</p>
+          <div class="why-showcase-tags">
+            <span>India HQ</span><span>USA</span><span>Japan</span><span>South Korea</span><span>Europe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <div class="section-divider" style="transform-origin:left"></div>
@@ -2514,7 +2515,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     if (!hero || !canvas) return;
     var ctx = canvas.getContext('2d');
 
-    var SQ = 10;
+    var SQ = 8;
     var RADIUS = 2;
     var DECAY = 0.004;
     var cols, rows, grid;
@@ -2565,8 +2566,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-      var baseR = 116, baseG = 72, baseB = 151;
-      var glowR = 255, glowG = 209, glowB = 102;
+      var baseR = 232, baseG = 184, baseB = 75;
+      var glowR = 255, glowG = 232, glowB = 120;
       var maxAlpha = isDark ? 0.85 : 0.55;
 
       for (var i = 0; i < grid.length; i++) {

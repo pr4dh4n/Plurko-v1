@@ -43,7 +43,7 @@ export function initInteractions() {
     if (!hero || !canvas) return;
     var ctx = canvas.getContext('2d');
 
-    var SQ = 10;
+    var SQ = 8;
     var RADIUS = 2;
     var DECAY = 0.004;
     var cols, rows, grid;
@@ -94,8 +94,8 @@ export function initInteractions() {
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-      var baseR = 116, baseG = 72, baseB = 151;
-      var glowR = 255, glowG = 209, glowB = 102;
+      var baseR = 232, baseG = 184, baseB = 75;
+      var glowR = 255, glowG = 232, glowB = 120;
       var maxAlpha = isDark ? 0.85 : 0.55;
 
       for (var i = 0; i < grid.length; i++) {
