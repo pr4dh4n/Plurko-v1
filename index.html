@@ -2603,6 +2603,10 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       setBodyHeight();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
     });
+    // Keep the scroll height in sync when content resizes (e.g. inquiry-form step change)
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(function() { setBodyHeight(); }).observe(smoothContent);
+    }
 
     window.addEventListener('scroll', function() {
       target = window.scrollY;
