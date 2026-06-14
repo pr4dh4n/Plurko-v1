@@ -1843,8 +1843,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   <nav>
     <a href="index.html">Home</a>
     <a href="solutions.html">Solutions</a>
-    <a href="ip-core-products.html" data-mega="ip-cores">IP Core Products</a>
-    <a href="blogs.html">Blogs</a>
+    <a href="ip-core-products.html" data-mega="ip-cores">Products</a>
+    <a href="blogs.html">Press Releases</a>
     <a href="contact.html">Contact</a>
   </nav>
   <div class="menu-overlay-footer">
@@ -2710,16 +2710,15 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       l1Built = true;
       var head = document.createElement('div');
       head.className = 'mega-col-head';
-      head.textContent = 'IP Cores';
+      head.textContent = 'Product Categories';
       l1.appendChild(head);
 
+      // Single level: hovering Product reveals only the categories (each its own button)
       Object.keys(PRODUCT_TREE).forEach(function(cat) {
-        var row = document.createElement('div');
+        var row = document.createElement('a');
         row.className = 'mega-row';
-        row.setAttribute('data-key', cat);
-        var n = countLeaves(PRODUCT_TREE[cat]);
-        row.innerHTML = '<span>' + shortLabel(cat) + '<span class="mega-count">' + n + '</span></span>' + CHEVRON;
-        row.addEventListener('mouseenter', function() { selectL1(cat); });
+        row.href = 'ip-core-products.html';
+        row.innerHTML = '<span>' + shortLabel(cat) + '</span>';
         l1.appendChild(row);
       });
     }
