@@ -2277,18 +2277,20 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
         <!-- STEP 2: Your Details -->
         <div class="form-step" data-step="1">
           <div class="form-grid">
-            <div class="form-group">
-              <select class="form-select" id="title">
-                <option value="" disabled selected></option>
-                <option>Mr.</option>
-                <option>Mrs.</option>
-                <option>Ms.</option>
-              </select>
-              <label class="form-label" for="title">Title</label>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-input" id="fname" required/>
-              <label class="form-label" for="fname">Full Name</label>
+            <div class="form-group full" style="display:grid;grid-template-columns:1fr 4fr;gap:40px">
+              <div class="form-group">
+                <select class="form-select" id="title">
+                  <option value="" disabled selected></option>
+                  <option>Mr.</option>
+                  <option>Mrs.</option>
+                  <option>Ms.</option>
+                </select>
+                <label class="form-label" for="title">Title</label>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-input" id="fname" required/>
+                <label class="form-label" for="fname">Full Name</label>
+              </div>
             </div>
             <div class="form-group">
               <input type="email" class="form-input" id="email" required/>
