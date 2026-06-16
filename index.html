@@ -61,7 +61,7 @@
 [data-theme="dark"] .products-section{background:var(--bg)}
 [data-theme="dark"] .product-card{background:var(--bg-alt);border-color:rgba(255,255,255,0.06)}
 [data-theme="dark"] .product-tag{background:rgba(116,72,151,0.15)}
-[data-theme="dark"] .blog-section{background:var(--bg)}
+[data-theme="dark"] .blog-section{background:var(--bg-alt)}
 [data-theme="dark"] .blog-card{border-color:rgba(255,255,255,0.06)}
 [data-theme="dark"] .blog-card-img{background:var(--bg-alt);border-color:rgba(255,255,255,0.04)}
 [data-theme="dark"] .blog-card:hover{box-shadow:0 20px 60px rgba(0,0,0,0.3)}
@@ -110,7 +110,7 @@
 
 [data-theme="light"] .product-card{background:var(--bg);border-color:rgba(116,72,151,0.08)}
 [data-theme="light"] .product-tag{background:rgba(116,72,151,0.06)}
-[data-theme="light"] .blog-section{background:var(--bg)}
+[data-theme="light"] .blog-section{background:var(--bg-alt)}
 [data-theme="light"] .blog-card{border-color:var(--border)}
 [data-theme="light"] .blog-card:hover{box-shadow:0 20px 60px rgba(0,0,0,0.08)}
 [data-theme="light"] .blog-card-img{background:var(--bg-alt);border-color:var(--border)}
@@ -603,7 +603,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   font-family:'Poppins',sans-serif;font-size:clamp(11px,0.9vw,13px);font-weight:600;
   text-transform:uppercase;letter-spacing:0.15em;
   background:var(--gold);color:#222222;
-  padding:12px 28px;border-radius:100px;
+  padding:16px 38px;border-radius:100px;
   border:none;
   position:relative;overflow:hidden;
   transition:transform 0.3s var(--ease-smooth);
@@ -722,7 +722,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .offerings-header{max-width:1400px;margin:0 auto 32px}
 .offerings-header h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:8px}
-.offerings-header p{font-size:14px;color:var(--text-light);max-width:520px;line-height:1.55}
+.offerings-header p{font-size:14px;color:var(--text-light);max-width:760px;line-height:1.55}
 .offerings-grid{
   max-width:1400px;margin:0 auto;
 }
@@ -784,8 +784,9 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .why-section::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(rgba(26,26,30,0.8),rgba(26,26,30,0.8)),url('assets/images/why-section-bg.png') center/cover no-repeat;
-  opacity:0.2;pointer-events:none;filter:brightness(0.6);
+  background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:24px 24px;
+  opacity:1;pointer-events:none;
 }
 .why-section>*{position:relative;z-index:1}
 .why-header{max-width:1400px;margin:0 auto 24px}
@@ -844,8 +845,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .why-card-icon svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.5}
 .why-card h3{font-size:16px;color:var(--white);margin-bottom:6px}
 .why-card p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55}
-[data-theme="light"] .why-section{background:rgba(247,245,242,0.6);color:var(--text)}
-[data-theme="light"] .why-section::before{opacity:0.35;filter:none}
+[data-theme="light"] .why-section{background:var(--bg);color:var(--text)}
+[data-theme="light"] .why-section::before{background-image:radial-gradient(rgba(34,34,34,0.04) 1px,transparent 1px)}
 [data-theme="light"] .why-header h2{color:var(--text)}
 [data-theme="light"] .why-header p{color:var(--text-light)}
 [data-theme="light"] .why-card{background:rgba(255,255,255,0.8);border-color:var(--border);backdrop-filter:blur(8px)}
@@ -868,7 +869,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   font-weight:600;text-transform:uppercase;letter-spacing:0.2em;
   color:var(--purple);margin-bottom:16px;display:block;
 }
-[data-theme="dark"] .section-tag{color:#e6b830}
+[data-theme="dark"] .section-tag{color:var(--gold)}
 .gold-tag{color:var(--gold)}
 [data-theme="light"] .gold-tag{
   color:var(--gold);
@@ -1300,7 +1301,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   opacity:0;transition:opacity 0.45s var(--ease-out-expo);
 }
 .blog-card.is-active .blog-card-body{opacity:1}
-.blog-card .blog-tag{color:var(--gold)}
+.blog-card .blog-tag{color:var(--gold);font-weight:500;text-shadow:0 1px 6px rgba(0,0,0,0.75)}
 .blog-card h3{color:#fff;font-size:17px}
 .blog-card p{color:rgba(255,255,255,0.82)}
 .blog-card::after{content:'';position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08);pointer-events:none;z-index:3}
@@ -1548,7 +1549,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .why-tab::after{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--gold);transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--gold),var(--purple));transform-origin:left;transform:scaleX(0);
   transition:none;
 }
 .why-tab.active::after{transform:scaleX(1);transition:transform 4s linear}
@@ -1916,7 +1917,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <p class="hero-sub reveal">Access silicon-proven IP cores and advanced solutions engineered to shorten development cycles and time-to-market.</p>
       <a href="ip-core-products.html" class="hero-cta reveal">
         <div class="cta-fill"></div>
-        <span>Explore IP Core Products</span>
+        <span>Explore Products</span>
         </a>
     </div>
   </div>
@@ -1997,7 +1998,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     <p class="reveal" style="font-size:14px;color:var(--text-light);margin-top:20px">A Simple Process to Access Semiconductor Solutions</p>
   </div>
   <div class="howitworks-grid">
-    <div class="howitworks-card gsap-up" style="--i:0">
+    <div class="howitworks-card reveal-stagger" style="--i:0">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <div class="howitworks-badge">1</div>
@@ -2005,7 +2006,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <h3>Browse Our Catalogue</h3>
       <p>Browse silicon-proven IP cores across connectivity, compute, automotive, and secure domains.</p>
     </div>
-    <div class="howitworks-card gsap-up" style="--i:1">
+    <div class="howitworks-card reveal-stagger" style="--i:1">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         <div class="howitworks-badge">2</div>
@@ -2013,7 +2014,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <h3>Shortlist IP Cores</h3>
       <p>Compare specifications and compatibility to match your architecture.</p>
     </div>
-    <div class="howitworks-card gsap-up" style="--i:2">
+    <div class="howitworks-card reveal-stagger" style="--i:2">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         <div class="howitworks-badge">3</div>
@@ -2021,7 +2022,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <h3>Raise Inquiry</h3>
       <p>Share your requirements for tailored recommendations from our specialists.</p>
     </div>
-    <div class="howitworks-card gsap-up" style="--i:3">
+    <div class="howitworks-card reveal-stagger" style="--i:3">
       <div class="howitworks-icon">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12.89 1.45l8 4A2 2 0 0122 7.24v9.53a2 2 0 01-1.11 1.79l-8 4a2 2 0 01-1.79 0l-8-4A2 2 0 012 16.76V7.24a2 2 0 011.11-1.79l8-4a2 2 0 011.78 0z"/><polyline points="2.32 6.16 12 11 21.68 6.16"/><line x1="12" y1="22.76" x2="12" y2="11"/></svg>
         <div class="howitworks-badge">4</div>
@@ -2042,7 +2043,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     <p class="reveal">Explore widely adopted semiconductor IP technologies and engineering solutions supporting connectivity platforms, memory architectures, programmable logic systems, and custom silicon development.</p>
   </div>
   <div class="expand-panels" id="expandPanels">
-    <div class="expand-panel active" data-panel="0" style="--accent:var(--purple)">
+    <div class="expand-panel active" data-panel="0" style="--accent:var(--purple-l)">
       <img src="assets/images/offering-interface-ip.png" alt="High-Speed Interface IP" loading="lazy"/>
       <div class="expand-panel-overlay"></div>
       <div class="expand-panel-collapsed">
@@ -2080,7 +2081,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <div class="expand-panel-content">
         <span class="expand-panel-num">03</span>
         <h3>Custom IP Development</h3>
-        <p>Tailored semiconductor IP core solutions designed to address specialized architecture requirements, performance targets, and integration constraints.</p>
+        <p>Tailor-made semiconductor IP cores designed to address unique architecture demands, optimize performance, and ensure seamless system integration.</p>
         <a href="#contact" class="expand-panel-link">Discuss Your Needs <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
@@ -2307,8 +2308,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   <div class="form-layout">
     <div class="form-headline">
       <span class="inquiry-badge reveal">Start an Inquiry</span>
-      <h2 class="reveal">Ready to<br/>Innovate?</h2>
-      <p class="reveal">Our technical team is ready to discuss your custom architecture requirements. Reach out to start a collaborative partnership.</p>
+      <h2 class="reveal">Ready to<br/>Develop?</h2>
+      <p class="reveal">Our technical team is ready to discuss your custom solutions. Reach out to start a collaborative partnership.</p>
     </div>
     <div class="form-stepper-wrap">
       <!-- Step indicator -->
@@ -2338,7 +2339,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
             </div>
             <div class="form-group">
               <input type="text" class="form-input" id="ipCategory"/>
-              <label class="form-label" for="ipCategory">IP Category of Interest</label>
+              <label class="form-label" for="ipCategory">Required IP/KGD Solution</label>
             </div>
             <div class="form-group">
               <input type="text" class="form-input" id="fabNode"/>
@@ -2416,22 +2417,22 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       <p>Empower professionals with reliable, high-performance semiconductor IP products that drive innovation across industries worldwide.</p>
     </div>
     <div class="footer-col">
-      <h5>Products</h5>
+      <h5>Solutions</h5>
       <ul>
-        <li><a href="#">Interface IPs</a></li>
-        <li><a href="#">Memory IPs</a></li>
-        <li><a href="#">Peripheral & Crypto</a></li>
-        <li><a href="#">Analog IPs</a></li>
-        <li><a href="#">Cellular IPs</a></li>
+        <li><a href="solutions.html">Memory Die Solutions</a></li>
+        <li><a href="solutions.html">High-Speed IP Cores</a></li>
+        <li><a href="solutions.html">Custom IP Development</a></li>
+        <li><a href="solutions.html">Verification</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Solutions</h5>
+      <h5>Products</h5>
       <ul>
-        <li><a href="#">Verification IPs</a></li>
-        <li><a href="#">EDA Tools</a></li>
-        <li><a href="#">ASIC Turn-Key</a></li>
-        <li><a href="#">Test Services</a></li>
+        <li><a href="ip-core-products.html">Interface IP</a></li>
+        <li><a href="ip-core-products.html">Memory IP</a></li>
+        <li><a href="ip-core-products.html">SerDes IP</a></li>
+        <li><a href="ip-core-products.html">Analog &amp; Mixed-Signal</a></li>
+        <li><a href="ip-core-products.html">Peripheral &amp; Crypto</a></li>
       </ul>
     </div>
     <div class="footer-col footer-newsletter">
@@ -2445,9 +2446,8 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
       </div>
       <div class="footer-social">
         <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
-        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
-        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="rgba(255,255,255,0.4)" stroke="none"/></svg></a>
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
       </div>
     </div>
   </div>
@@ -3070,20 +3070,20 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
     heroSpans.forEach(function(span, i) {
       introTL.fromTo(span, { y: '110%', opacity: 0 }, {
         y: '0%', opacity: 1, duration: 0.7, ease: 'power4.out'
-      }, 0.75 + i * 0.12);
+      }, 0.75 + i * 0.08);
     });
     introTL.fromTo('.hero-slide.active .hero-sub', { y: 30, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 0.8
-    }, 1.15);
+      y: 0, opacity: 1, duration: 0.7
+    }, 2.05);
     introTL.fromTo('.hero-slide.active .hero-cta', { scale: 0.8, opacity: 0 }, {
       scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', clearProps: 'transform'
-    }, 1.35);
+    }, 2.85);
     introTL.fromTo('.hero-dots', { opacity: 0, y: 20 }, {
       opacity: 1, y: 0, duration: 0.6
-    }, 1.4);
+    }, 3.3);
     introTL.fromTo('.hero-arrows', { opacity: 0, y: 20 }, {
       opacity: 1, y: 0, duration: 0.6
-    }, 1.4);
+    }, 3.3);
     introTL.fromTo('.hero-visual', { opacity: 0, scale: 0.85, rotation: -5 }, {
       opacity: 0.12, scale: 1, rotation: 0, duration: 1.2, ease: 'power2.out'
     }, 0.9);

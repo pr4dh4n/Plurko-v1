@@ -598,20 +598,20 @@ export function initInteractions() {
     heroSpans.forEach(function(span, i) {
       introTL.fromTo(span, { y: '110%', opacity: 0 }, {
         y: '0%', opacity: 1, duration: 0.7, ease: 'power4.out'
-      }, 0.75 + i * 0.12);
+      }, 0.75 + i * 0.08);
     });
     introTL.fromTo('.hero-slide.active .hero-sub', { y: 30, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 0.8
-    }, 1.15);
+      y: 0, opacity: 1, duration: 0.7
+    }, 2.05);
     introTL.fromTo('.hero-slide.active .hero-cta', { scale: 0.8, opacity: 0 }, {
       scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', clearProps: 'transform'
-    }, 1.35);
+    }, 2.85);
     introTL.fromTo('.hero-dots', { opacity: 0, y: 20 }, {
       opacity: 1, y: 0, duration: 0.6
-    }, 1.4);
+    }, 3.3);
     introTL.fromTo('.hero-arrows', { opacity: 0, y: 20 }, {
       opacity: 1, y: 0, duration: 0.6
-    }, 1.4);
+    }, 3.3);
     introTL.fromTo('.hero-visual', { opacity: 0, scale: 0.85, rotation: -5 }, {
       opacity: 0.12, scale: 1, rotation: 0, duration: 1.2, ease: 'power2.out'
     }, 0.9);
