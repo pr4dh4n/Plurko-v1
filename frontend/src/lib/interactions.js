@@ -152,6 +152,7 @@ export function initInteractions() {
   var header = document.getElementById('siteHeader');
   var headerLogo = document.getElementById('headerLogo');
   var lastHeaderY = window.scrollY || 0;
+  var headerAcc = 0;
 
   function updateHeader() {
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -161,16 +162,20 @@ export function initInteractions() {
     } else {
       header.classList.remove('scrolled');
     }
-    // Fade the header out when scrolling down, back in when scrolling up
-    if (Math.abs(y - lastHeaderY) > 6) {
-      if (y > 140 && y > lastHeaderY) {
-        header.classList.add('header-hidden');
-      } else {
-        header.classList.remove('header-hidden');
-      }
-      lastHeaderY = y;
+    // Slide the header away on scroll, with hysteresis so momentum jitter never flickers it
+    var delta = y - lastHeaderY;
+    if ((delta > 0) !== (headerAcc > 0)) headerAcc = 0; // direction changed -> reset accumulator
+    headerAcc += delta;
+    if (y <= 80) {
+      header.classList.remove('header-hidden');           // always visible near the top
+    } else if (headerAcc > 70) {
+      header.classList.add('header-hidden');              // sustained scroll down -> hide
+      headerAcc = 0;
+    } else if (headerAcc < -45) {
+      header.classList.remove('header-hidden');           // sustained scroll up -> reveal
+      headerAcc = 0;
     }
-    if (y <= 60) header.classList.remove('header-hidden');
+    lastHeaderY = y;
     if (headerLogo) headerLogo.src = isDark ? 'assets/images/logo-dark.png' : 'assets/images/logo-light.png';
   }
   window.addEventListener('scroll', updateHeader, { passive: true });
