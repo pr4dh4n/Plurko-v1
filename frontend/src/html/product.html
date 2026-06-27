@@ -1,0 +1,148 @@
+<section class="product-top">
+  <div class="product-top-inner">
+    <div class="breadcrumb reveal" id="breadcrumb"></div>
+    <div class="product-header">
+      <div class="product-header-left">
+        <span class="product-category" id="productCategory"></span>
+        <h1 id="productName"></h1>
+        <p class="product-desc" id="productDesc"></p>
+      </div>
+      <div class="product-header-right">
+        <div class="quick-stats" id="quickStats"></div>
+        <div class="product-ctas">
+          <a href="index.html#contact" class="product-cta-primary">
+            <div class="cta-fill"></div>
+            <span>Request Evaluation</span>
+            <svg class="dot-svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+          </a>
+          <a class="product-cta-secondary" id="downloadBriefBtn">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Brief
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="tab-overview">Overview</button>
+  <button class="tab-btn" data-tab="tab-brief">Product Brief</button>
+</div>
+
+<div class="tab-content active" id="tab-overview">
+  <div class="overview-layout">
+    <div class="overview-left">
+      <div class="info-section reveal">
+        <div class="info-section-title">Description</div>
+        <p class="info-text" id="overviewDesc"></p>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Key Features</div>
+        <ul class="feature-list" id="featureList"></ul>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Applications</div>
+        <div class="app-pills" id="appPills"></div>
+      </div>
+      <div class="info-section reveal">
+        <div class="info-section-title">Deliverables</div>
+        <ul class="deliverable-list" id="deliverableList"></ul>
+      </div>
+    </div>
+    <div class="overview-right">
+      <div class="reveal" style="position:relative">
+        <div class="layer-diagram" id="layerDiagram"></div>
+        <button class="diagram-edit-btn" id="diagramEditBtn" title="Edit diagram">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>
+      <div class="quick-ref reveal" id="quickRef"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" id="tab-brief">
+  <div class="doc-viewer-wrap">
+    <div class="doc-viewer-toolbar">
+      <div class="doc-viewer-title">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span id="docFileName"></span>
+      </div>
+      <div class="doc-viewer-actions">
+        <a class="doc-action-btn" id="docDownloadBtn" download>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+      </div>
+    </div>
+    <div id="pdfContainer">
+      <div class="doc-loading">
+        <div class="spinner"></div>
+        <span>Select the Product Brief tab to load the document.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" style="transform-origin:right"></div>
+
+<section class="product-cta-section">
+  <h2 class="reveal">Ready to Evaluate This <span class="accent-word">IP?</span></h2>
+  <p class="reveal">Get access to the full technical documentation and connect with our integration engineering team.</p>
+  <a href="index.html#contact" class="final-cta-btn reveal">Request Evaluation</a>
+</section>
+
+<div class="vb-overlay" id="vbOverlay">
+  <div class="vb-toolbar">
+    <span class="vb-brand">Diagram Builder</span>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbAddBox" title="Add box">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Box
+      </button>
+      <button class="vb-tool" id="vbAddContainer" title="Add container">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" stroke-dasharray="4 2"/></svg> Container
+      </button>
+      <button class="vb-tool" id="vbAddArrow" title="Draw arrow (click two ports)">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Arrow
+      </button>
+    </div>
+    <div class="vb-toolbar-group">
+      <div class="vb-tool-color" style="background:#744897" data-color="#744897" title="Purple"></div>
+      <div class="vb-tool-color" style="background:#FFD166" data-color="#FFD166" title="Gold"></div>
+      <div class="vb-tool-color" style="background:#3a3a3e" data-color="#3a3a3e" title="Dark"></div>
+      <div class="vb-tool-color" style="background:transparent;border-color:rgba(255,255,255,0.3)" data-color="outline" title="Outline only"></div>
+    </div>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbDuplicate" title="Duplicate selected">
+        <svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg> Clone
+      </button>
+      <button class="vb-tool" id="vbDelete" title="Delete selected">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> Delete
+      </button>
+    </div>
+    <div class="vb-toolbar-group">
+      <button class="vb-tool" id="vbSave" title="Save & apply to page">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save
+      </button>
+      <button class="vb-tool" id="vbExportJSON" title="Export as JSON">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export
+      </button>
+      <button class="vb-tool" id="vbClose" title="Close editor">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Close
+      </button>
+    </div>
+  </div>
+  <div class="vb-canvas-wrap">
+    <div class="vb-canvas" id="vbCanvas">
+      <svg class="vb-arrows" id="vbArrowsSvg" viewBox="0 0 1200 800">
+        <defs>
+          <marker id="vbArrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(255,255,255,0.5)"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</div>
+<div class="vb-toast" id="vbToast"></div>

@@ -1,8 +1,8 @@
 // Ported from the original index.html inline script. Runs once after mount.
 // GSAP + ScrollTrigger are loaded as globals via index.html.
-let _inited = false;
-export function initInteractions() {
-  if (_inited) return; _inited = true;
+let _inited=false;
+export function initInteractions(){
+  if(_inited)return;_inited=true;
   'use strict';
   try {
 
@@ -119,7 +119,7 @@ export function initInteractions() {
   const smoothWrapper = document.getElementById('smooth-wrapper');
   const smoothContent = document.getElementById('smooth-content');
 
-  if (!isTouch && smoothWrapper && smoothContent) {
+  if (!isTouch && smoothWrapper && smoothContent && !smoothWrapper.classList.contains('no-smooth')) {
     let current = 0;
     let target = 0;
     let ease = 0.1;

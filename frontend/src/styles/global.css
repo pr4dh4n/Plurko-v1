@@ -133,6 +133,8 @@ ul,ol{list-style:none}
 input,select,textarea{font-family:inherit;border:none;outline:none;background:transparent}
 
 #smooth-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden}
+#smooth-wrapper.no-smooth{position:relative;height:auto;overflow:visible}
+#smooth-wrapper.no-smooth #smooth-content{transform:none!important}
 #smooth-content{will-change:transform;padding-top:64px}
 @media(pointer:coarse){
   #smooth-wrapper{position:relative;overflow:visible}

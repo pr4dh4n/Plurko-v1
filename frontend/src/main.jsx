@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import SiteShell from './components/SiteShell.jsx'
+import homeContent from './html/content.html?raw'
 
-// Mark JS-ready before first paint so reveal-on-scroll elements start hidden
+// Home page. Mark js-ready before first paint so reveal-on-scroll elements start hidden.
+// No StrictMode: the ported interaction script binds listeners / rAF loops once.
 document.body.classList.add('js-ready')
-
-// No StrictMode: the ported interaction script binds listeners / rAF loops once,
-// and StrictMode's double-invoke in dev would double-bind them.
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <SiteShell content={homeContent} />
+)
