@@ -167,14 +167,14 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);
   border-bottom-color:var(--border);
 }
-.site-header.header-hidden{opacity:0;transform:translateY(-100%);pointer-events:none}
+.site-header.header-hidden{opacity:0;pointer-events:none}
 #smooth-wrapper{
   transition:transform 1.1s cubic-bezier(0.22,1,0.36,1),border-radius 1.1s cubic-bezier(0.22,1,0.36,1),width 1.1s cubic-bezier(0.22,1,0.36,1),left 1.1s cubic-bezier(0.22,1,0.36,1);
 }
 #smooth-wrapper.pushed{
   left:min(380px,85vw) !important;
   width:calc(100% - min(380px,85vw)) !important;
-  border-radius:16px;
+  border-radius:0;
 }
 .site-header.menu-open{
   left:min(380px,85vw);
@@ -766,12 +766,12 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .why-section::before{
   content:'';position:absolute;inset:0;
-  background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);
-  background-size:24px 24px;
+  background-image:radial-gradient(rgba(255,255,255,0.09) 1.6px,transparent 1.6px);
+  background-size:22px 22px;
   opacity:1;pointer-events:none;
 }
 .why-section>*{position:relative;z-index:1}
-.why-header{max-width:1400px;margin:0 auto 24px}
+.why-header{max-width:1400px;margin:0 auto 32px}
 .why-header h2{font-size:clamp(1.4rem,2.5vw,2rem);color:var(--white);margin-bottom:8px}
 .why-header p{font-size:14px;color:rgba(255,255,255,0.4);max-width:520px;line-height:1.55}
 /* Why Stats Counter Strip */
@@ -828,7 +828,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 .why-card h3{font-size:16px;color:var(--white);margin-bottom:6px}
 .why-card p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55}
 [data-theme="light"] .why-section{background:var(--bg);color:var(--text)}
-[data-theme="light"] .why-section::before{background-image:radial-gradient(rgba(34,34,34,0.04) 1px,transparent 1px)}
+[data-theme="light"] .why-section::before{background-image:radial-gradient(rgba(116,72,151,0.10) 1.6px,transparent 1.6px)}
 [data-theme="light"] .why-header h2{color:var(--text)}
 [data-theme="light"] .why-header p{color:var(--text-light)}
 [data-theme="light"] .why-card{background:rgba(255,255,255,0.8);border-color:var(--border);backdrop-filter:blur(8px)}
@@ -1199,7 +1199,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 }
 .blog-header{
   display:flex;justify-content:space-between;align-items:flex-end;
-  max-width:1400px;margin:0 auto 48px;gap:24px;flex-wrap:wrap;
+  max-width:1400px;margin:0 auto 32px;gap:24px;flex-wrap:wrap;
 }
 .blog-nav{display:flex;gap:8px}
 .blog-nav button{
@@ -1503,6 +1503,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
   font-size:clamp(16px,2vw,22px);color:#fff;margin-bottom:8px;line-height:1.2;
 }
 .expand-panel-content p{font-size:13px;color:#fff;line-height:1.55;max-width:480px;margin-bottom:16px}
+.expand-panel[data-panel="2"] .expand-panel-content p{max-width:360px}
 .expand-panel-link{
   display:inline-flex;align-items:center;gap:6px;
   font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;

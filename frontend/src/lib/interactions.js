@@ -151,8 +151,7 @@ export function initInteractions() {
 
   var header = document.getElementById('siteHeader');
   var headerLogo = document.getElementById('headerLogo');
-  var lastHeaderY = window.scrollY || 0;
-  var headerAcc = 0;
+  var scrollIdleTimer = null;
 
   function updateHeader() {
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -162,20 +161,16 @@ export function initInteractions() {
     } else {
       header.classList.remove('scrolled');
     }
-    // Slide the header away on scroll, with hysteresis so momentum jitter never flickers it
-    var delta = y - lastHeaderY;
-    if ((delta > 0) !== (headerAcc > 0)) headerAcc = 0; // direction changed -> reset accumulator
-    headerAcc += delta;
-    if (y <= 80) {
-      header.classList.remove('header-hidden');           // always visible near the top
-    } else if (headerAcc > 70) {
-      header.classList.add('header-hidden');              // sustained scroll down -> hide
-      headerAcc = 0;
-    } else if (headerAcc < -45) {
-      header.classList.remove('header-hidden');           // sustained scroll up -> reveal
-      headerAcc = 0;
+    // Fade the header out while scrolling; fade it back in once scrolling stops
+    // (so the menu/search stay reachable whenever the user pauses). Always visible near the top.
+    if (y > 80) {
+      header.classList.add('header-hidden');
+      clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = setTimeout(function() { header.classList.remove('header-hidden'); }, 200);
+    } else {
+      clearTimeout(scrollIdleTimer);
+      header.classList.remove('header-hidden');
     }
-    lastHeaderY = y;
     if (headerLogo) headerLogo.src = isDark ? 'assets/images/logo-dark.png' : 'assets/images/logo-light.png';
   }
   window.addEventListener('scroll', updateHeader, { passive: true });
@@ -218,182 +213,93 @@ export function initInteractions() {
     var l1 = document.getElementById('megaL1');
     var l2 = document.getElementById('megaL2');
     var l3 = document.getElementById('megaL3');
-    var ipCoresLink = document.querySelector('.menu-overlay nav a[data-mega="ip-cores"]');
-    if (!l1 || !ipCoresLink) return;
+    var menuOverlayEl = document.getElementById('menuOverlay');
+    if (!l1 || !menuOverlayEl) return;
 
-    var megaActive = false;
+    // Single-level fly-outs that mirror the footer columns (footer is the source of truth)
+    var FLYOUTS = {
+      'ip-cores': {
+        head: 'Products',
+        items: [
+          { label: 'Interface IP', href: 'ip-core-products.html' },
+          { label: 'Memory IP', href: 'ip-core-products.html' },
+          { label: 'SerDes IP', href: 'ip-core-products.html' },
+          { label: 'Analog & Mixed-Signal', href: 'ip-core-products.html' },
+          { label: 'Peripheral & Crypto', href: 'ip-core-products.html' }
+        ]
+      },
+      'solutions': {
+        head: 'Solutions',
+        items: [
+          { label: 'Memory Die Solutions', href: 'solutions.html' },
+          { label: 'High-Speed IP Cores', href: 'solutions.html' },
+          { label: 'Custom IP Development', href: 'solutions.html' },
+          { label: 'Verification', href: 'solutions.html' }
+        ]
+      }
+    };
+
     var hideTimeout = null;
-    var activeL1Key = null;
-    var activeL2Key = null;
-    var l1Built = false;
+    var activeKey = null;
 
-    var CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>';
-
-    function shortLabel(cat) {
-      return cat
-        .replace(/ IP Cores?$/i, '')
-        .replace(/^High speed interface$/i, 'Interface')
-        .replace(/^Peripheral and Cryptographic$/i, 'Peripheral & Crypto');
-    }
-
-    function countLeaves(obj) {
-      if (Array.isArray(obj)) return obj.length;
-      var n = 0;
-      Object.keys(obj).forEach(function(k) { n += countLeaves(obj[k]); });
-      return n;
-    }
-
-    function ensureL1() {
-      if (l1Built) return;
-      l1Built = true;
+    function buildL1(key) {
+      var cfg = FLYOUTS[key];
+      if (!cfg) return;
+      l1.innerHTML = '';
       var head = document.createElement('div');
       head.className = 'mega-col-head';
-      head.textContent = 'Product Categories';
+      head.textContent = cfg.head;
       l1.appendChild(head);
-
-      // Single level: hovering Product reveals only the categories (each its own button)
-      Object.keys(PRODUCT_TREE).forEach(function(cat) {
+      cfg.items.forEach(function(it) {
         var row = document.createElement('a');
         row.className = 'mega-row';
-        row.href = 'ip-core-products.html';
-        row.innerHTML = '<span>' + shortLabel(cat) + '</span>';
+        row.href = it.href;
+        row.innerHTML = '<span>' + it.label + '</span>';
         l1.appendChild(row);
       });
     }
 
-    function selectL1(cat) {
-      if (activeL1Key === cat) return;
-      activeL1Key = cat;
-      activeL2Key = null;
-
-      l1.querySelectorAll('.mega-row').forEach(function(r) {
-        r.classList.toggle('active', r.getAttribute('data-key') === cat);
-      });
-
-      l3.classList.remove('open');
-      l2.innerHTML = '';
-      var head = document.createElement('div');
-      head.className = 'mega-col-head';
-      head.textContent = shortLabel(cat);
-      l2.appendChild(head);
-
-      var data = PRODUCT_TREE[cat];
-
-      if (Array.isArray(data)) {
-        data.forEach(function(product) {
-          var row = document.createElement('a');
-          row.className = 'mega-row';
-          row.href = '#';
-          row.innerHTML = '<span>' + product + '</span>';
-          row.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            navigateToProduct(product);
-          });
-          l2.appendChild(row);
-        });
-      } else {
-        Object.keys(data).forEach(function(sub) {
-          var row = document.createElement('div');
-          row.className = 'mega-row';
-          row.setAttribute('data-key', sub);
-          var count = data[sub].length;
-          row.innerHTML = '<span>' + sub + '<span class="mega-count">' + count + '</span></span>' + CHEVRON;
-          row.addEventListener('mouseenter', function() { selectL2(cat, sub); });
-          l2.appendChild(row);
-        });
-      }
-
-      l2.classList.add('open');
-    }
-
-    function selectL2(cat, sub) {
-      if (activeL2Key === sub) return;
-      activeL2Key = sub;
-
-      l2.querySelectorAll('.mega-row').forEach(function(r) {
-        r.classList.toggle('active', r.getAttribute('data-key') === sub);
-      });
-
-      l3.innerHTML = '';
-      var head = document.createElement('div');
-      head.className = 'mega-col-head';
-      head.textContent = sub;
-      l3.appendChild(head);
-
-      PRODUCT_TREE[cat][sub].forEach(function(product) {
-        var row = document.createElement('a');
-        row.className = 'mega-row';
-        row.href = 'product-pcie-gen5.html';
-        row.innerHTML = '<span>' + product + '</span>';
-        l3.appendChild(row);
-      });
-
-      l3.classList.add('open');
-    }
-
-    function navigateToProduct(name) {
-      closeAll();
-      if (menuOpen) toggleMenu();
-      var sec = document.getElementById('offerings');
-      if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-      setTimeout(function() {
-        var input = document.getElementById('headerSearchInput');
-        if (input) {
-          input.value = name;
-          input.dispatchEvent(new Event('input', { bubbles: true }));
-          input.focus();
-        }
-      }, 600);
-    }
-
-    function showMega() {
+    function showMega(key) {
       clearTimeout(hideTimeout);
-      if (megaActive) return;
-      megaActive = true;
-      activeL1Key = null;
-      activeL2Key = null;
-      ensureL1();
-      l1.querySelectorAll('.mega-row').forEach(function(r) { r.classList.remove('active'); });
-      l2.classList.remove('open');
-      l3.classList.remove('open');
+      if (activeKey !== key) { activeKey = key; buildL1(key); }
+      if (l2) l2.classList.remove('open');
+      if (l3) l3.classList.remove('open');
       l1.classList.add('open');
     }
-
-    function hideMega() {
-      hideTimeout = setTimeout(closeAll, 250);
-    }
-
+    function hideMega() { hideTimeout = setTimeout(closeAll, 250); }
     function closeAll() {
-      megaActive = false;
-      activeL1Key = null;
-      activeL2Key = null;
+      activeKey = null;
       l1.classList.remove('open');
-      l2.classList.remove('open');
-      l3.classList.remove('open');
+      if (l2) l2.classList.remove('open');
+      if (l3) l3.classList.remove('open');
     }
-
     function cancelHide() { clearTimeout(hideTimeout); }
 
-    ipCoresLink.addEventListener('mouseenter', showMega);
-    ipCoresLink.addEventListener('mouseleave', hideMega);
+    document.querySelectorAll('.menu-overlay nav a[data-mega]').forEach(function(link) {
+      var key = link.getAttribute('data-mega');
+      link.addEventListener('mouseenter', function() { showMega(key); });
+      link.addEventListener('mouseleave', hideMega);
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (activeKey === key && l1.classList.contains('open')) closeAll();
+        else showMega(key);
+      });
+    });
     [l1, l2, l3].forEach(function(col) {
+      if (!col) return;
       col.addEventListener('mouseenter', cancelHide);
       col.addEventListener('mouseleave', hideMega);
     });
-    ipCoresLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!megaActive) showMega(); else closeAll();
-    });
+
     var megaObs = new MutationObserver(function(mutations) {
       mutations.forEach(function(m) {
-        if (m.attributeName === 'class' && !menuOverlay.classList.contains('open') && megaActive) {
+        if (m.attributeName === 'class' && !menuOverlayEl.classList.contains('open') && activeKey) {
           closeAll();
         }
       });
     });
-    megaObs.observe(menuOverlay, { attributes: true });
+    megaObs.observe(menuOverlayEl, { attributes: true });
   })();
 
   (function() {
