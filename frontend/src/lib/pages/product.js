@@ -157,8 +157,9 @@ export function initProduct() {
       var totalH = maxY - minY || 1;
       var pad = 20;
 
-      var html = '<div style="position:relative;width:100%;padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
-      html += '<svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
+      var html = '<div class="layer-diagram-title">' + PRODUCT.subcategory + ' Protocol Stack</div>';
+      html += '<div class="vbr-wrap" style="padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
+      html += '<svg class="vbr-arrows" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
       html += '<defs><marker id="ah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(116,72,151,0.5)"/></marker></defs>';
       a.forEach(function(ar) {
         var fromB = b.find(function(bl) { return bl.id === ar.from; });
@@ -179,27 +180,17 @@ export function initProduct() {
       });
       html += '</svg>';
 
+      // Map builder palette -> design-token treatments so saved diagrams keep the site's look
+      var COLOR_CLASS = { '#744897': 'vbr--purple', '#FFD166': 'vbr--gold', '#3a3a3e': 'vbr--dark', 'outline': 'vbr--outline' };
       b.forEach(function(bl) {
         var left = ((bl.x - minX + pad) / (totalW + pad * 2) * 100);
         var top = ((bl.y - minY + pad) / (totalH + pad * 2) * 100);
         var w = (bl.w / (totalW + pad * 2) * 100);
         var h = (bl.h / (totalH + pad * 2) * 100);
         var isContainer = bl.type === 'container';
-        var isOutline = bl.color === 'outline';
-        var bg = isContainer ? 'transparent' : (isOutline ? 'rgba(116,72,151,0.06)' : bl.color);
-        var border = isContainer ? '2px dashed ' + bl.color : (isOutline ? '1px solid rgba(116,72,151,0.12)' : '1px solid rgba(255,255,255,0.1)');
-        var textColor = isContainer ? bl.color : (isOutline ? 'var(--text)' : (bl.color === '#FFD166' ? '#222' : '#fff'));
-        var z = isContainer ? 0 : 2;
-        var fontSize = bl.fontSize || 12;
-        var align = isContainer ? 'flex-start' : 'center';
-        var justify = isContainer ? 'flex-start' : 'center';
-        var extraStyle = isContainer ? 'text-transform:uppercase;letter-spacing:0.12em;font-weight:700;' : 'font-weight:600;';
-
-        html += '<div style="position:absolute;left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;' +
-          'background:' + bg + ';border:' + border + ';border-radius:6px;' +
-          'display:flex;align-items:' + align + ';justify-content:' + justify + ';' +
-          'color:' + textColor + ';font-family:Poppins,sans-serif;font-size:' + fontSize + 'px;' +
-          'text-align:center;z-index:' + z + ';padding:4px 8px;' + extraStyle + '">' +
+        var cls = (isContainer ? 'vbr-container ' : 'vbr-block ') + (COLOR_CLASS[bl.color] || 'vbr--purple');
+        var fontSize = bl.fontSize || (isContainer ? 11 : 13);
+        html += '<div class="' + cls + '" style="left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;font-size:' + fontSize + 'px">' +
           bl.text + '</div>';
       });
       html += '</div>';

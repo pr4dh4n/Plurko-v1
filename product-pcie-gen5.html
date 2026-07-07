@@ -592,6 +592,35 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700;line-height:1
 [data-theme="dark"] .layer-connector{background:rgba(255,255,255,0.1)}
 [data-theme="dark"] .side-block{background:rgba(255,209,102,0.06);border-color:rgba(255,209,102,0.15)}
 
+/* Visual-builder rendered diagram — same design language as the default layer stack */
+.vbr-wrap{position:relative;width:100%}
+.vbr-arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.vbr-block{
+  position:absolute;z-index:2;display:flex;align-items:center;justify-content:center;
+  padding:4px 8px;text-align:center;border-radius:8px;overflow:hidden;
+  font-family:'Poppins',sans-serif;font-weight:600;color:var(--text);
+  transition:background 0.3s;
+}
+.vbr-block.vbr--purple{background:rgba(116,72,151,0.06);border:1px solid rgba(116,72,151,0.12)}
+.vbr-block.vbr--purple:hover{background:rgba(116,72,151,0.1)}
+.vbr-block.vbr--gold{background:rgba(255,209,102,0.06);border:1px solid rgba(255,209,102,0.12)}
+.vbr-block.vbr--gold:hover{background:rgba(255,209,102,0.1)}
+.vbr-block.vbr--dark{background:rgba(34,34,34,0.05);border:1px solid var(--border)}
+.vbr-block.vbr--outline{background:transparent;border:1px dashed rgba(116,72,151,0.25)}
+.vbr-container{
+  position:absolute;z-index:0;display:flex;align-items:flex-start;justify-content:flex-start;
+  padding:8px 10px;border-radius:10px;
+  font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+}
+.vbr-container.vbr--purple{border:2px dashed rgba(116,72,151,0.35);color:var(--purple)}
+.vbr-container.vbr--gold{border:2px dashed rgba(255,209,102,0.5);color:var(--gold-d)}
+.vbr-container.vbr--dark,.vbr-container.vbr--outline{border:2px dashed var(--border);color:var(--text-muted)}
+[data-theme="dark"] .vbr-block.vbr--purple{background:rgba(116,72,151,0.08);border-color:rgba(116,72,151,0.2)}
+[data-theme="dark"] .vbr-block.vbr--gold{background:rgba(255,209,102,0.06);border-color:rgba(255,209,102,0.15)}
+[data-theme="dark"] .vbr-block.vbr--dark{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08)}
+[data-theme="dark"] .vbr-block.vbr--outline{border-color:rgba(255,255,255,0.18)}
+[data-theme="dark"] .vbr-container.vbr--gold{color:var(--gold)}
+
 .diagram-edit-btn{
   position:absolute;top:12px;right:12px;z-index:5;
   width:32px;height:32px;border-radius:8px;cursor:pointer;
@@ -1327,8 +1356,9 @@ body.role-admin .diagram-edit-btn{display:flex}
     var totalH = maxY - minY || 1;
     var pad = 20;
 
-    var html = '<div style="position:relative;width:100%;padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
-    html += '<svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
+    var html = '<div class="layer-diagram-title">' + PRODUCT.subcategory + ' Protocol Stack</div>';
+    html += '<div class="vbr-wrap" style="padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
+    html += '<svg class="vbr-arrows" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
     html += '<defs><marker id="ah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(116,72,151,0.5)"/></marker></defs>';
     a.forEach(function(ar) {
       var fromB = b.find(function(bl) { return bl.id === ar.from; });
@@ -1349,27 +1379,17 @@ body.role-admin .diagram-edit-btn{display:flex}
     });
     html += '</svg>';
 
+    // Map builder palette -> design-token treatments so saved diagrams keep the site's look
+    var COLOR_CLASS = { '#744897': 'vbr--purple', '#FFD166': 'vbr--gold', '#3a3a3e': 'vbr--dark', 'outline': 'vbr--outline' };
     b.forEach(function(bl) {
       var left = ((bl.x - minX + pad) / (totalW + pad * 2) * 100);
       var top = ((bl.y - minY + pad) / (totalH + pad * 2) * 100);
       var w = (bl.w / (totalW + pad * 2) * 100);
       var h = (bl.h / (totalH + pad * 2) * 100);
       var isContainer = bl.type === 'container';
-      var isOutline = bl.color === 'outline';
-      var bg = isContainer ? 'transparent' : (isOutline ? 'rgba(116,72,151,0.06)' : bl.color);
-      var border = isContainer ? '2px dashed ' + bl.color : (isOutline ? '1px solid rgba(116,72,151,0.12)' : '1px solid rgba(255,255,255,0.1)');
-      var textColor = isContainer ? bl.color : (isOutline ? 'var(--text)' : (bl.color === '#FFD166' ? '#222' : '#fff'));
-      var z = isContainer ? 0 : 2;
-      var fontSize = bl.fontSize || 12;
-      var align = isContainer ? 'flex-start' : 'center';
-      var justify = isContainer ? 'flex-start' : 'center';
-      var extraStyle = isContainer ? 'text-transform:uppercase;letter-spacing:0.12em;font-weight:700;' : 'font-weight:600;';
-
-      html += '<div style="position:absolute;left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;' +
-        'background:' + bg + ';border:' + border + ';border-radius:6px;' +
-        'display:flex;align-items:' + align + ';justify-content:' + justify + ';' +
-        'color:' + textColor + ';font-family:Poppins,sans-serif;font-size:' + fontSize + 'px;' +
-        'text-align:center;z-index:' + z + ';padding:4px 8px;' + extraStyle + '">' +
+      var cls = (isContainer ? 'vbr-container ' : 'vbr-block ') + (COLOR_CLASS[bl.color] || 'vbr--purple');
+      var fontSize = bl.fontSize || (isContainer ? 11 : 13);
+      html += '<div class="' + cls + '" style="left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;font-size:' + fontSize + 'px">' +
         bl.text + '</div>';
     });
     html += '</div>';
