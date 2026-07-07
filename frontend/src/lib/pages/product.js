@@ -144,8 +144,84 @@ export function initProduct() {
     function renderVisualDiagram(state) {
       if (!layerEl) return false;
       if (!state || !state.blocks || !state.blocks.length) return false;
-      var b = state.blocks;
-      var a = state.arrows || [];
+      var blocksAll = state.blocks;
+      var arrowsAll = state.arrows || [];
+      var boxes = blocksAll.filter(function(bl) { return bl.type !== 'container'; });
+      var containers = blocksAll.filter(function(bl) { return bl.type === 'container'; });
+      var diagramTitle = PRODUCT.subcategory + ' Protocol Stack';
+      var COLOR_MOD = { '#744897': 'vbf--purple', '#FFD166': 'vbf--gold', '#3a3a3e': 'vbf--dark', 'outline': 'vbf--outline' };
+
+      // ---- Attempt 1: rebuild the designed flow layout from geometry (works for any diagram) ----
+      // Plain boxes cluster into horizontal rows; single-box rows render as the designed
+      // full-width layer stack, multi-box rows as the side-block grid. Sub-labels preserved.
+      function buildFlow() {
+        if (containers.length || !boxes.length) return null;
+        var sorted = boxes.slice().sort(function(p, q) { return (p.y + p.h / 2) - (q.y + q.h / 2); });
+        var rows = [];
+        sorted.forEach(function(bl) {
+          var row = null;
+          for (var i = 0; i < rows.length; i++) {
+            var r = rows[i];
+            var overlap = Math.min(r.y2, bl.y + bl.h) - Math.max(r.y1, bl.y);
+            if (overlap > Math.min(bl.h, r.minH) * 0.4) { row = r; break; }
+          }
+          if (!row) { row = { items: [], y1: bl.y, y2: bl.y + bl.h, minH: bl.h }; rows.push(row); }
+          row.items.push(bl);
+          row.y1 = Math.min(row.y1, bl.y);
+          row.y2 = Math.max(row.y2, bl.y + bl.h);
+          row.minH = Math.min(row.minH, bl.h);
+        });
+        rows.sort(function(p, q) { return p.y1 - q.y1; });
+        rows.forEach(function(r) { r.items.sort(function(p, q) { return p.x - q.x; }); });
+
+        var rowOf = {};
+        rows.forEach(function(r, ri) { r.items.forEach(function(bl) { rowOf[bl.id] = ri; }); });
+        var connected = {};
+        for (var k = 0; k < arrowsAll.length; k++) {
+          var ar = arrowsAll[k];
+          var r1 = rowOf[ar.from], r2 = rowOf[ar.to];
+          if (r1 === undefined || r2 === undefined) return null;
+          if (Math.abs(r1 - r2) !== 1) return null; // cross / horizontal arrows -> free-form layout
+          connected[Math.min(r1, r2)] = true;
+        }
+
+        function subHtml(bl) { return bl.sub ? '<span class="layer-sub">' + bl.sub + '</span>' : ''; }
+        var out = '<div class="layer-diagram-title">' + diagramTitle + '</div>';
+        var i2 = 0;
+        while (i2 < rows.length) {
+          if (rows[i2].items.length === 1) {
+            var stack = '';
+            var j = i2;
+            while (j < rows.length && rows[j].items.length === 1) {
+              var bl2 = rows[j].items[0];
+              stack += '<div class="layer-box ' + (COLOR_MOD[bl2.color] || 'vbf--purple') + '">' + bl2.text + subHtml(bl2) + '</div>';
+              if (j + 1 < rows.length && rows[j + 1].items.length === 1 && connected[j]) {
+                stack += '<div class="layer-connector"></div>';
+              }
+              j++;
+            }
+            out += '<div class="layer-stack">' + stack + '</div>';
+            i2 = j;
+          } else {
+            var cells = rows[i2].items.map(function(bl3) {
+              return '<div class="side-block ' + (COLOR_MOD[bl3.color] || 'vbf--gold') + '">' + bl3.text + subHtml(bl3) + '</div>';
+            }).join('');
+            out += '<div class="layer-sides" style="grid-template-columns:repeat(' + rows[i2].items.length + ',1fr)">' + cells + '</div>';
+            i2++;
+          }
+        }
+        return out;
+      }
+
+      var flow = buildFlow();
+      if (flow !== null) {
+        layerEl.innerHTML = flow;
+        return true;
+      }
+
+      // ---- Fallback: free-form layout (containers or cross arrows), in design tokens ----
+      var b = blocksAll;
+      var a = arrowsAll;
       var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
       b.forEach(function(bl) {
         if (bl.x < minX) minX = bl.x;
@@ -157,10 +233,10 @@ export function initProduct() {
       var totalH = maxY - minY || 1;
       var pad = 20;
 
-      var html = '<div class="layer-diagram-title">' + PRODUCT.subcategory + ' Protocol Stack</div>';
+      var html = '<div class="layer-diagram-title">' + diagramTitle + '</div>';
       html += '<div class="vbr-wrap" style="padding-top:' + ((totalH + pad * 2) / (totalW + pad * 2) * 100) + '%">';
       html += '<svg class="vbr-arrows" viewBox="0 0 ' + (totalW + pad * 2) + ' ' + (totalH + pad * 2) + '">';
-      html += '<defs><marker id="ah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7 Z" fill="rgba(116,72,151,0.5)"/></marker></defs>';
+      html += '<defs><marker id="ah" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><path d="M0 0 L7 2.5 L0 5 Z" fill="rgba(116,72,151,0.5)"/></marker></defs>';
       a.forEach(function(ar) {
         var fromB = b.find(function(bl) { return bl.id === ar.from; });
         var toB = b.find(function(bl) { return bl.id === ar.to; });
@@ -176,11 +252,10 @@ export function initProduct() {
         }
         var p1 = portPos(fromB, ar.fromPort);
         var p2 = portPos(toB, ar.toPort);
-        html += '<line x1="' + (p1.x - minX + pad) + '" y1="' + (p1.y - minY + pad) + '" x2="' + (p2.x - minX + pad) + '" y2="' + (p2.y - minY + pad) + '" stroke="rgba(116,72,151,0.4)" stroke-width="2" marker-end="url(#ah)"/>';
+        html += '<line x1="' + (p1.x - minX + pad) + '" y1="' + (p1.y - minY + pad) + '" x2="' + (p2.x - minX + pad) + '" y2="' + (p2.y - minY + pad) + '" stroke="rgba(116,72,151,0.4)" stroke-width="1.5" marker-end="url(#ah)"/>';
       });
       html += '</svg>';
 
-      // Map builder palette -> design-token treatments so saved diagrams keep the site's look
       var COLOR_CLASS = { '#744897': 'vbr--purple', '#FFD166': 'vbr--gold', '#3a3a3e': 'vbr--dark', 'outline': 'vbr--outline' };
       b.forEach(function(bl) {
         var left = ((bl.x - minX + pad) / (totalW + pad * 2) * 100);
@@ -191,7 +266,7 @@ export function initProduct() {
         var cls = (isContainer ? 'vbr-container ' : 'vbr-block ') + (COLOR_CLASS[bl.color] || 'vbr--purple');
         var fontSize = bl.fontSize || (isContainer ? 11 : 13);
         html += '<div class="' + cls + '" style="left:' + left + '%;top:' + top + '%;width:' + w + '%;height:' + h + '%;font-size:' + fontSize + 'px">' +
-          bl.text + '</div>';
+          bl.text + (bl.sub && !isContainer ? '<span class="layer-sub">' + bl.sub + '</span>' : '') + '</div>';
       });
       html += '</div>';
       layerEl.innerHTML = html;
@@ -245,6 +320,7 @@ export function initProduct() {
           x: opts.x || 100, y: opts.y || 100,
           w: opts.w || 160, h: opts.h || 50,
           text: opts.text || 'Label',
+          sub: opts.sub || '',
           color: opts.color || activeColor,
           type: opts.type || 'box',
           fontSize: opts.fontSize || 12
@@ -293,6 +369,27 @@ export function initProduct() {
           label.style.fontWeight = '700';
         }
         el.appendChild(label);
+
+        if (b.sub && b.type !== 'container') {
+          var subEl = document.createElement('div');
+          subEl.className = 'vb-sublabel';
+          subEl.textContent = b.sub;
+          el.appendChild(subEl);
+          subEl.addEventListener('dblclick', function(ev) {
+            ev.stopPropagation();
+            subEl.contentEditable = 'true';
+            subEl.focus();
+            function finishSub() {
+              subEl.contentEditable = 'false';
+              b.sub = subEl.textContent.trim();
+              subEl.removeEventListener('blur', finishSub);
+              subEl.removeEventListener('keydown', onSubKey);
+            }
+            function onSubKey(kv) { if (kv.key === 'Enter') { kv.preventDefault(); finishSub(); } }
+            subEl.addEventListener('blur', finishSub);
+            subEl.addEventListener('keydown', onSubKey);
+          });
+        }
 
         ['se','sw','ne','nw'].forEach(function(dir) {
           var h = document.createElement('div');
@@ -611,20 +708,18 @@ export function initProduct() {
       function initFromProduct() {
         canvas.querySelectorAll('.vb-block').forEach(function(el) { el.remove(); });
         blocks = []; arrows = []; idCounter = 0;
-        var startY = 60;
+        var startY = 40;
         var centerX = 440;
 
-        createBlock({ x: centerX, y: startY, w: 320, h: 36, text: PRODUCT.subcategory + ' Protocol Stack', color: '#3a3a3e', type: 'box', fontSize: 11 });
-
         PRODUCT.layers.forEach(function(l, i) {
-          var ly = createBlock({ x: centerX, y: startY + 60 + i * 80, w: 320, h: 50, text: l.name, color: '#744897' });
+          var ly = createBlock({ x: centerX, y: startY + i * 80, w: 320, h: 50, text: l.name, sub: l.sub, color: '#744897' });
           if (i > 0) {
             arrows.push({ from: blocks[blocks.length - 2].id, fromPort: 'b', to: ly.id, toPort: 't' });
           }
         });
 
         PRODUCT.interfaces.forEach(function(iface, i) {
-          createBlock({ x: centerX + i * 170 - (PRODUCT.interfaces.length > 1 ? 85 : 0), y: startY + 60 + PRODUCT.layers.length * 80 + 20, w: 150, h: 50, text: iface.name, color: '#FFD166' });
+          createBlock({ x: centerX + i * 170 - (PRODUCT.interfaces.length > 1 ? 85 : 0), y: startY + PRODUCT.layers.length * 80 + 20, w: 150, h: 50, text: iface.name, sub: iface.sub, color: '#FFD166' });
         });
 
         drawArrows();
